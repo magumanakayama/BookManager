@@ -1,23 +1,18 @@
 import { useState } from 'react'
 import { Button, Box } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
 import theme from './theme'
 import './App.css'
 
 import BookModal from './components/BookModal';
 import BookTable from './components/BookTable';
+import Header from './components/Header';
 
 function App() {
   const [open, setOpen] = useState(false)
   const [bookInfo, setBookInfo] = useState(JSON.parse(localStorage.getItem('books')) || []);
   const [inputBooks, setInputBooks] = useState({ title: '', author: '', date: '' });
 
-  const handleOpen = () => {
-    setOpen(true);
-    const mmdd = `${String(new Date().getMonth() + 1).padStart(2, '0')}/${String(new Date().getDate()).padStart(2, '0')}`;
-    setInputBooks({ title: '', author: '', date: mmdd });
-  };
   const handlePreset = (books) => {
     localStorage.setItem('books', JSON.stringify(books));
     setBookInfo(JSON.parse(localStorage.getItem('books')));
@@ -35,20 +30,14 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ display: 'flex', position: 'fixed', width: '100%', top: 0, left: 0, zIndex: 1100, backgroundColor: '#555555' }}>
-        <Typography variant="h4" sx={{ m: 2 }}>
-          書籍管理アプリ
-        </Typography>
-        <Box sx={{ flexGrow: 1 }} />
-        <Button variant="contained" onClick={handleOpen} sx={{ m: 2 }}>書籍登録</Button>
-      </Box>
+      <Header setOpen={setOpen} setInputBooks={setInputBooks} />
 
-      <Box sx={{ height: '100%', width: '100%', maxWidth: 400 }}>
-        <BookTable bookInfo={bookInfo} />
-      </Box>
+      <BookTable bookInfo={bookInfo} />
 
-      <Button variant="contained" onClick={() => handlePreset([])}>全削除</Button>
-      <Button variant="contained" onClick={() => handlePreset([{ title: 'Nのために', author: '湊かなえ', date: '08/02' }, { title: 'コンビニ人間', author: '村田沙耶香', date: '08/03' }])}>デバックプリセット</Button>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2, gap: 1 }}>
+        <Button variant="contained" onClick={() => handlePreset([])}>全削除</Button>
+        <Button variant="contained" onClick={() => handlePreset([{ title: 'Nのために', author: '湊かなえ', date: '8/2' }, { title: 'コンビニ人間', author: '村田沙耶香', date: '8/3' }])}>デバックプリセット</Button>
+      </Box>
 
       <BookModal {...modalProps} />
     </ThemeProvider >

@@ -14,7 +14,15 @@ const theme = createTheme({
       dark: '#357a38',
       contrastText: '#fff',
     },
-
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        contained: {
+          color: 'rgba(255, 255, 255, 0.87)', // ここで全containedボタンの文字色を白に
+        },
+      },
+    },
   },
 });
 

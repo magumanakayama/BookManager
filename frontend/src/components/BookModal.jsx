@@ -1,5 +1,7 @@
 import { Button, Modal, Box, TextField } from '@mui/material'
-import theme from '../theme'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 const BookModal = ({ open, setOpen, inputBooks, bookInfo, setBookInfo, setInputBooks }) => {
   const modalStyle = {
@@ -7,9 +9,9 @@ const BookModal = ({ open, setOpen, inputBooks, bookInfo, setBookInfo, setInputB
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    bgcolor: theme.palette.primary.dark,
-    width: 720,
-    height: 480,
+    bgcolor: 'background.paper',
+    borderRadius: 2,
+    width: 480,
     p: 4,
   }
 
@@ -17,7 +19,6 @@ const BookModal = ({ open, setOpen, inputBooks, bookInfo, setBookInfo, setInputB
     setOpen(false);
     setInputBooks({ title: '', author: '', date: '' });
   };
-
   const handleSubmit = () => {
     localStorage.setItem("books", JSON.stringify([...bookInfo, { title: inputBooks.title, author: inputBooks.author, date: inputBooks.date }]));
     setBookInfo(JSON.parse(localStorage.getItem('books')));
@@ -29,13 +30,28 @@ const BookModal = ({ open, setOpen, inputBooks, bookInfo, setBookInfo, setInputB
   return (
     <Modal open={open} onClose={handleClose}>
       <Box sx={modalStyle}>
-        <TextField label="タイトル" variant="outlined" value={inputBooks.title} onChange={e => handleInput('title', e.target.value)} />
-        <TextField label="著者" variant="outlined" value={inputBooks.author} onChange={e => handleInput('author', e.target.value)} />
-        <TextField label="読了日" variant="outlined" value={inputBooks.date} onChange={e => handleInput('date', e.target.value)} />
-        <Button variant="contained" onClick={handleClose}>閉じる</Button>
-        <Button variant="contained" onClick={handleSubmit}>登録</Button>
-        <Button variant="contained" onClick={() => setInputBooks({ title: '成瀬は天下を取りにいく', author: '宮島未奈', date: '03/22' })}>デバックプリセット</Button>
-        <Button variant="contained" onClick={() => { }}>カレンダー</Button>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <TextField label="タイトル" variant="outlined" value={inputBooks.title} onChange={e => handleInput('title', e.target.value)} />
+          <TextField label="著者" variant="outlined" value={inputBooks.author} onChange={e => handleInput('author', e.target.value)} />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="読了日"
+              value={new Date(inputBooks.date)}
+              onChange={(newValue) => {
+                const mm = String(newValue.getMonth() + 1);
+                const dd = String(newValue.getDate());
+                handleInput('date', `${mm}/${dd}`);
+              }}
+              format="MM/dd"
+            />
+          </LocalizationProvider>
+        </Box>
+        <Box sx={{ display: 'flex', mt: 8, gap: 1 }}>
+          <Button variant="contained" onClick={() => setInputBooks({ title: '成瀬は天下を取りにいく', author: '宮島未奈', date: '3/22' })}>デバックプリセット</Button>
+          <Box sx={{ flexGrow: 1 }} />
+          <Button variant="contained" onClick={handleSubmit}>登録</Button>
+          <Button variant="outlined" onClick={handleClose}>閉じる</Button>
+        </Box>
       </Box>
     </Modal>
   );
