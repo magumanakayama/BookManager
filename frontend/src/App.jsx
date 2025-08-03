@@ -43,7 +43,7 @@ function App() {
         <Button variant="contained" onClick={handleOpen} sx={{ m: 2 }}>書籍登録</Button>
       </Box>
 
-      <Box sx={{ height: '100%', width: 480 }}>
+      <Box sx={{ height: '100%', width: 400 }}>
         <BookTable bookInfo={bookInfo} />
       </Box>
 
