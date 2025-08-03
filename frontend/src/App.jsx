@@ -9,7 +9,7 @@ import BookTable from './components/BookTable';
 
 function App() {
   const [open, setOpen] = useState(false)
-  const [bookInfo, setBookInfo] = useState(JSON.parse(localStorage.getItem('books') || [{}]));
+  const [bookInfo, setBookInfo] = useState(JSON.parse(localStorage.getItem('books')) || []);
   const [inputBooks, setInputBooks] = useState({ title: '', author: '', date: '' });
 
   const handleOpen = () => {
