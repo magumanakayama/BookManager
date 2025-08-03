@@ -1,74 +1,49 @@
 import { useState } from 'react'
-import { Button, Modal, Box, TextField } from '@mui/material'
-import { DataGrid } from '@mui/x-data-grid';
-import Paper from '@mui/material/Paper';
-
+import { Button, Box } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme'
 import './App.css'
 
+import BookModal from './components/BookModal';
+import BookTable from './components/BookTable';
+
 function App() {
   const [open, setOpen] = useState(false)
-  const [bookInfo, setBookInfo] = useState({
-    title: '',
-    author: '',
-    date: '',
-  });
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    bgcolor: theme.palette.primary.dark,
-    width: 800,
-    height: 450,
-    p: 4,
+  const [bookInfo, setBookInfo] = useState(JSON.parse(localStorage.getItem('books')));
+  const [inputBooks, setInputBooks] = useState({ title: '', author: '', date: '' });
+
+  const handleOpen = () => {
+    setOpen(true);
+    const mmdd = `${String(new Date().getMonth() + 1).padStart(2, '0')}/${String(new Date().getDate()).padStart(2, '0')}`;
+    setInputBooks({ title: '', author: '', date: mmdd });
+  };
+  const handlePreset = (books) => {
+    localStorage.setItem('books', JSON.stringify(books));
+    setBookInfo(JSON.parse(localStorage.getItem('books')));
   }
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const handleSubmit = () => {
-    localStorage.setItem('title', bookInfo.title);
-    localStorage.setItem('author', bookInfo.author);
-    localStorage.setItem('date', bookInfo.date);
-    handleClose();
-  }
-  const handleInput = (e, param) => setBookInfo({ ...bookInfo, [param]: e.target.value });
-
-
-  const localTitle = localStorage.getItem('title');
-  const localAuthor = localStorage.getItem('author');
-  const localDate = localStorage.getItem('date');
-  const rows = [{ id: 1, title: localTitle, author: localAuthor, date: localDate }];
-  const columns = [{ field: 'title', headerName: 'タイトル' }, { field: 'author', headerName: '著者' }, { field: 'date', headerName: '読み終わった日' }];
-
+  const modalProps = {
+    open,
+    setOpen,
+    bookInfo,
+    setBookInfo,
+    inputBooks,
+    setInputBooks, // デバックプリセット専用
+  };
 
 
   return (
     <ThemeProvider theme={theme}>
-
-      <Paper sx={{ height: 400, width: '100%' }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          pageSizeOptions={[5, 10]}
-          sx={{ border: 0 }}
-        />
-      </Paper>
+      <Box sx={{ height: '100%', width: 480 }}>
+        <BookTable bookInfo={bookInfo} />
+      </Box>
 
       <Button variant="contained" onClick={handleOpen}>書籍登録</Button>
+      <Button variant="contained" onClick={() => handlePreset([])}>全削除</Button>
+      <Button variant="contained" onClick={() => handlePreset([{ title: 'Nのために', author: '湊かなえ', date: '08/02' }, { title: 'コンビニ人間', author: '村田沙耶香', date: '08/03' }])}>デバックプリセット</Button>
 
-
-      <Modal open={open} onClose={handleClose}>
-        <Box sx={style}>
-          <TextField label="タイトル" variant="outlined" value={bookInfo.title} onChange={e => handleInput(e, 'title')} />
-          <TextField label="著者" variant="outlined" value={bookInfo.author} onChange={e => handleInput(e, 'author')} />
-          <TextField label="読み終わった日" variant="outlined" value={bookInfo.date} onChange={e => handleInput(e, 'date')} />
-          <Button variant="contained" onClick={handleClose}>閉じる</Button>
-          <Button variant="contained" onClick={handleSubmit}>登録</Button>
-        </Box>
-      </Modal>
-    </ThemeProvider>
+      <BookModal {...modalProps} />
+    </ThemeProvider >
   )
 }
 
