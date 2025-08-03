@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read  # リポジトリの内容を読み取る権限
+  contents: read  # リポジトリ内容を読み取る権限
   pages: write  # Pagesへの書き込み(デプロイ)権限
   id-token: write  # IDトークンの書き込み権限、Pagesへの安全なデプロイに必要
 
