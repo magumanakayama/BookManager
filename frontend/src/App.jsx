@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Button, Box } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
 import theme from './theme'
 import './App.css'
 
@@ -34,11 +35,18 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <Box sx={{ display: 'flex', position: 'fixed', width: '100%', top: 0, left: 0, zIndex: 1100 }}>
+        <Typography variant="h4" sx={{ m: 2 }}>
+          書籍管理アプリ
+        </Typography>
+        <Box sx={{ flexGrow: 1 }} />
+        <Button variant="contained" onClick={handleOpen} sx={{ m: 2 }}>書籍登録</Button>
+      </Box>
+
       <Box sx={{ height: '100%', width: 480 }}>
         <BookTable bookInfo={bookInfo} />
       </Box>
 
-      <Button variant="contained" onClick={handleOpen}>書籍登録</Button>
       <Button variant="contained" onClick={() => handlePreset([])}>全削除</Button>
       <Button variant="contained" onClick={() => handlePreset([{ title: 'Nのために', author: '湊かなえ', date: '08/02' }, { title: 'コンビニ人間', author: '村田沙耶香', date: '08/03' }])}>デバックプリセット</Button>
 
