@@ -3,7 +3,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
-const BookModal = ({ open, setOpen, inputBooks, bookInfo, setBookInfo, setInputBooks }) => {
+const BookModal = ({ open, setOpen, inputBooks, handleSubmit, setInputBooks }) => {
   const modalStyle = {
     position: 'absolute',
     top: '50%',
@@ -19,11 +19,6 @@ const BookModal = ({ open, setOpen, inputBooks, bookInfo, setBookInfo, setInputB
     setOpen(false);
     setInputBooks({ title: '', author: '', date: '' });
   };
-  const handleSubmit = () => {
-    localStorage.setItem("books", JSON.stringify([...bookInfo, { title: inputBooks.title, author: inputBooks.author, date: inputBooks.date }]));
-    setBookInfo(JSON.parse(localStorage.getItem('books')));
-    handleClose();
-  }
   const handleInput = (param, inputValue) => setInputBooks({ ...inputBooks, [param]: inputValue });
 
 
@@ -49,7 +44,7 @@ const BookModal = ({ open, setOpen, inputBooks, bookInfo, setBookInfo, setInputB
         <Box sx={{ display: 'flex', mt: 8, gap: 1 }}>
           <Button variant="contained" onClick={() => setInputBooks({ title: '成瀬は天下を取りにいく', author: '宮島未奈', date: '3/22' })}>デバックプリセット</Button>
           <Box sx={{ flexGrow: 1 }} />
-          <Button variant="contained" onClick={handleSubmit}>登録</Button>
+          <Button variant="contained" onClick={() => handleSubmit(handleClose, inputBooks)}>登録</Button>
           <Button variant="outlined" onClick={handleClose}>閉じる</Button>
         </Box>
       </Box>

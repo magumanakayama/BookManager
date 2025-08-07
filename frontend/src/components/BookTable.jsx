@@ -11,7 +11,7 @@ const BookTable = ({ bookInfo }) => {
   ];
 
   return (
-    <Box sx={{ width: '100dvw' }}>
+    <Box sx={{ width: '100dvw', maxWidth: '100%' }}>
       <DataGrid
         rows={rows}
         columns={columns}

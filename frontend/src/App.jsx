@@ -1,46 +1,36 @@
-import { useState } from 'react'
-import { Button, Box } from '@mui/material'
+import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
+
+import { BASE_URL } from './constant';
+
+import BookSearch from './components/BookSearch';
+import TopPage from './TopPage';
 import theme from './theme'
 import './App.css'
 
-import BookModal from './components/BookModal';
-import BookTable from './components/BookTable';
-import Header from './components/Header';
 
 function App() {
-  const [open, setOpen] = useState(false)
+
   const [bookInfo, setBookInfo] = useState(JSON.parse(localStorage.getItem('books')) || []);
   const [inputBooks, setInputBooks] = useState({ title: '', author: '', date: '' });
 
-  const handlePreset = (books) => {
-    localStorage.setItem('books', JSON.stringify(books));
+  const handleSubmit = (handleClose, submitBook) => {
+    console.log(submitBook);
+    localStorage.setItem("books", JSON.stringify([...bookInfo, { title: submitBook.title, author: submitBook.author, date: submitBook.date }]));
     setBookInfo(JSON.parse(localStorage.getItem('books')));
+    handleClose();
   }
 
-  const modalProps = {
-    open,
-    setOpen,
-    bookInfo,
-    setBookInfo,
-    inputBooks,
-    setInputBooks, // デバックプリセット専用
-  };
-
-
   return (
-    <ThemeProvider theme={theme}>
-      <Header setOpen={setOpen} setInputBooks={setInputBooks} />
-
-      <BookTable bookInfo={bookInfo} />
-
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2, gap: 1 }}>
-        <Button variant="contained" onClick={() => handlePreset([])}>全削除</Button>
-        <Button variant="contained" onClick={() => handlePreset([{ title: 'Nのために', author: '湊かなえ', date: '8/2' }, { title: 'コンビニ人間', author: '村田沙耶香', date: '8/3' }])}>デバックプリセット</Button>
-      </Box>
-
-      <BookModal {...modalProps} />
-    </ThemeProvider >
+    <Router>
+      <ThemeProvider theme={theme}>
+        <Routes>
+          <Route path={`${BASE_URL}/`} element={<TopPage handleSubmit={handleSubmit} bookInfo={bookInfo} setBookInfo={setBookInfo} inputBooks={inputBooks} setInputBooks={setInputBooks} />} />
+          <Route path={`${BASE_URL}/BookSearch`} element={<BookSearch handleSubmit={handleSubmit} />} />
+        </Routes>
+      </ThemeProvider>
+    </Router>
   )
 }
 
