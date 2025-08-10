@@ -30,7 +30,10 @@ const BookModal = ({ open, setOpen, inputBooks, handleSubmit, setInputBooks }) =
           <TextField label="著者" variant="outlined" value={inputBooks.author} onChange={e => handleInput('author', e.target.value)} />
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
-              label="読了日"
+              label="カレンダー"
+              slotProps={{
+                textField: { inputProps: { 'aria-label': '読了日入力欄' } }
+              }}
               value={new Date(inputBooks.date)}
               onChange={(newValue) => {
                 const mm = String(newValue.getMonth() + 1);
