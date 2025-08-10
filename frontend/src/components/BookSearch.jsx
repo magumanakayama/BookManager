@@ -1,21 +1,20 @@
 import { useState } from 'react';
 import { Box, TextField, Button, Grid } from '@mui/material';
-import { Card, CardContent, CardMedia, CardActions, CardActionArea } from '@mui/material';
+import { Card, CardContent, CardMedia, CardActions, CardActionArea, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useFetch } from './useFetch';
 
 import { BASE_URL } from '../constant';
 
 const BookSearch = ({ handleSubmit }) => {
   const [keyword, setKeyword] = useState('');
-  const [books, setBooks] = useState([]);
+  const [searchUrl, setSearchUrl] = useState('');
+
+  const { data, loading, error } = useFetch(searchUrl);
 
   const handleSearch = async () => {
     if (!keyword) return;
-    const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(keyword)}&maxResults=40`);
-    const data = await res.json();
-    console.log(data.items[0].volumeInfo.authors[0]);
-    console.log(data.items[0].volumeInfo.title);
-    setBooks(data.items || []);
+    setSearchUrl(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(keyword)}&maxResults=40`);
   };
 
 
@@ -36,11 +35,12 @@ const BookSearch = ({ handleSubmit }) => {
           onChange={e => setKeyword(e.target.value)}
           size="small"
         />
-        <Button variant="contained" onClick={handleSearch}>検索</Button>
+        <Button variant="contained" onClick={handleSearch} sx={{ display: loading ? 'none' : 'block' }}>検索</Button>
+        <CircularProgress sx={{ display: loading ? 'block' : 'none', ml: 1 }} />
       </Box>
       <Box sx={{ width: '100%', justifyContent: 'center' }}>
         <Grid container spacing={2} sx={{ justifyContent: 'center', m: 2 }}>
-          {books.map(book => (
+          {(data?.items ?? []).map(book => (
             <Grid key={book.id}>
               <Card sx={{ width: 210, mb: 2 }}>
                 <CardActionArea sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
