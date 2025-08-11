@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import '@testing-library/jest-dom';
 import BookModal from './BookModal';
-import { render, screen, waitFor, } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 const renderModal = (open, inputBooks) => {
   const setOpen = vi.fn();
