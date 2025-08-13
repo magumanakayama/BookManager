@@ -11,13 +11,14 @@ const DetailModal = ({ open, setOpen, book, handleSubmitCustom }) => {
     <Modal open={open} onClose={() => setOpen(false)}>
       <Box sx={{ p: 2 }}>
         <Stack direction="row">
-          <img src={book?.volumeInfo.imageLinks?.thumbnail} alt={book?.volumeInfo.title} />
+          <img src={book?.Item?.largeImageUrl} alt={book?.Item?.title} />
           <Box sx={{ ml: 2 }}>
-            <h2>{book?.volumeInfo.title}</h2>
-            <p>{book?.volumeInfo.authors?.join(', ') || '著者不明'}</p>
+            <h2>{book?.Item?.title}</h2>
+            <p>{book?.Item?.author || '著者不明'}</p>
+            <p>{book?.Item?.size}</p>
           </Box>
         </Stack>
-        <p>{book?.volumeInfo.description}</p>
+        <p>{book?.Item?.itemCaption}</p>
         <Button variant="contained" onClick={() => handleSubmitCustom2(book)}>登録</Button>
         <Button variant="contained" onClick={() => setOpen(false)} sx={{ ml: 1 }}>閉じる</Button>
       </Box>
