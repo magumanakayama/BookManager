@@ -1,14 +1,15 @@
 import { useState } from 'react';
-import { Box, TextField, Button, Grid } from '@mui/material';
-import { Card, CardContent, CardMedia, CardActions, CardActionArea, CircularProgress } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
+import { Card, CardContent, CardMedia, CardActions, CardActionArea } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useFetch } from './useFetch';
+import { useFetch } from '../useFetch';
 import DetailModal from './DetailModal'
+import SearchBox from './SearchBox';
 
-import { BASE_URL } from '../constant';
+import { BASE_URL } from '../../constant';
 
 const BookSearch = ({ handleSubmit }) => {
-  const [keyword, setKeyword] = useState('');
+  const [query, setQuery] = useState({ author: '', title: '', });
   const [searchUrl, setSearchUrl] = useState('');
 
   // detailModalのモーダルのオープン状態
@@ -16,13 +17,13 @@ const BookSearch = ({ handleSubmit }) => {
   const [selectedBook, setSelectedBook] = useState(null);
 
   const { data, loading, error } = useFetch(searchUrl);
-  console.log("data:", data);
 
   const handleSearch = async () => {
-    const target_url="https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404"
-    const applicationId=""    
-    if (!keyword) return;
-    setSearchUrl(`${target_url}?applicationId=${applicationId}&author=${encodeURIComponent(keyword)}`);
+    if (!query.title && !query.author) return;
+    const titleQuery = query.title ? `title=${query.title}` : '';
+    const authorQuery = query.author ? `author=${query.author}` : '';
+    const and = query.title && query.author ? '&' : '';
+    setSearchUrl(`https://8t6x3iucgd.execute-api.ap-northeast-1.amazonaws.com/default/myFunc?${titleQuery}${and}${authorQuery}`);
   };
 
   const openDetailModal = (book) => {
@@ -34,23 +35,19 @@ const BookSearch = ({ handleSubmit }) => {
   const handleSubmitCustom = (book) => {
     const mm = String(new Date().getMonth() + 1);
     const dd = String(new Date().getDate());
-    handleSubmit(() => navigate(`${BASE_URL}/`), { title: book.Item.title, author: book.Item.author || '著者不明', date: `${mm}/${dd}` });
+    handleSubmit(() => navigate(`${BASE_URL}/`), { title: book.Item.title, author: book.Item.author || '著者不明', date: `${mm}/${dd}`, image: book.Item.largeImageUrl, isbn: book.Item.isbn });
   };
-
-
 
 
   return (
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', m: 2, gap: 1 }}>
-        <TextField
-          label="書籍名で検索"
-          value={keyword}
-          onChange={e => setKeyword(e.target.value)}
-          size="small"
+        <SearchBox
+          query={query}
+          setQuery={setQuery}
+          handleSearch={handleSearch}
+          loading={loading}
         />
-        <Button variant="contained" onClick={handleSearch} sx={{ display: loading ? 'none' : 'block' }}>検索</Button>
-        <CircularProgress sx={{ display: loading ? 'block' : 'none', ml: 1 }} />
       </Box>
       {/* エラー表示 */}
       {error && (

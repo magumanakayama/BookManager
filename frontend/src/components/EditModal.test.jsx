@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import '@testing-library/jest-dom';
-import BookModal from './BookModal';
+import EditModal from './EditModal';
 import { render } from '@testing-library/react';
 
 const renderModal = (open, inputBooks) => {
@@ -9,7 +9,7 @@ const renderModal = (open, inputBooks) => {
   const setInputBooks = vi.fn();
 
   const result = render(
-    <BookModal
+    <EditModal
       open={open}
       setOpen={setOpen}
       inputBooks={inputBooks}
@@ -22,7 +22,7 @@ const renderModal = (open, inputBooks) => {
 };
 
 
-describe('BookModal Component', () => {
+describe('EditModal Component', () => {
   it('モーダルが閉じているときは入力欄が表示されない', () => {
     const inputBooks = { title: '', author: '', date: '' };
     const { result } = renderModal(false, inputBooks);
@@ -39,8 +39,7 @@ describe('BookModal Component', () => {
     expect(result.getByRole('textbox', { name: 'タイトル' })).toBeInTheDocument();
     expect(result.getByRole('textbox', { name: '著者' })).toBeInTheDocument();
     expect(result.getByLabelText('読了日入力欄')).toBeInTheDocument();
-    expect(result.getByRole('button', { name: 'デバックプリセット' })).toBeInTheDocument();
-    expect(result.getByRole('button', { name: '登録' })).toBeInTheDocument();
+    expect(result.getByRole('button', { name: '完了' })).toBeInTheDocument();
   });
 
   it('初期値有り', () => {
@@ -56,7 +55,7 @@ describe('BookModal Component', () => {
     const inputBooks = { title: '告白', author: '湊かなえ', date: '0101' };
     const { result, handleSubmit } = renderModal(true, inputBooks);
 
-    result.getByText('登録').click();
+    result.getByText('完了').click();
     expect(handleSubmit).toHaveBeenCalledWith(expect.anything(), inputBooks);
   });
 

@@ -4,7 +4,7 @@ import { ThemeProvider } from '@mui/material/styles';
 
 import { BASE_URL } from './constant';
 
-import BookSearch from './components/BookSearch';
+import BookSearch from './components/search/BookSearch';
 import TopPage from './TopPage';
 import theme from './theme'
 import './App.css'
@@ -17,7 +17,7 @@ function App() {
 
   const handleSubmit = (handleClose, submitBook) => {
     console.log(submitBook);
-    localStorage.setItem("books", JSON.stringify([...bookInfo, { title: submitBook.title, author: submitBook.author, date: submitBook.date }]));
+    localStorage.setItem("books", JSON.stringify([...bookInfo, { title: submitBook.title, author: submitBook.author, date: submitBook.date, image: submitBook.image, isbn: submitBook.isbn }]));
     setBookInfo(JSON.parse(localStorage.getItem('books')));
     handleClose();
   }

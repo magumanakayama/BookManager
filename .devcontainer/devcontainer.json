@@ -13,7 +13,12 @@
         "vitest.explorer"
       ],
       "settings": {
-        "terminal.integrated.defaultProfile.linux": "bash"
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "eslint.validate": [
+          "javascript",
+          "javascriptreact"
+        ],
+        "editor.formatOnSave": true
       }
     }
   }
