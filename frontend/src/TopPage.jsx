@@ -20,10 +20,11 @@ const TopPage = ({ handleSubmit, bookInfo, setBookInfo, inputBooks, setInputBook
       <ThemeProvider theme={theme}>
         <Header />
         {/* <BookTable bookInfo={bookInfo} /> */}
-        <ImageGrid bookInfo={bookInfo} handleSubmit={handleSubmit} inputBooks={inputBooks} setInputBooks={setInputBooks} />
-
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2, gap: 1 }}>
-          <Button variant="contained" onClick={() => handlePreset([])}>全削除</Button>
+        <Box sx={{ mt: 12 }}>
+          <ImageGrid bookInfo={bookInfo} handleSubmit={handleSubmit} inputBooks={inputBooks} setInputBooks={setInputBooks} />
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2, gap: 1 }}>
+            <Button variant="contained" onClick={() => handlePreset([])}>全削除</Button>
+          </Box>
         </Box>
       </ThemeProvider>
     </>
