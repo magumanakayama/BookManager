@@ -1,6 +1,5 @@
 import { Button, Modal, Box, TextField } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
@@ -31,7 +30,7 @@ const EditModal = ({ open, setOpen, inputBooks, handleSubmit, setInputBooks }) =
           <TextField label="タイトル" variant="outlined" value={inputBooks.title} onChange={e => handleInput('title', e.target.value)} />
           <TextField label="著者" variant="outlined" value={inputBooks.author} onChange={e => handleInput('author', e.target.value)} />
           <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <MobileDatePicker
+            <DatePicker
               label="読了日"
               slotProps={{
                 textField: { inputProps: { 'aria-label': '読了日入力欄' } }
