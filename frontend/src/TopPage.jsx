@@ -24,7 +24,6 @@ const TopPage = ({ handleSubmit, bookInfo, setBookInfo, inputBooks, setInputBook
 
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2, gap: 1 }}>
           <Button variant="contained" onClick={() => handlePreset([])}>全削除</Button>
-          <Button variant="contained" onClick={() => handlePreset([{ title: 'Nのために', author: '湊かなえ', date: '8/2' }, { title: 'コンビニ人間', author: '村田沙耶香', date: '8/3' }])}>デバックプリセット</Button>
         </Box>
       </ThemeProvider>
     </>
