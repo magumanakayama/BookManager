@@ -8,7 +8,7 @@ import BookTable from './components/BookTable';
 import ImageGrid from './components/ImageGrid';
 import Header from './components/Header';
 
-const TopPage = ({ handleSubmit, bookInfo, setBookInfo, inputBooks, setInputBooks }) => {
+const TopPage = ({ bookInfo, setBookInfo, inputBooks, setInputBooks }) => {
 
   const handlePreset = (books) => {
     localStorage.setItem('books', JSON.stringify(books));
@@ -21,7 +21,7 @@ const TopPage = ({ handleSubmit, bookInfo, setBookInfo, inputBooks, setInputBook
         <Header />
         {/* <BookTable bookInfo={bookInfo} /> */}
         <Box sx={{ mt: 12 }}>
-          <ImageGrid bookInfo={bookInfo} handleSubmit={handleSubmit} inputBooks={inputBooks} setInputBooks={setInputBooks} />
+          <ImageGrid bookInfo={bookInfo} setBookInfo={setBookInfo} inputBooks={inputBooks} setInputBooks={setInputBooks} />
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2, gap: 1 }}>
             <Button variant="contained" onClick={() => handlePreset([])}>全削除</Button>
           </Box>
