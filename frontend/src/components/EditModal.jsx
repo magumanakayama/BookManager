@@ -21,6 +21,7 @@ const EditModal = ({ open, setOpen, inputBooks, handleSubmit, setInputBooks }) =
   };
   const handleInput = (param, inputValue) => setInputBooks({ ...inputBooks, [param]: inputValue });
 
+  // 
   const parseDate = (dateStr) => {
     if (!dateStr) return null;
     const [mm, dd] = dateStr.split('/');
@@ -46,8 +47,8 @@ const EditModal = ({ open, setOpen, inputBooks, handleSubmit, setInputBooks }) =
               }}
               value={dateValue}
               onChange={(newValue) => {
-                const mm = String(newValue.getMonth() + 1).padStart(2, '0');
-                const dd = String(newValue.getDate()).padStart(2, '0');
+                const mm = String(newValue.getMonth() + 1)
+                const dd = String(newValue.getDate())
                 handleInput('date', `${mm}/${dd}`);
               }}
               format="MM/dd"
