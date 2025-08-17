@@ -21,6 +21,8 @@ const EditModal = ({ open, setOpen, inputBooks, handleSubmit, setInputBooks }) =
   };
   const handleInput = (param, inputValue) => setInputBooks({ ...inputBooks, [param]: inputValue });
 
+  const dateValue = inputBooks.date ? new Date(inputBooks.date) : null;
+
 
   return (
     <Modal open={open} onClose={handleClose}>
@@ -35,7 +37,7 @@ const EditModal = ({ open, setOpen, inputBooks, handleSubmit, setInputBooks }) =
               slotProps={{
                 textField: { inputProps: { 'aria-label': '読了日入力欄' } }
               }}
-              value={new Date(inputBooks.date)}
+              value={dateValue}
               onChange={(newValue) => {
                 const mm = String(newValue.getMonth() + 1);
                 const dd = String(newValue.getDate());
