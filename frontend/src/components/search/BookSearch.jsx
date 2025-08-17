@@ -56,20 +56,20 @@ const BookSearch = ({ handleSubmit }) => {
         </Box>
       )}
       <Box sx={{ width: '100%', justifyContent: 'center' }}>
-        <Grid container spacing={2} sx={{ justifyContent: 'center', m: 2 }}>
+        <Grid container spacing={1} sx={{ justifyContent: 'center' }}>
           {(data?.Items ?? []).map(book => (
             <Grid key={book.Item.isbn}>
-              <Card sx={{ width: 210, mb: 2 }}>
+              <Card sx={{ width: 176 }}>
                 <CardActionArea onClick={() => openDetailModal(book)} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <CardMedia
                     component="img"
-                    sx={{ height: 210, width: 148, mt: 2 }} // 右に余白を追加
+                    sx={{ height: 210, width: 148, mt: 2 }}
                     image={book.Item?.largeImageUrl}
                     alt={book.Item.title}
                   />
                   <CardContent>
-                    {book.Item.title?.length > 10 ? `${book.Item.title.slice(0, 10)}...` : book.Item.title}
-                    <p>{book.Item.author?.length > 10 ? `${book.Item.author.slice(0, 10)} ...` : book.Item.author || '著者不明'}</p>
+                    {book.Item.title?.length > 8 ? `${book.Item.title.slice(0, 8)}...` : book.Item.title}
+                    <p>{book.Item.author?.length > 8 ? `${book.Item.author.slice(0, 8)} ...` : book.Item.author || '著者不明'}</p>
                   </CardContent>
                 </CardActionArea>
                 <CardActions sx={{ justifyContent: 'center' }}>
