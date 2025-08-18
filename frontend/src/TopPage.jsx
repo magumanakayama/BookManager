@@ -23,7 +23,7 @@ const TopPage = ({ bookInfo, setBookInfo, inputBooks, setInputBooks }) => {
         <Box sx={{ mt: 12 }}>
           <ImageGrid bookInfo={bookInfo} setBookInfo={setBookInfo} inputBooks={inputBooks} setInputBooks={setInputBooks} />
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2, gap: 1 }}>
-            <Button variant="contained" onClick={() => handlePreset([])}>全削除</Button>
+            {/* <Button variant="contained" onClick={() => handlePreset([])}>全削除</Button> */}
           </Box>
         </Box>
       </ThemeProvider>

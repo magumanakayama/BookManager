@@ -66,8 +66,8 @@ const EditModal = ({ open, setOpen, setBookInfo, inputBooks, setInputBooks }) =>
         <Box sx={{ display: 'flex', mt: 2, gap: 1 }}>
           <Button variant="contained" color="error" onClick={() => handleEdit("delete")}>削除</Button>
           <Box sx={{ flexGrow: 1 }} />
-          <Button variant="contained" onClick={() => handleEdit("edit")}>完了</Button>
           <Button variant="outlined" onClick={handleClose}>閉じる</Button>
+          <Button variant="contained" onClick={() => handleEdit("edit")}>完了</Button>
         </Box>
       </Box>
     </Modal>

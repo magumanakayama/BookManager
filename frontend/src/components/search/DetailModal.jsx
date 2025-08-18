@@ -18,11 +18,13 @@ const DetailModal = ({ open, setOpen, book, handleSubmitCustom }) => {
             <p>{book?.Item?.size}</p>
           </Box>
         </Stack>
-        <p>{book?.Item?.itemCaption}</p>
+        <Box sx={{ maxHeight: '50dvh', overflowY: 'auto' }}>
+          <p>{book?.Item?.itemCaption}</p>
+        </Box>
         <Button variant="contained" onClick={() => handleSubmitCustom2(book)}>登録</Button>
         <Button variant="contained" onClick={() => setOpen(false)} sx={{ ml: 1 }}>閉じる</Button>
       </Box>
-    </Modal>
+    </Modal >
   );
 };
 

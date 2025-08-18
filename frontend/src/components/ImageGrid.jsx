@@ -1,11 +1,9 @@
 import { useState } from 'react'
-import { Button, Grid, useMediaQuery } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
 import EditModal from './EditModal';
 
 const ImageGrid = ({ bookInfo, setBookInfo, inputBooks, setInputBooks }) => {
   const [open, setOpen] = useState(false)
-
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
   const handleEditOpen = (book) => {
     setOpen(true);
@@ -22,10 +20,10 @@ const ImageGrid = ({ bookInfo, setBookInfo, inputBooks, setInputBooks }) => {
 
   return (
     <>
-      <Grid container spacing={isMobile ? 0 : 2} sx={{ justifyContent: 'center', m: 1 }}>
+      <Grid container spacing={2} sx={{ width: '100dvw', px: 2 }}>
         {bookInfo.map(book => (
-          <Grid key={book.isbn} size={{ xs: 3 }} >
-            <Button onClick={() => handleEditOpen(book)}>
+          <Grid key={book.isbn} size={{ xs: 3, sm: 2, md: 1.5 }} >
+            <Button onClick={() => handleEditOpen(book)} sx={{ p: 0, boxShadow: 8 }} >
               <img src={book.image} alt={book.title} style={{ display: 'block', width: '100%' }} />
             </Button>
           </Grid>
