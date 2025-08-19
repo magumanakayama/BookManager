@@ -1,33 +1,34 @@
+import { useState } from 'react';
 import { Button, Box } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles';
 
 import theme from './theme'
 import './App.css'
 
-import BookTable from './components/BookTable';
 import ImageGrid from './components/ImageGrid';
 import Header from './components/Header';
+import SortForm from './components/SortForm';
 
 const TopPage = ({ bookInfo, setBookInfo, inputBooks, setInputBooks }) => {
+  const [sort, setSort] = useState('off');
 
-  const handlePreset = (books) => {
-    localStorage.setItem('books', JSON.stringify(books));
-    setBookInfo(JSON.parse(localStorage.getItem('books')));
-  }
+  // const handlePreset = (books) => {
+  //   localStorage.setItem('books', JSON.stringify(books));
+  //   setBookInfo(JSON.parse(localStorage.getItem('books')));
+  // }
+
 
   return (
-    <>
-      <ThemeProvider theme={theme}>
-        <Header />
-        {/* <BookTable bookInfo={bookInfo} /> */}
-        <Box sx={{ mt: 12 }}>
-          <ImageGrid bookInfo={bookInfo} setBookInfo={setBookInfo} inputBooks={inputBooks} setInputBooks={setInputBooks} />
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2, gap: 1 }}>
-            {/* <Button variant="contained" onClick={() => handlePreset([])}>全削除</Button> */}
-          </Box>
-        </Box>
-      </ThemeProvider>
-    </>
+    <ThemeProvider theme={theme}>
+      <Header />
+      <Box sx={{ mt: 10 }}>
+        <SortForm sort={sort} setSort={setSort} />
+        <ImageGrid bookInfo={bookInfo} setBookInfo={setBookInfo} inputBooks={inputBooks} setInputBooks={setInputBooks} sort={sort} />
+        {/* <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2, gap: 1 }}>
+          <Button variant="contained" onClick={() => handlePreset([])}>全削除</Button>
+        </Box> */}
+      </Box>
+    </ThemeProvider>
   )
 }
 

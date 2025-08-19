@@ -1,3 +1,4 @@
+//不要になったコンポーネント
 import { Box } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import theme from '../theme';

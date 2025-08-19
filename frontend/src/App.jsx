@@ -4,8 +4,9 @@ import { ThemeProvider } from '@mui/material/styles';
 
 import { BASE_URL } from './constant';
 
-import BookSearch from './components/search/BookSearch';
 import TopPage from './TopPage';
+import BookSearch from './components/search/BookSearch';
+import BookGraph from './components/graph/BookGraph';
 import theme from './theme'
 import './App.css'
 
@@ -16,7 +17,6 @@ function App() {
   const [inputBooks, setInputBooks] = useState({ title: '', author: '', date: '' });
 
   const handleSubmit = (handleClose, submitBook) => {
-    console.log(submitBook);
     localStorage.setItem("books", JSON.stringify([...bookInfo, { title: submitBook.title, author: submitBook.author, date: submitBook.date, image: submitBook.image, isbn: submitBook.isbn }]));
     setBookInfo(JSON.parse(localStorage.getItem('books')));
     handleClose();
@@ -28,6 +28,7 @@ function App() {
         <Routes>
           <Route path={`${BASE_URL}/`} element={<TopPage handleSubmit={handleSubmit} bookInfo={bookInfo} setBookInfo={setBookInfo} inputBooks={inputBooks} setInputBooks={setInputBooks} />} />
           <Route path={`${BASE_URL}/BookSearch`} element={<BookSearch handleSubmit={handleSubmit} />} />
+          <Route path={`${BASE_URL}/BookGraph`} element={<BookGraph bookInfo={bookInfo} />} />
         </Routes>
       </ThemeProvider>
     </Router>
