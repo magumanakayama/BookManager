@@ -21,7 +21,7 @@ const TopPage = ({ bookInfo, setBookInfo, inputBooks, setInputBooks }) => {
   return (
     <ThemeProvider theme={theme}>
       <Header />
-      <Box sx={{ mt: 10 }}>
+      <Box sx={{ mt: { xs: 4, sm: 8 } }}>
         <SortForm sort={sort} setSort={setSort} />
         <ImageGrid bookInfo={bookInfo} setBookInfo={setBookInfo} inputBooks={inputBooks} setInputBooks={setInputBooks} sort={sort} />
         {/* <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2, gap: 1 }}>
