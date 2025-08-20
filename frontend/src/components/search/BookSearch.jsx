@@ -33,9 +33,9 @@ const BookSearch = ({ handleSubmit }) => {
 
   const navigate = useNavigate();
   const handleSubmitCustom = (book) => {
-    const mm = String(new Date().getMonth() + 1);
-    const dd = String(new Date().getDate());
-    handleSubmit(() => navigate(`${BASE_URL}/`), { title: book.Item.title, author: book.Item.author || '著者不明', date: `${mm}/${dd}`, image: book.Item.largeImageUrl, isbn: book.Item.isbn });
+    // const mm = String(new Date().getMonth() + 1);
+    // const dd = String(new Date().getDate());
+    handleSubmit(() => navigate(`${BASE_URL}/`), { title: book.Item.title, author: book.Item.author || '著者不明', date: new Date(Date.now()).toLocaleDateString(), image: book.Item.largeImageUrl, isbn: book.Item.isbn });
   };
 
 

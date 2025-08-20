@@ -33,9 +33,8 @@ const EditModal = ({ open, setOpen, setBookInfo, inputBooks, setInputBooks }) =>
   // モバイル版ではMM/DDのStringを直接Date型にするエラーになるため、丁寧にパースする
   const parseDate = (dateStr) => {
     if (!dateStr) return null;
-    const [mm, dd] = dateStr.split('/');
-    const now = new Date();
-    return new Date(now.getFullYear(), Number(mm) - 1, Number(dd));
+    const [yyyy, mm, dd] = dateStr.split('/');
+    return new Date(Number(yyyy), Number(mm) - 1, Number(dd));
   };
 
 
@@ -55,11 +54,12 @@ const EditModal = ({ open, setOpen, setBookInfo, inputBooks, setInputBooks }) =>
               // そもそもDate型をローカルストレージに置くのもあり
               value={parseDate(inputBooks.date)}
               onChange={(newValue) => {
-                const mm = String(newValue.getMonth() + 1)
-                const dd = String(newValue.getDate())
-                handleInput('date', `${mm}/${dd}`);
+                const yyyy = String(newValue.getFullYear());
+                const mm = String(newValue.getMonth() + 1).padStart(2, '0');
+                const dd = String(newValue.getDate()).padStart(2, '0');
+                handleInput('date', `${yyyy}/${mm}/${dd}`);
               }}
-              format="MM/dd"
+              format="yyyy/MM/dd"
             />
           </LocalizationProvider>
         </Box>

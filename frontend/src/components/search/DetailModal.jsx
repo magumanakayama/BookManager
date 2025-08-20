@@ -7,13 +7,15 @@ const DetailModal = ({ open, setOpen, book, handleSubmitCustom }) => {
     handleSubmitCustom(book);
   };
 
+  const fontSize = book?.Item?.title.length > 20 && '1rem';
+
   return (
     <Modal open={open} onClose={() => setOpen(false)}>
       <Box sx={{ p: 2 }}>
         <Stack direction="row">
           <img src={book?.Item?.largeImageUrl} alt={book?.Item?.title} />
           <Box sx={{ ml: 2 }}>
-            <h2>{book?.Item?.title}</h2>
+            <h2 style={{ fontSize }}>{book?.Item?.title}</h2>
             <p>{book?.Item?.author || '著者不明'}</p>
             <p>{book?.Item?.size}</p>
           </Box>
