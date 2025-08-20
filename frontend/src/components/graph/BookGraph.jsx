@@ -1,3 +1,4 @@
+import { Box, Button } from '@mui/material';
 import { PieChart } from '@mui/x-charts/PieChart';
 
 
@@ -13,22 +14,37 @@ const BookGraph = ({ bookInfo }) => {
     return acc;
   }, {});
 
+  const legendData = Object.entries(authorCounts);
 
   return (
-    <PieChart
-      series={[
-        {
-          data: Object.entries(authorCounts).map(([label, value], index) => ({
-            id: index,
-            value,
-            label,
-          })),
-          arcLabel: 'value'
-        },
-      ]}
-      width={240}
-      height={240}
-    />
+    <Box>
+      <Button variant="outlined" onClick={() => window.history.back()} >戻る</Button>
+      <PieChart
+        series={[
+          {
+            data: legendData.map(([label, value], index) => ({
+              id: index,
+              value,
+              label,
+            })),
+            arcLabel: 'value',
+            paddingAngle: 2,
+            cornerRadius: 5,
+          },
+        ]}
+        slotProps={{
+          legend: {
+            direction: 'horizontal',
+            position: {
+              vertical: 'top',
+              horizontal: 'center'
+            }
+          }
+        }}
+        width={240}
+        height={240}
+      />
+    </Box >
   );
 };
 

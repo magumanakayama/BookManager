@@ -33,22 +33,18 @@ const BookSearch = ({ handleSubmit }) => {
 
   const navigate = useNavigate();
   const handleSubmitCustom = (book) => {
-    // const mm = String(new Date().getMonth() + 1);
-    // const dd = String(new Date().getDate());
     handleSubmit(() => navigate(`${BASE_URL}/`), { title: book.Item.title, author: book.Item.author || '著者不明', date: new Date(Date.now()).toLocaleDateString(), image: book.Item.largeImageUrl, isbn: book.Item.isbn });
   };
 
 
   return (
     <Box>
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', m: 2, gap: 1 }}>
-        <SearchBox
-          query={query}
-          setQuery={setQuery}
-          handleSearch={handleSearch}
-          loading={loading}
-        />
-      </Box>
+      <SearchBox
+        query={query}
+        setQuery={setQuery}
+        handleSearch={handleSearch}
+        loading={loading}
+      />
       {/* エラー表示 */}
       {error && (
         <Box sx={{ color: 'red', mt: 2 }}>
