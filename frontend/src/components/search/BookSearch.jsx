@@ -33,7 +33,10 @@ const BookSearch = ({ handleSubmit }) => {
 
   const navigate = useNavigate();
   const handleSubmitCustom = (book) => {
-    handleSubmit(() => navigate(`${BASE_URL}/`), { title: book.Item.title, author: book.Item.author || '著者不明', date: new Date(Date.now()).toLocaleDateString(), image: book.Item.largeImageUrl, isbn: book.Item.isbn });
+    const yyyy = String(new Date().getFullYear());
+    const mm = String(new Date().getMonth() + 1);
+    const dd = String(new Date().getDate());
+    handleSubmit(() => navigate(`${BASE_URL}/`), { title: book.Item.title, author: book.Item.author || '著者不明', date: `${yyyy}/${mm}/${dd}`, image: book.Item.largeImageUrl, isbn: book.Item.isbn });
   };
 
 
