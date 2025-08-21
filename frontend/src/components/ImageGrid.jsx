@@ -2,8 +2,9 @@ import { useState } from 'react'
 import { Box, Button, Grid } from '@mui/material';
 import EditModal from './EditModal';
 
-const ImageGrid = ({ bookInfo, setBookInfo, inputBooks, setInputBooks, sort }) => {
+const ImageGrid = ({ bookInfo, setBookInfo, sort }) => {
   const [open, setOpen] = useState(false)
+  const [inputBooks, setInputBooks] = useState({ title: '', author: '', date: '' });
 
   const handleEditOpen = (book) => {
     setOpen(true);
@@ -15,13 +16,14 @@ const ImageGrid = ({ bookInfo, setBookInfo, inputBooks, setInputBooks, sort }) =
     setOpen,
     setBookInfo,
     inputBooks,
-    setInputBooks, // デバックプリセット専用
+    setInputBooks
   };
 
   const sortMethods = {
-    date: [...bookInfo].sort((a, b) => new Date(b.date) - new Date(a.date)),
-    title: [...bookInfo].sort((a, b) => a.title.localeCompare(b.title)),
-    author: [...bookInfo].sort((a, b) => a.author.localeCompare(b.author)),
+    new: [...bookInfo].sort((a, b) => new Date(b.date) - new Date(a.date)),
+    old: [...bookInfo].sort((a, b) => new Date(a.date) - new Date(b.date)),
+    // title: [...bookInfo].sort((a, b) => a.title.localeCompare(b.title)),
+    // author: [...bookInfo].sort((a, b) => a.author.localeCompare(b.author)),
     // 他のソート条件も追加可能
     off: [...bookInfo]
   };

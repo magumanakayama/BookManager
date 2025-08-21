@@ -9,7 +9,7 @@ import ImageGrid from './components/ImageGrid';
 import Header from './components/Header';
 import SortForm from './components/SortForm';
 
-const TopPage = ({ bookInfo, setBookInfo, inputBooks, setInputBooks }) => {
+const TopPage = ({ bookInfo, setBookInfo }) => {
   const [sort, setSort] = useState('off');
 
   // const handlePreset = (books) => {
@@ -20,10 +20,10 @@ const TopPage = ({ bookInfo, setBookInfo, inputBooks, setInputBooks }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Header />
-      <Box sx={{ mt: { xs: 2, sm: 8 } }}>
-        <SortForm sort={sort} setSort={setSort} />
-        <ImageGrid bookInfo={bookInfo} setBookInfo={setBookInfo} inputBooks={inputBooks} setInputBooks={setInputBooks} sort={sort} />
+      <Header sort={sort} setSort={setSort} />
+      <Box sx={{ mt: { xs: 4, sm: 8 } }}>
+        {/* <SortForm sort={sort} setSort={setSort} /> */}
+        <ImageGrid bookInfo={bookInfo} setBookInfo={setBookInfo} sort={sort} />
         {/* <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2, gap: 1 }}>
           <Button variant="contained" onClick={() => handlePreset([])}>全削除</Button>
         </Box> */}

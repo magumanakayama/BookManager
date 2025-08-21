@@ -1,25 +1,27 @@
-import { Button, Box } from '@mui/material'
+import { Button, Stack, ToggleButton, ToggleButtonGroup } from '@mui/material'
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../constant';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
-const Header = () => {
+const Header = ({ sort, setSort }) => {
   const navigate = useNavigate();
   const handleSearch = () => navigate(`${BASE_URL}/BookSearch`);
   const handleGraph = () => navigate(`${BASE_URL}/BookGraph`);
 
+  const control = {
+    value: sort,
+    onChange: (_, newSort) => setSort(newSort),
+    exclusive: true,
+  };
+
   return (
-    <Box sx={{ display: 'flex', position: 'fixed', width: '100%', top: 0, left: 0, zIndex: 1100, backgroundColor: '#555555' }}>
+    <Stack direction="row" sx={{ position: 'fixed', justifyContent: 'space-between', alignItems: 'center', width: '100%', top: 0, left: 0, zIndex: 1100, backgroundColor: '#555555' }}>
       <Button variant="contained" onClick={handleGraph} sx={{ m: 2 }}>グラフ</Button>
-      <Box sx={{ flexGrow: 1 }} />
-      <ToggleButtonGroup>
-        <ToggleButton value="option1">オプション1</ToggleButton>
-        <ToggleButton value="option2">オプション2</ToggleButton>
+      <ToggleButtonGroup size='small' {...control} aria-label="Small sizes" sx={{ bgcolor: '#e0e0e065' }}>
+        <ToggleButton value="new">新しい順</ToggleButton>
+        <ToggleButton value="old">古い順</ToggleButton>
       </ToggleButtonGroup>
-      <Box sx={{ flexGrow: 1 }} />
       <Button variant="contained" onClick={handleSearch} sx={{ m: 2 }}>書籍検索</Button>
-    </Box>
+    </Stack >
   );
 };
 
