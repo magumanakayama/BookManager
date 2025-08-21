@@ -34,9 +34,14 @@ const EditModal = ({ open, setOpen, setBookInfo, inputBooks, setInputBooks }) =>
   const parseDate = (dateStr) => {
     if (!dateStr) return null;
     const [yyyy, mm, dd] = dateStr.split('/');
-    return new Date(Number(yyyy), Number(mm) - 1, Number(dd));
+    // console.log(new Date(Number(yyyy), Number(mm) - 1, Number(dd)));
+    const now = new Date();
+    console.log(new Date(now.getFullYear(), Number(mm) - 1, Number(dd)));
+    // return new Date(Number(yyyy), Number(mm) - 1, Number(dd));
+    return new Date(now.getFullYear(), Number(mm) - 1, Number(dd))
   };
 
+  // console.log(new Date(Date.now()));
 
   return (
     <Modal open={open} onClose={handleClose}>
