@@ -22,9 +22,7 @@ const CustomAlert = ({ alert, setAlert }) => {
   }, [open]);
 
   // exitアニメーションが終わるまでAlertを残す
-  const handleExited = () => {
-    setAlert({ open: false, message: '', severity: '' });
-  };
+  const handleExited = () => setAlert({ open: false, message: '', severity: '' });;
 
 
   return (
