@@ -7,27 +7,23 @@ import { BASE_URL } from './constant';
 import TopPage from './TopPage';
 import BookSearch from './components/search/BookSearch';
 import BookGraph from './components/graph/BookGraph';
+import MockComponent from './MockComponent';
 import theme from './theme'
 import './App.css'
 
 
 function App() {
-
   const [bookInfo, setBookInfo] = useState(JSON.parse(localStorage.getItem('books')) || []);
-
-  const handleSubmit = (handleClose, submitBook) => {
-    localStorage.setItem("books", JSON.stringify([...bookInfo, { title: submitBook.title, author: submitBook.author, date: submitBook.date, image: submitBook.image, isbn: submitBook.isbn }]));
-    setBookInfo(JSON.parse(localStorage.getItem('books')));
-    handleClose();
-  }
+  const [alert, setAlert] = useState({ open: false, message: '', severity: '' });
 
   return (
     <Router>
       <ThemeProvider theme={theme}>
         <Routes>
-          <Route path={`${BASE_URL}/`} element={<TopPage handleSubmit={handleSubmit} bookInfo={bookInfo} setBookInfo={setBookInfo} />} />
-          <Route path={`${BASE_URL}/BookSearch`} element={<BookSearch handleSubmit={handleSubmit} />} />
+          <Route path={`${BASE_URL}/`} element={<TopPage bookInfo={bookInfo} setBookInfo={setBookInfo} alert={alert} setAlert={setAlert} />} />
+          <Route path={`${BASE_URL}/BookSearch`} element={<BookSearch bookInfo={bookInfo} setBookInfo={setBookInfo} setAlert={setAlert} />} />
           <Route path={`${BASE_URL}/BookGraph`} element={<BookGraph bookInfo={bookInfo} />} />
+          <Route path={`${BASE_URL}/Mock`} element={<MockComponent />} />
         </Routes>
       </ThemeProvider>
     </Router>

@@ -24,8 +24,6 @@ const ImageGrid = ({ bookInfo, setBookInfo, sort }) => {
     old: [...bookInfo].sort((a, b) => new Date(a.date) - new Date(b.date)),
     // title: [...bookInfo].sort((a, b) => a.title.localeCompare(b.title)),
     // author: [...bookInfo].sort((a, b) => a.author.localeCompare(b.author)),
-    // 他のソート条件も追加可能
-    off: [...bookInfo]
   };
 
 

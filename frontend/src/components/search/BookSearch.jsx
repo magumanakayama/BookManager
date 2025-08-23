@@ -8,7 +8,7 @@ import SearchBox from './SearchBox';
 
 import { BASE_URL } from '../../constant';
 
-const BookSearch = ({ handleSubmit }) => {
+const BookSearch = ({ bookInfo, setBookInfo, setAlert }) => {
   const [query, setQuery] = useState({ author: '', title: '', });
   const [searchUrl, setSearchUrl] = useState('');
 
@@ -17,6 +17,17 @@ const BookSearch = ({ handleSubmit }) => {
   const [selectedBook, setSelectedBook] = useState(null);
 
   const { data, loading, error } = useFetch(searchUrl);
+
+  const navigate = useNavigate();
+  const handleSubmit = (submitBook) => {
+    const yyyy = String(new Date().getFullYear());
+    const mm = String(new Date().getMonth() + 1);
+    const dd = String(new Date().getDate());
+    localStorage.setItem("books", JSON.stringify([...bookInfo, { title: submitBook.title, author: submitBook.author || '著者不明', date: `${yyyy}/${mm}/${dd}`, image: submitBook.largeImageUrl, isbn: submitBook.isbn }]));
+    setBookInfo(JSON.parse(localStorage.getItem('books')));
+    setAlert({ open: true, message: '登録が完了しました', severity: 'success' });
+    navigate(`${BASE_URL}/`)
+  }
 
   const handleSearch = async () => {
     if (!query.title && !query.author) return;
@@ -30,15 +41,6 @@ const BookSearch = ({ handleSubmit }) => {
     setSelectedBook(book);
     setOpen(true);
   };
-
-  const navigate = useNavigate();
-  const handleSubmitCustom = (book) => {
-    const yyyy = String(new Date().getFullYear());
-    const mm = String(new Date().getMonth() + 1);
-    const dd = String(new Date().getDate());
-    handleSubmit(() => navigate(`${BASE_URL}/`), { title: book.Item.title, author: book.Item.author || '著者不明', date: `${yyyy}/${mm}/${dd}`, image: book.Item.largeImageUrl, isbn: book.Item.isbn });
-  };
-
 
   return (
     <Box>
@@ -72,7 +74,7 @@ const BookSearch = ({ handleSubmit }) => {
                   </CardContent>
                 </CardActionArea>
                 <CardActions sx={{ justifyContent: 'center' }}>
-                  <Button variant="contained" size="small" onClick={() => handleSubmitCustom(book)}>登録</Button>
+                  <Button variant="contained" size="small" onClick={() => handleSubmit(book.Item)}>登録</Button>
                 </CardActions>
               </Card>
               {/* ToDo： サムネが無い場合は適当な画像を入れたい */}
@@ -81,7 +83,7 @@ const BookSearch = ({ handleSubmit }) => {
           ))}
         </Grid>
       </Box>
-      <DetailModal open={open} setOpen={setOpen} book={selectedBook} handleSubmitCustom={handleSubmitCustom} />
+      <DetailModal open={open} setOpen={setOpen} book={selectedBook} handleSubmit={handleSubmit} />
     </Box>
   );
 };
