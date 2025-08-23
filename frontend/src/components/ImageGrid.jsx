@@ -29,7 +29,7 @@ const ImageGrid = ({ bookInfo, setBookInfo, sort }) => {
 
   return (
     <>
-      <Grid container spacing={2} sx={{ width: '100dvw', px: 2 }}>
+      <Grid container spacing={2} sx={{ width: '100dvw', px: 2, pb: 2 }}>
         {(sortMethods[sort]).map(book => (
           <Grid key={book.isbn} size={{ xs: 3, sm: 2, md: 1.5 }} >
             <Button onClick={() => handleEditOpen(book)} sx={{ p: 0, boxShadow: 8 }} >

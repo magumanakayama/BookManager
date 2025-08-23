@@ -10,7 +10,10 @@ const Header = ({ sort, setSort }) => {
 
   const control = {
     value: sort,
-    onChange: (_, newSort) => setSort(newSort),
+    onChange: (_, newValue) => {
+      if (newValue === null) return;
+      setSort(newValue)
+    },
     exclusive: true,
   };
 
