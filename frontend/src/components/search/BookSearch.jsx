@@ -25,7 +25,7 @@ const BookSearch = ({ bookInfo, setBookInfo, setAlert }) => {
     const dd = String(new Date().getDate());
     localStorage.setItem("books", JSON.stringify([...bookInfo, { title: submitBook.title, author: submitBook.author || '著者不明', date: `${yyyy}/${mm}/${dd}`, image: submitBook.largeImageUrl, isbn: submitBook.isbn }]));
     setBookInfo(JSON.parse(localStorage.getItem('books')));
-    setAlert({ open: true, message: '登録が完了しました', severity: 'success' });
+    setAlert({ open: true, message: '書籍情報を登録しました', severity: 'success' });
     navigate(`${BASE_URL}/`)
   }
 

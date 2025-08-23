@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Box, Button, Grid } from '@mui/material';
 import EditModal from './EditModal';
 
-const ImageGrid = ({ bookInfo, setBookInfo, sort }) => {
+const ImageGrid = ({ bookInfo, setBookInfo, sort, setAlert }) => {
   const [open, setOpen] = useState(false)
   const [inputBooks, setInputBooks] = useState({ title: '', author: '', date: '' });
 
@@ -16,7 +16,8 @@ const ImageGrid = ({ bookInfo, setBookInfo, sort }) => {
     setOpen,
     setBookInfo,
     inputBooks,
-    setInputBooks
+    setInputBooks,
+    setAlert
   };
 
   const sortMethods = {
@@ -24,12 +25,14 @@ const ImageGrid = ({ bookInfo, setBookInfo, sort }) => {
     old: [...bookInfo].sort((a, b) => new Date(a.date) - new Date(b.date)),
     // title: [...bookInfo].sort((a, b) => a.title.localeCompare(b.title)),
     // author: [...bookInfo].sort((a, b) => a.author.localeCompare(b.author)),
+    // 他のソート条件も追加可能
+    off: [...bookInfo]
   };
 
 
   return (
     <>
-      <Grid container spacing={2} sx={{ width: '100dvw', px: 2, pb: 2 }}>
+      <Grid container spacing={2} sx={{ width: '100dvw', px: 2 }}>
         {(sortMethods[sort]).map(book => (
           <Grid key={book.isbn} size={{ xs: 3, sm: 2, md: 1.5 }} >
             <Button onClick={() => handleEditOpen(book)} sx={{ p: 0, boxShadow: 8 }} >

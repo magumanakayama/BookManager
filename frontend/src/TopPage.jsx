@@ -11,15 +11,14 @@ import CustomAlert from './components/CustomAlert';
 
 const TopPage = ({ bookInfo, setBookInfo, alert, setAlert }) => {
   const [sort, setSort] = useState("new");
-  const { open, message, severity } = alert;
 
 
   return (
     <ThemeProvider theme={theme}>
       <Header sort={sort} setSort={setSort} />
       <Box sx={{ mt: 10 }}>
-        <ImageGrid bookInfo={bookInfo} setBookInfo={setBookInfo} sort={sort} />
-        <CustomAlert open={open} message={message} severity={severity} setAlert={setAlert} />
+        <ImageGrid bookInfo={bookInfo} setBookInfo={setBookInfo} sort={sort} setAlert={setAlert} />
+        <CustomAlert alert={alert} setAlert={setAlert} />
       </Box>
     </ThemeProvider >
   )

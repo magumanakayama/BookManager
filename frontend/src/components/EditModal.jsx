@@ -3,7 +3,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
-const EditModal = ({ open, setOpen, setBookInfo, inputBooks, setInputBooks }) => {
+const EditModal = ({ open, setOpen, setBookInfo, inputBooks, setInputBooks, setAlert }) => {
   const modalStyle = {
     position: 'absolute',
     top: '50%',
@@ -18,7 +18,17 @@ const EditModal = ({ open, setOpen, setBookInfo, inputBooks, setInputBooks }) =>
   const handleEdit = (mode) => {
     const books = JSON.parse(localStorage.getItem('books')) || [];
     const index = books.findIndex(book => book.isbn === inputBooks.isbn);
-    mode == 'edit' ? books[index] = { ...books[index], ...inputBooks } : books.splice(index, 1);
+    const editFunc = {
+      edit: () => {
+        books[index] = { ...books[index], ...inputBooks };
+        setAlert({ open: true, message: '書籍情報を更新しました', severity: 'success' });
+      },
+      delete: () => {
+        books.splice(index, 1);
+        setAlert({ open: true, message: '書籍情報を削除しました', severity: 'success' });
+      }
+    }
+    editFunc[mode]();
     localStorage.setItem('books', JSON.stringify(books));
     setBookInfo(JSON.parse(localStorage.getItem('books')));
     handleClose();
