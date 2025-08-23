@@ -21,14 +21,14 @@ const TopPage = ({ bookInfo, setBookInfo }) => {
   return (
     <ThemeProvider theme={theme}>
       <Header sort={sort} setSort={setSort} />
-      <Box sx={{ mt: { xs: 4, sm: 8 } }}>
+      <Box sx={{ mt: 10 }}>
         {/* <SortForm sort={sort} setSort={setSort} /> */}
         <ImageGrid bookInfo={bookInfo} setBookInfo={setBookInfo} sort={sort} />
         {/* <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2, gap: 1 }}>
           <Button variant="contained" onClick={() => handlePreset([])}>全削除</Button>
         </Box> */}
       </Box>
-    </ThemeProvider>
+    </ThemeProvider >
   )
 }
 
