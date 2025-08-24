@@ -2,6 +2,7 @@ import { Button, Modal, Box, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { ja } from 'date-fns/locale';
 
 const EditModal = ({ open, setOpen, setBookInfo, inputBooks, setInputBooks, setAlert }) => {
   const modalStyle = {
@@ -56,7 +57,7 @@ const EditModal = ({ open, setOpen, setBookInfo, inputBooks, setInputBooks, setA
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           <TextField label="タイトル" variant="outlined" value={inputBooks.title} onChange={e => handleInput('title', e.target.value)} />
           <TextField label="著者" variant="outlined" value={inputBooks.author} onChange={e => handleInput('author', e.target.value)} />
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ja}>
             <DatePicker
               label="読了日"
               slotProps={{
