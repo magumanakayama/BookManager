@@ -9,7 +9,7 @@ import SearchResultInfo from './SearchResultInfo';
 
 import { BASE_URL } from '../../constant';
 
-const BookSearch = ({ bookInfo, setBookInfo, setAlert }) => {
+const BookSearch = ({ handleSubmit }) => {
   const [query, setQuery] = useState({ author: '', title: '', });
   const [searchUrl, setSearchUrl] = useState('');
   const [page, setPage] = useState(1);
@@ -22,16 +22,19 @@ const BookSearch = ({ bookInfo, setBookInfo, setAlert }) => {
   const pageCount = data?.pageCount || 0;
 
   const navigate = useNavigate();
-  const handleSubmit = (submitBook) => {
-    const yyyy = String(new Date().getFullYear());
-    const mm = String(new Date().getMonth() + 1);
-    const dd = String(new Date().getDate());
-    localStorage.setItem("books", JSON.stringify([...bookInfo, { title: submitBook.title, author: submitBook.author || '著者不明', date: `${yyyy}/${mm}/${dd}`, image: submitBook.largeImageUrl, isbn: submitBook.isbn }]));
-    setBookInfo(JSON.parse(localStorage.getItem('books')));
-    setAlert({ open: true, message: '書籍情報を登録しました', severity: 'success' });
+  // const handleSubmit = (submitBook) => {
+  //   const yyyy = String(new Date().getFullYear());
+  //   const mm = String(new Date().getMonth() + 1);
+  //   const dd = String(new Date().getDate());
+  //   localStorage.setItem("books", JSON.stringify([...bookInfo, { title: submitBook.title, author: submitBook.author || '著者不明', date: `${yyyy}/${mm}/${dd}`, image: submitBook.largeImageUrl, isbn: submitBook.isbn }]));
+  //   setBookInfo(JSON.parse(localStorage.getItem('books')));
+  //   setAlert({ open: true, message: '書籍情報を登録しました', severity: 'success' });
+  //   navigate(`${BASE_URL}/`)
+  // }
+  const handleSubmitCustom = (submitBook) => {
+    handleSubmit(submitBook);
     navigate(`${BASE_URL}/`)
-  }
-
+  };
 
   const handleSearch = () => {
     if (!query.title && !query.author) return;
@@ -75,7 +78,7 @@ const BookSearch = ({ bookInfo, setBookInfo, setAlert }) => {
                 </CardContent>
               </CardActionArea>
               <CardActions sx={{ justifyContent: 'center' }}>
-                <Button variant="contained" size="small" onClick={() => handleSubmit(book.Item)}>登録</Button>
+                <Button variant="contained" size="small" onClick={() => handleSubmitCustom(book.Item)}>登録</Button>
               </CardActions>
             </Card>
             {/* ToDo： サムネが無い場合は適当な画像を入れたい */}

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import '@testing-library/jest-dom';
-import EditModal from './EditModal';
+import ControlModal from './ControlModal';
 import { render } from '@testing-library/react';
 
 const renderModal = (open, inputBooks) => {
@@ -9,7 +9,7 @@ const renderModal = (open, inputBooks) => {
   const setInputBooks = vi.fn();
 
   const result = render(
-    <EditModal
+    <ControlModal
       open={open}
       setOpen={setOpen}
       inputBooks={inputBooks}
@@ -22,7 +22,7 @@ const renderModal = (open, inputBooks) => {
 };
 
 
-describe('EditModal Component', () => {
+describe('ControlModal Component', () => {
   it('モーダルが閉じているときは入力欄が表示されない', () => {
     const inputBooks = { title: '', author: '', date: '' };
     const { result } = renderModal(false, inputBooks);

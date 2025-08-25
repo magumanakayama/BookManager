@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Box, Button, Grid } from '@mui/material';
-import EditModal from './EditModal';
+import ControlModal from './ControlModal';
 
 const ImageGrid = ({ bookInfo, setBookInfo, sort, setAlert }) => {
   const [open, setOpen] = useState(false)
@@ -12,6 +12,7 @@ const ImageGrid = ({ bookInfo, setBookInfo, sort, setAlert }) => {
   };
 
   const modalProps = {
+    modalMode: "edit",
     open,
     setOpen,
     setBookInfo,
@@ -20,7 +21,7 @@ const ImageGrid = ({ bookInfo, setBookInfo, sort, setAlert }) => {
     setAlert
   };
 
-  const sortMethods = {
+  const sortedList = {
     new: [...bookInfo].sort((a, b) => new Date(b.date) - new Date(a.date)),
     old: [...bookInfo].sort((a, b) => new Date(a.date) - new Date(b.date)),
     // title: [...bookInfo].sort((a, b) => a.title.localeCompare(b.title)),
@@ -29,11 +30,10 @@ const ImageGrid = ({ bookInfo, setBookInfo, sort, setAlert }) => {
     off: [...bookInfo]
   };
 
-
   return (
     <>
       <Grid container spacing={2} sx={{ width: '100dvw', px: 2 }}>
-        {(sortMethods[sort]).map(book => (
+        {(sortedList[sort]).map(book => (
           <Grid key={book.isbn} size={{ xs: 3, sm: 2, md: 1.5 }} >
             <Button onClick={() => handleEditOpen(book)} sx={{ p: 0, boxShadow: 8 }} >
               <img src={book.image} alt={book.title} style={{ display: 'block', width: '100%' }} />
@@ -41,7 +41,7 @@ const ImageGrid = ({ bookInfo, setBookInfo, sort, setAlert }) => {
           </Grid>
         ))}
       </Grid >
-      <EditModal {...modalProps} />
+      <ControlModal {...modalProps} />
     </>
   )
 }
