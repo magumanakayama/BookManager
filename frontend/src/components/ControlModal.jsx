@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Button, Modal, Box } from '@mui/material';
 import BaseModalParts from './BaseModalParts'
 import generateTodayString from '../generateTodayString';
@@ -46,14 +47,15 @@ const ControlModal = ({ modalMode, open, setOpen, setBookInfo = () => { }, input
     setInputBooks({ title: '', author: '', date: '' });
   };
 
-  const submitInputBooks = modalMode === "submit" ? { ...inputBooks, date: generateTodayString() } : inputBooks;
-
+  useEffect(() => {
+    modalMode === "submit" && setInputBooks({ ...inputBooks, date: generateTodayString() });
+  }, [modalMode]);
 
   return (
     <Modal open={open} onClose={handleClose}>
       <Box sx={modalStyle}>
         <img src={inputBooks.image} alt={inputBooks.title} style={{ paddingBottom: 16 }} />
-        <BaseModalParts inputBooks={submitInputBooks} setInputBooks={setInputBooks} />
+        <BaseModalParts inputBooks={inputBooks} setInputBooks={setInputBooks} />
         <Box sx={{ display: 'flex', mt: 2, gap: 1 }}>
           {modalMode === "edit" && <Button variant="contained" color="error" onClick={() => handleEdit("delete")}>削除</Button>}
           <Box sx={{ flexGrow: 1 }} />
