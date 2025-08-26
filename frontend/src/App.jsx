@@ -18,7 +18,7 @@ function App() {
   const [alert, setAlert] = useState({ open: false, message: '', severity: '' });
 
   const handleSubmit = (submitBook) => {
-    localStorage.setItem("books", JSON.stringify([...bookInfo, { title: submitBook.title, author: submitBook.author || '著者不明', date: generateTodayString(), image: submitBook.largeImageUrl, isbn: submitBook.isbn }]));
+    localStorage.setItem("books", JSON.stringify([...bookInfo, { title: submitBook.title, author: submitBook.author || '著者不明', date: submitBook.date || generateTodayString(), image: submitBook.largeImageUrl, isbn: submitBook.isbn }]));
     setBookInfo(JSON.parse(localStorage.getItem('books')));
     setAlert({ open: true, message: '書籍情報を登録しました', severity: 'success' });
   }

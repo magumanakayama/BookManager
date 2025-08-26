@@ -49,7 +49,7 @@ const ControlModal = ({ modalMode, open, setOpen, setBookInfo = () => { }, input
 
   useEffect(() => {
     modalMode === "submit" && setInputBooks({ ...inputBooks, date: generateTodayString() });
-  }, [modalMode]);
+  }, [open]);
 
   return (
     <Modal open={open} onClose={handleClose}>
