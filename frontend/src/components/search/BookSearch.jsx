@@ -22,15 +22,6 @@ const BookSearch = ({ handleSubmit }) => {
   const pageCount = data?.pageCount || 0;
 
   const navigate = useNavigate();
-  // const handleSubmit = (submitBook) => {
-  //   const yyyy = String(new Date().getFullYear());
-  //   const mm = String(new Date().getMonth() + 1);
-  //   const dd = String(new Date().getDate());
-  //   localStorage.setItem("books", JSON.stringify([...bookInfo, { title: submitBook.title, author: submitBook.author || '著者不明', date: `${yyyy}/${mm}/${dd}`, image: submitBook.largeImageUrl, isbn: submitBook.isbn }]));
-  //   setBookInfo(JSON.parse(localStorage.getItem('books')));
-  //   setAlert({ open: true, message: '書籍情報を登録しました', severity: 'success' });
-  //   navigate(`${BASE_URL}/`)
-  // }
   const handleSubmitCustom = (submitBook) => {
     handleSubmit(submitBook);
     navigate(`${BASE_URL}/`)
