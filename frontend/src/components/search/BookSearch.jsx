@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Box, Button, Grid, Pagination } from '@mui/material';
+import { Button, Grid, Pagination } from '@mui/material';
 import { Card, CardContent, CardMedia, CardActions, CardActionArea } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useFetch } from '../useFetch';

@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { Box, Button, Grid } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import ControlModal from './ControlModal';
+import { BOOK_SHADOW } from '../constant';
 
 const ImageGrid = ({ bookInfo, setBookInfo, sort, setAlert }) => {
   const [open, setOpen] = useState(false)
@@ -35,7 +36,7 @@ const ImageGrid = ({ bookInfo, setBookInfo, sort, setAlert }) => {
       <Grid container spacing={2} sx={{ width: '100dvw', px: 2 }}>
         {(sortedList[sort]).map(book => (
           <Grid key={book.isbn} size={{ xs: 3, sm: 2, md: 1.5 }} >
-            <Button onClick={() => handleEditOpen(book)} sx={{ p: 0, boxShadow: 8 }} >
+            <Button onClick={() => handleEditOpen(book)} sx={{ p: 0, boxShadow: BOOK_SHADOW }} >
               <img src={book.image} alt={book.title} style={{ display: 'block', width: '100%' }} />
             </Button>
           </Grid>

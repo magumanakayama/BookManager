@@ -6,17 +6,11 @@ import AuthorList from './AuthorList';
 const BookGraph = ({ bookInfo }) => {
   const MAX_DISPLAY = 5;
 
-  const authorFormattedBookList = bookInfo.map((book) => {
-    const formattedAuthor = book.author.replace(/\s+/g, '');
-    return { ...book, author: formattedAuthor };
-  });
-
+  const authorFormattedBookList = bookInfo.map((book) => ({ ...book, author: book.author.replace(/\s+/g, '') }));
   const authorCounts = authorFormattedBookList.reduce((acc, book) => {
     acc[book.author] = (acc[book.author] || 0) + 1;
     return acc;
   }, {});
-
-
   const sortedAuthors = Object.entries(authorCounts).sort((a, b) => b[1] - a[1]);
   const tmp = {
     top5: sortedAuthors.slice(0, MAX_DISPLAY),
