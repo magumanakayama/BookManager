@@ -1,26 +1,23 @@
+import { useState } from 'react';
 import { Box, Button } from '@mui/material';
 import { PieChart } from '@mui/x-charts/PieChart';
 import AuthorList from './AuthorList';
+import HeaderLayout from '../HeaderLayout';
+import GraphHeader from './GraphHeader';
+import listFormatter from './listFormatter';
 
 
 const BookGraph = ({ bookInfo }) => {
   const MAX_DISPLAY = 5;
-
-  const authorFormattedBookList = bookInfo.map((book) => ({ ...book, author: book.author.replace(/\s+/g, '') }));
-  const authorCounts = authorFormattedBookList.reduce((acc, book) => {
-    acc[book.author] = (acc[book.author] || 0) + 1;
-    return acc;
-  }, {});
-  const sortedAuthors = Object.entries(authorCounts).sort((a, b) => b[1] - a[1]);
-  const tmp = {
-    top5: sortedAuthors.slice(0, MAX_DISPLAY),
-    others: sortedAuthors.length > MAX_DISPLAY ? ['その他', sortedAuthors.slice(MAX_DISPLAY).reduce((sum, [, count]) => sum + count, 0)] : [],
-  };
-  const legendData = [...tmp.top5, tmp.others];
+  const [graphMode, setGraphMode] = useState("author");
+  const { sortedAuthors, legendData } = listFormatter(bookInfo, MAX_DISPLAY);
 
 
   return (
     <Box>
+      <HeaderLayout>
+        <GraphHeader graphMode={graphMode} setGraphMode={setGraphMode} />
+      </HeaderLayout>
       <Button variant="outlined" onClick={() => window.history.back()} >戻る</Button>
       <PieChart
         series={[

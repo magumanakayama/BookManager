@@ -4,10 +4,11 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme'
 import './App.css'
 
-import ImageGrid from './components/ImageGrid';
-import Header from './components/Header';
+import ImageGrid from './components/top/ImageGrid';
+import HeaderLayout from './components/HeaderLayout';
+import TopHeader from './components/top/TopHeader';
 import CustomAlert from './components/CustomAlert';
-import ControlModal from './components/ControlModal'
+import ControlModal from './components/top/ControlModal'
 import SpeedDialButtons from './components/SpeedDialButtons';
 
 
@@ -19,14 +20,16 @@ const TopPage = ({ bookInfo, setBookInfo, alert, setAlert, handleSubmit }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Header sort={sort} setSort={setSort} setOpen={setOpen} />
-      <Box sx={{ mt: 10, mb: 2 }}>
+      <HeaderLayout>
+        <TopHeader sort={sort} setSort={setSort} setOpen={setOpen} />
+      </HeaderLayout>
+      <Box sx={{ mb: 2 }}>
         <ImageGrid bookInfo={bookInfo} setBookInfo={setBookInfo} sort={sort} setAlert={setAlert} />
         <CustomAlert alert={alert} setAlert={setAlert} />
         <ControlModal modalMode={"submit"} open={open} setOpen={setOpen} inputBooks={inputBooks} setInputBooks={setInputBooks} handleSubmit={handleSubmit} />
         <SpeedDialButtons setOpen={setOpen} />
       </Box>
-    </ThemeProvider>
+    </ThemeProvider >
   )
 }
 

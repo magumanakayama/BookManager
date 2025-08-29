@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Button, Grid } from '@mui/material';
 import ControlModal from './ControlModal';
-import { BOOK_SHADOW } from '../constant';
+import { BOOK_SHADOW } from '../../constant';
 
 const ImageGrid = ({ bookInfo, setBookInfo, sort, setAlert }) => {
   const [open, setOpen] = useState(false)
