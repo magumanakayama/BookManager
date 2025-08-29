@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Button, Modal, Box } from '@mui/material';
 import BaseModalParts from './BaseModalParts'
-import generateTodayString from '../generateTodayString';
+import generateTodayString from '../../generateTodayString';
 
 const ControlModal = ({ modalMode, open, setOpen, setBookInfo = () => { }, inputBooks, setInputBooks, setAlert = () => { }, handleSubmit = () => { } }) => {
   const modalStyle = {
@@ -40,7 +40,6 @@ const ControlModal = ({ modalMode, open, setOpen, setBookInfo = () => { }, input
     handleSubmit({ ...inputBooks, largeImageUrl: dummyImage, isbn: randomIsbn });
     handleClose();
   };
-
 
   const handleClose = () => {
     setOpen(false);
