@@ -82,7 +82,7 @@ const BookSearch = ({ handleSubmit }) => {
           </Grid>
         ))}
       </Grid>
-      {(data?.Items?.length > 0) && <Pagination sx={{ display: "flex", justifyContent: 'center', my: 2 }} count={pageCount} color="primary" onChange={(event, value) => handlePageChange(event, value)} />}
+      {(data?.Items?.length > 0) && <Pagination sx={{ display: "flex", justifyContent: 'center', mt: 2, mb: 6 }} count={pageCount} color="primary" onChange={(event, value) => handlePageChange(event, value)} />}
       <SearchResultInfo data={data} loading={loading} error={error} />
       <DetailModal open={open} setOpen={setOpen} book={selectedBook} handleSubmit={handleSubmit} />
     </>
