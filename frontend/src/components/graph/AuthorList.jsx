@@ -47,7 +47,7 @@ const AuthorList = ({ bookInfo, sortedAuthors }) => {
           </React.Fragment>
         ))}
       </List>
-      <AuthorModal open={open} setOpen={setOpen} selectedAuthor={selectedAuthor} setSelectedAuthor={setSelectedAuthor} bookInfo={bookInfo} />
+      <AuthorModal open={open} setOpen={setOpen} blurProps={blurProps} selectedAuthor={selectedAuthor} setSelectedAuthor={setSelectedAuthor} bookInfo={bookInfo} />
     </>
   );
 };
