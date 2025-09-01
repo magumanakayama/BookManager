@@ -41,8 +41,13 @@ const BookSearch = ({ handleSubmit }) => {
     setOpen(true);
   };
 
-  const handlePageChange = (event, value) => setPage(value);
+  const handlePageChange = (event, value) => {
+    setPage(value);
+    window.scrollTo({ top: 0, behavior: 'auto' }); // ページの一番上までスクロール
+  };
+
   useEffect(() => handleSearch(), [page]);
+
 
   return (
     <>
