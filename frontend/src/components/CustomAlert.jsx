@@ -9,6 +9,7 @@ const ALERT_VALUE = {
 
 const CustomAlert = ({ alert, setAlert }) => {
   const { open, message, severity } = alert;
+
   // openだけだと2秒後のopen=false時に再レンダリングが走るので、フェードアウトする前にコンポーネント全体が再レンダリングされてしまう
   // よってステートを分けることでアラートの表示(showAlert)とコンポーネント全体のレンダリング判定(open)を別にする
   const [showAlert, setShowAlert] = useState(false);

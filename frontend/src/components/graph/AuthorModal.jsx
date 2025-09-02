@@ -1,5 +1,5 @@
 import { Box, Button, Modal, List, ListItem, ListItemText } from '@mui/material';
-import listFormatter from './listFormatter';
+import listFormatter from './listFormatterPie';
 import { useRef, useLayoutEffect, useState } from 'react';
 
 

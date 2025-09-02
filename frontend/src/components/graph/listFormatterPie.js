@@ -1,4 +1,4 @@
-const listFormatter = (bookInfo, MAX_DISPLAY = 5) => {
+const listFormatterPie = (bookInfo, MAX_DISPLAY = 5) => {
     // Authorの空白を削除して集計
     const authorFormattedBookList = bookInfo.map((book) => ({ ...book, author: book.author.replace(/\s+/g, '') }));
 
@@ -23,4 +23,4 @@ const listFormatter = (bookInfo, MAX_DISPLAY = 5) => {
     return { authorFormattedBookList, sortedAuthors, legendData };
 };
 
-export default listFormatter;
+export default listFormatterPie;

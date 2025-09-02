@@ -46,6 +46,8 @@ const BookSearch = ({ handleSubmit }) => {
     window.scrollTo({ top: 0, behavior: 'auto' }); // ページの一番上までスクロール
   };
 
+  // ステートの更新は非同期なのでhandlePageChangeの中でhandlesearchしても前のページが参照されうまくいかない
+  // よってuseEffectが必須となる
   useEffect(() => handleSearch(), [page]);
 
 

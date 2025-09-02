@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
 import { Button, Modal, Box } from '@mui/material';
 import BaseModalParts from './BaseModalParts'
-import generateTodayString from '../../generateTodayString';
+
 
 const ControlModal = ({ modalMode, open, setOpen, setBookInfo = () => { }, inputBooks, setInputBooks, setAlert = () => { }, handleSubmit = () => { } }) => {
   const modalStyle = {
@@ -46,9 +45,6 @@ const ControlModal = ({ modalMode, open, setOpen, setBookInfo = () => { }, input
     setInputBooks({ title: '', author: '', date: '' });
   };
 
-  useEffect(() => {
-    modalMode === "submit" && setInputBooks({ ...inputBooks, date: generateTodayString() });
-  }, [open]);
 
   return (
     <Modal open={open} onClose={handleClose}>

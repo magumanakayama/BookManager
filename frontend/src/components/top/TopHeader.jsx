@@ -1,6 +1,5 @@
 import { ToggleButton, ToggleButtonGroup } from '@mui/material'
 
-
 const TopHeader = ({ sort, setSort, }) => {
   const control = {
     value: sort,
@@ -17,6 +16,7 @@ const TopHeader = ({ sort, setSort, }) => {
   ];
 
   return (
+    // ToggleButtonGroupのvalueを持つToggleButtonが選択されるような仕組みにもともとなっている
     <ToggleButtonGroup size='small' {...control} aria-label="Small sizes" sx={{ bgcolor: '#e0e0e0b9' }}>
       {toggleList.map(({ value, label }) => <ToggleButton key={value} value={value} sx={{ width: 80 }}>{label}</ToggleButton>)}
     </ToggleButtonGroup>

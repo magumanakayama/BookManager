@@ -27,7 +27,7 @@ const TopPage = ({ bookInfo, setBookInfo, alert, setAlert, handleSubmit }) => {
         <ImageGrid bookInfo={bookInfo} setBookInfo={setBookInfo} sort={sort} setAlert={setAlert} />
         <CustomAlert alert={alert} setAlert={setAlert} />
         <ControlModal modalMode={"submit"} open={open} setOpen={setOpen} inputBooks={inputBooks} setInputBooks={setInputBooks} handleSubmit={handleSubmit} />
-        <SpeedDialButtons setOpen={setOpen} />
+        <SpeedDialButtons setOpen={setOpen} setInputBooks={setInputBooks} />
       </Box>
     </ThemeProvider >
   )

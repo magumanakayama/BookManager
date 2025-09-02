@@ -1,19 +1,20 @@
 import { ToggleButton, ToggleButtonGroup } from '@mui/material'
 
 
-const GraphHeader = ({ sort, setSort }) => {
+const GraphHeader = ({ graphMode, setGraphMode }) => {
   const control = {
-    value: sort,
+    // 選択している値
+    value: graphMode,
     onChange: (_, newValue) => {
       if (newValue === null) return;
-      setSort(newValue)
+      setGraphMode(newValue)
     },
     exclusive: true,
   };
 
   const toggleList = [
     { value: 'author', label: '著者' },
-    { value: 'yearly', label: '年次' },
+    { value: 'monthly', label: '月次' },
   ];
 
   return (
