@@ -20,9 +20,22 @@ const listFormatterBar = (bookInfo) => {
   }, {});
 
   // 年ごとのリストを作成
-  const yearlyList = Object.entries(yearlyCounts).map(([year, count]) => ({ year, count }));
+  const yearlyList = Object.entries(yearlyCounts).map(([year, count]) => ({ year: Number(year), count }));
 
-  return { monthlyList, yearlyList };
+  const monthlyListByYear = bookInfo.reduce((acc, book) => {
+    const year2 = new Date(book.date).getFullYear();
+    const month2 = new Date(book.date).getMonth() + 1;
+    acc[year2] = acc[year2] || {};
+    acc[year2][month2] = (acc[year2][month2] || 0) + 1;
+    return acc;
+  }, {});
+
+  const monthlyCountByYear = Object.entries(monthlyListByYear).map(([year, months]) => ({
+    year: Number(year),
+    months: Object.entries(months).map(([month, count]) => ({ month, count })),
+  }));
+
+  return { monthlyList, yearlyList, monthlyCountByYear };
 }
 
 export default listFormatterBar;

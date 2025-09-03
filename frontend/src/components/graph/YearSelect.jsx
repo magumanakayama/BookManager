@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Box, InputLabel, MenuItem, FormControl, Select } from '@mui/material';
 
 const YearSelect = ({ yearlyList, year, setYear }) => {
