@@ -8,14 +8,19 @@ import AuthorList from './AuthorList';
 import listFormatterPie from './listFormatterPie';
 
 import MonthlyGraph from './MonthlyGraph';
+import MonthlyList from './MonthlyList';
+import YearSelect from './YearSelect.jsx';
 import listFormatterBar from './listFormatterBar';
 
 
 const BookGraph = ({ bookInfo }) => {
   const MAX_DISPLAY = 5;
   const [graphMode, setGraphMode] = useState("author");
+  // yearステートは移動予定
+  const [year, setYear] = useState(new Date().getFullYear());
+
   const { sortedAuthors, legendData } = listFormatterPie(bookInfo, MAX_DISPLAY);
-  const { monthlyList } = listFormatterBar(bookInfo);
+  const { monthlyList, yearlyList } = listFormatterBar(bookInfo);
 
 
   return (
@@ -23,14 +28,20 @@ const BookGraph = ({ bookInfo }) => {
       <HeaderLayout>
         <GraphHeader graphMode={graphMode} setGraphMode={setGraphMode} />
       </HeaderLayout>
-      <Button variant="outlined" onClick={() => window.history.back()} >戻る</Button>
+      {/* <Button variant="outlined" onClick={() => window.history.back()} >戻る</Button> */}
       {graphMode === "author" &&
         <>
           <AuthorGraph legendData={legendData} />
           <AuthorList bookInfo={bookInfo} sortedAuthors={sortedAuthors} />
         </>
       }
-      {graphMode === "monthly" && <MonthlyGraph monthlyList={monthlyList} />}
+      {graphMode === "monthly" &&
+        <>
+          <YearSelect yearlyList={yearlyList} year={year} setYear={setYear} />
+          <MonthlyGraph monthlyList={monthlyList} />
+          <MonthlyList monthlyList={monthlyList} />
+        </>
+      }
     </Box >
   );
 };

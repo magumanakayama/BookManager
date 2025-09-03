@@ -12,7 +12,17 @@ const listFormatterBar = (bookInfo) => {
     return { month, count: monthlyCounts[month] || 0 };
   });
 
-  return { monthlyList };
+  // 年ごとに本の数をカウント
+  const yearlyCounts = bookInfo.reduce((acc, book) => {
+    const year = new Date(book.date).getFullYear();
+    acc[year] = (acc[year] || 0) + 1;
+    return acc;
+  }, {});
+
+  // 年ごとのリストを作成
+  const yearlyList = Object.entries(yearlyCounts).map(([year, count]) => ({ year, count }));
+
+  return { monthlyList, yearlyList };
 }
 
 export default listFormatterBar;

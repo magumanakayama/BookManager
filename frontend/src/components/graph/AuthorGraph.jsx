@@ -25,7 +25,7 @@ const AuthorGraph = ({ legendData }) => {
           }
         }
       }}
-      width={240}
+      // width={240}
       height={240}
     />
   );
