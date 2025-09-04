@@ -18,16 +18,13 @@ const BookGraph = ({ bookInfo }) => {
   const [graphMode, setGraphMode] = useState("author");
   // yearステートは移動予定
   const [year, setYear] = useState(new Date().getFullYear());
-  console.log(year); // yearの型と値を確認
 
   const { sortedAuthors, legendData } = listFormatterPie(bookInfo, MAX_DISPLAY);
-  const { monthlyList, yearlyList, monthlyCountByYear } = listFormatterBar(bookInfo);
-
-  console.log(monthlyCountByYear.find(item => item.year === year)['months']);
+  const { totalCount, yearlyList, monthlyListByYearZeroPlum } = listFormatterBar(bookInfo);
 
 
   return (
-    <Box>
+    <Box sx={{ maxWidth: 600 }}>
       <HeaderLayout>
         <GraphHeader graphMode={graphMode} setGraphMode={setGraphMode} />
       </HeaderLayout>
@@ -41,8 +38,8 @@ const BookGraph = ({ bookInfo }) => {
       {graphMode === "monthly" &&
         <>
           <YearSelect yearlyList={yearlyList} year={year} setYear={setYear} />
-          <MonthlyGraph monthlyList={monthlyCountByYear.find(item => item.year === year)['months']} />
-          <MonthlyList monthlyList={monthlyList} />
+          <MonthlyGraph monthlyList={monthlyListByYearZeroPlum.find(item => item.year === year)['months']} />
+          <MonthlyList totalCount={totalCount} thisYearMonthlyList={monthlyListByYearZeroPlum.find(item => item.year === new Date().getFullYear())['months']} />
         </>
       }
     </Box >

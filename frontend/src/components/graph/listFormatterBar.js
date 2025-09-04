@@ -1,16 +1,18 @@
 const listFormatterBar = (bookInfo) => {
-  // 月ごとに本の数をカウント
-  const monthlyCounts = bookInfo.reduce((acc, book) => {
-    const month = new Date(book.date).getMonth() + 1;
-    acc[month] = (acc[month] || 0) + 1;
-    return acc;
-  }, {});
+  const totalCount = bookInfo.length;
 
-  // 月ごとのリストを作成
-  const monthlyList = Array.from({ length: 12 }, (_, i) => {
-    const month = (i + 1).toString();
-    return { month, count: monthlyCounts[month] || 0 };
-  });
+  // // 月ごとに本の数をカウント
+  // const monthlyCounts = bookInfo.reduce((acc, book) => {
+  //   const month = new Date(book.date).getMonth() + 1;
+  //   acc[month] = (acc[month] || 0) + 1;
+  //   return acc;
+  // }, {});
+
+  // // 月ごとのリストを作成
+  // const monthlyList = Array.from({ length: 12 }, (_, i) => {
+  //   const month = (i + 1).toString();
+  //   return { month, count: monthlyCounts[month] || 0 };
+  // });
 
   // 年ごとに本の数をカウント
   const yearlyCounts = bookInfo.reduce((acc, book) => {
@@ -35,7 +37,15 @@ const listFormatterBar = (bookInfo) => {
     months: Object.entries(months).map(([month, count]) => ({ month, count })),
   }));
 
-  return { monthlyList, yearlyList, monthlyCountByYear };
+  const monthlyListByYearZeroPlum = monthlyCountByYear.map(({ year, months }) => {
+    const monthCounts = Array.from({ length: 12 }, (_, i) => {
+      const month3 = (i + 1).toString();
+      return { month: month3, count: months.find(m => m.month === month3)?.count || 0 };
+    });
+    return { year, months: monthCounts };
+  });
+
+  return { totalCount, yearlyList, monthlyListByYearZeroPlum };
 }
 
 export default listFormatterBar;

@@ -1,20 +1,29 @@
-import { Box, List, ListItem, ListItemText, Typography } from '@mui/material';
-import React from 'react';
+import { List, ListItem, Typography, Divider } from '@mui/material';
 
-const MonthlyList = ({ monthlyList }) => {
-  const annualCount = monthlyList.reduce((acc, { count }) => acc + count, 0);
-  const currentMonthCount = monthlyList[new Date().getMonth()].count;
+const MonthlyList = ({ totalCount, thisYearMonthlyList }) => {
+  const annualCount = thisYearMonthlyList.reduce((acc, { count }) => acc + count, 0);
+  const currentMonthCount = thisYearMonthlyList[new Date().getMonth()].count;
+
+  const infoList = [
+    { label: "累計", value: totalCount },
+    { label: "今年", value: annualCount },
+    { label: "今月", value: currentMonthCount }
+  ];
 
   return (
     <List>
-      <ListItem sx={{ display: 'flex', justifyContent: 'space-between', overflow: 'hidden', mx: 2 }}>
-        <Typography variant="body1">ことし</Typography>
-        <Typography variant="body1">{annualCount}冊</Typography>
-      </ListItem>
-      <ListItem sx={{ display: 'flex', justifyContent: 'space-between', overflow: 'hidden', mx: 2 }}>
-        <Typography variant="body1">こんげつ</Typography>
-        <Typography variant="body1">{currentMonthCount}冊</Typography>
-      </ListItem>
+      <Divider />
+      {infoList.map(({ label, value }) => {
+        return (
+          <>
+            <ListItem sx={{ display: 'flex', justifyContent: 'space-between', overflow: 'hidden' }} key={label}>
+              <Typography variant="body1" sx={{ color: '#000' }}>{label}</Typography>
+              <Typography variant="body1" sx={{ color: '#000' }}>{value}冊</Typography>
+            </ListItem>
+            <Divider />
+          </>
+        );
+      })}
     </List>
   );
 };
