@@ -10,11 +10,13 @@ import TopHeader from './components/top/TopHeader';
 import CustomAlert from './components/CustomAlert';
 import ControlModal from './components/top/ControlModal'
 import SpeedDialButtons from './components/SpeedDialButtons';
+import CSVModal from './components/top/CSVModal';
 
 
 const TopPage = ({ bookInfo, setBookInfo, alert, setAlert, handleSubmit }) => {
   const [sort, setSort] = useState("new");
   const [open, setOpen] = useState(false);
+  const [CSVopen, setCSVOpen] = useState(false);
   const [inputBooks, setInputBooks] = useState({ title: '', author: '', date: '' });
 
 
@@ -27,7 +29,8 @@ const TopPage = ({ bookInfo, setBookInfo, alert, setAlert, handleSubmit }) => {
         <ImageGrid bookInfo={bookInfo} setBookInfo={setBookInfo} sort={sort} setAlert={setAlert} />
         <CustomAlert alert={alert} setAlert={setAlert} />
         <ControlModal modalMode={"submit"} open={open} setOpen={setOpen} inputBooks={inputBooks} setInputBooks={setInputBooks} handleSubmit={handleSubmit} />
-        <SpeedDialButtons setOpen={setOpen} setInputBooks={setInputBooks} />
+        <CSVModal open={CSVopen} setOpen={setCSVOpen} bookInfo={bookInfo} />
+        <SpeedDialButtons setOpen={setOpen} setCSVOpen={setCSVOpen} setInputBooks={setInputBooks} />
       </Box>
     </ThemeProvider >
   )
