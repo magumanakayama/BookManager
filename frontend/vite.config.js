@@ -18,12 +18,12 @@ export default defineConfig({
         theme_color: '#ffffff',
         icons: [
           {
-            src: 'assets/192_sample_img.png',
+            src: 'assets/icon_192.png',
             sizes: '192x192',
             type: 'image/png'
           },
           {
-            src: 'assets/512_sample_img.png',
+            src: 'assets/icon_512.png',
             sizes: '512x512',
             type: 'image/png'
           }
