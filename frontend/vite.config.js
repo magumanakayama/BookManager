@@ -1,9 +1,36 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { VitePWA } from 'vite-plugin-pwa';
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      devOptions: {
+        enabled: true
+      },
+      manifest: {
+        name: 'Book Manager PWA',
+        short_name: 'Book Manager',
+        description: 'A PWA for managing your book collection',
+        theme_color: '#ffffff',
+        icons: [
+          {
+            src: 'assets/192_sample_img.png',
+            sizes: '192x192',
+            type: 'image/png'
+          },
+          {
+            src: 'assets/512_sample_img.png',
+            sizes: '512x512',
+            type: 'image/png'
+          }
+        ]
+      }
+    })
+  ],
   server: {
     host: '0.0.0.0',
     port: 3000
