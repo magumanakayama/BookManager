@@ -1,9 +1,9 @@
 import { Box, Button, Stack, Modal } from '@mui/material';
 import { FileDownload, FileUpload } from '@mui/icons-material';
 import { useRef } from 'react';
-import MODAL_STYLE from '../../constant';
+import { MODAL_STYLE } from '../../constant';
 
-const CSVModal = ({ open, setOpen, bookInfo, setBookInfo, setAlert }) => {
+const CSVModal = ({ CSVopen, setCSVOpen, bookInfo, setBookInfo, setAlert }) => {
   const anchorRef = useRef(null);
   const fileInputRef = useRef(null);
 
@@ -12,6 +12,7 @@ const CSVModal = ({ open, setOpen, bookInfo, setBookInfo, setAlert }) => {
     localStorage.setItem("books", JSON.stringify(importBook));
     setBookInfo(JSON.parse(localStorage.getItem('books')));
     setAlert({ open: true, message: '書籍情報を登録しました', severity: 'success' });
+    setCSVOpen(false);
   }
 
   const convertToCSV = () => {
@@ -58,7 +59,7 @@ const CSVModal = ({ open, setOpen, bookInfo, setBookInfo, setAlert }) => {
 
 
   return (
-    <Modal open={open} onClose={() => setOpen(false)}>
+    <Modal open={CSVopen} onClose={() => setCSVOpen(false)}>
       <Stack spacing={2} sx={{ ...MODAL_STYLE, display: "flex", justifyContent: "center", alignItems: "center" }}>
         <Button variant="contained" onClick={() => downloadCSV(convertToCSV(), 'books.csv')} sx={{ width: '75%' }}>
           <Stack direction="column" spacing={2} alignItems="center">

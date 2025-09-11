@@ -1,6 +1,6 @@
 import { Button, Modal, Box } from '@mui/material';
 import BaseModalParts from './BaseModalParts'
-import MODAL_STYLE from '../../constant';
+import { MODAL_STYLE } from '../../constant';
 
 
 const ControlModal = ({ modalMode, open, setOpen, setBookInfo = () => { }, inputBooks, setInputBooks, setAlert = () => { }, handleSubmit = () => { } }) => {

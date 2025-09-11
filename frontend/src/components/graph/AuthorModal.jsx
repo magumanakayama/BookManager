@@ -1,7 +1,7 @@
 import { Box, Button, Modal, List, ListItem, ListItemText } from '@mui/material';
 import listFormatter from './listFormatterPie';
 import { useRef, useLayoutEffect, useState } from 'react';
-import MODAL_STYLE from '../../constant';
+import { MODAL_STYLE } from '../../constant';
 
 
 const AuthorModal = ({ open, setOpen, blurProps, selectedAuthor, setSelectedAuthor, bookInfo }) => {
