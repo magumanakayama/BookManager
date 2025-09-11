@@ -28,7 +28,7 @@ const SpeedDialButtons = ({ setOpen, setCSVOpen, setInputBooks }) => {
 
 
   return (
-    <Box sx={{ position: 'fixed', bottom: 16, right: 16 }}>
+    <Box sx={{ position: 'fixed', bottom: 32, right: 32 }}>
       <SpeedDial ariaLabel="SpeedDial" open={dialOpen} onClick={() => setDialOpen(!dialOpen)} icon={<SpeedDialIcon />}>
         {actions.map((action) => <SpeedDialAction key={action.name} icon={action.icon} onClick={action.onClick} />)}
       </SpeedDial>
