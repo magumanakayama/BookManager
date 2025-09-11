@@ -1,19 +1,9 @@
 import { Button, Modal, Box } from '@mui/material';
 import BaseModalParts from './BaseModalParts'
+import MODAL_STYLE from '../../constant';
 
 
 const ControlModal = ({ modalMode, open, setOpen, setBookInfo = () => { }, inputBooks, setInputBooks, setAlert = () => { }, handleSubmit = () => { } }) => {
-  const modalStyle = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    bgcolor: 'background.paper',
-    borderRadius: 2,
-    width: 280,
-    p: 4,
-  }
-
   const handleEdit = (mode) => {
     const books = JSON.parse(localStorage.getItem('books')) || [];
     const index = books.findIndex(book => book.isbn === inputBooks.isbn);
@@ -48,7 +38,7 @@ const ControlModal = ({ modalMode, open, setOpen, setBookInfo = () => { }, input
 
   return (
     <Modal open={open} onClose={handleClose}>
-      <Box sx={modalStyle}>
+      <Box sx={MODAL_STYLE}>
         <img src={inputBooks.image} alt={inputBooks.title} style={{ paddingBottom: 16 }} />
         <BaseModalParts inputBooks={inputBooks} setInputBooks={setInputBooks} />
         <Box sx={{ display: 'flex', mt: 2, gap: 1 }}>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Box, SpeedDial, SpeedDialIcon, SpeedDialAction } from '@mui/material';
-import { Search, BarChart, Add, Output } from '@mui/icons-material';
+import { Search, BarChart, Add, ImportExport } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../constant';
 import generateTodayString from '../generateTodayString';
@@ -23,7 +23,7 @@ const SpeedDialButtons = ({ setOpen, setCSVOpen, setInputBooks }) => {
     { icon: <Search />, name: 'Search', onClick: handleSearch },
     { icon: <BarChart />, name: 'Graph', onClick: handleGraph },
     { icon: <Add />, name: 'Add', onClick: handleAdd },
-    { icon: <Output />, name: 'Close', onClick: handleCSVExport },
+    { icon: <ImportExport />, name: 'Close', onClick: handleCSVExport },
   ];
 
 
