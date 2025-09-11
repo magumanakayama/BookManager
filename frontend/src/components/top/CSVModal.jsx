@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Modal } from '@mui/material';
+import { Box, Button, Stack, Modal, Grow } from '@mui/material';
 import { FileDownload, FileUpload } from '@mui/icons-material';
 import { useRef } from 'react';
 import { MODAL_STYLE } from '../../constant';
@@ -57,25 +57,32 @@ const CSVModal = ({ CSVopen, setCSVOpen, bookInfo, setBookInfo, setAlert }) => {
 
 
   return (
-    <Modal open={CSVopen} onClose={() => setCSVOpen(false)}>
-      <Stack spacing={2} sx={{ ...MODAL_STYLE, display: "flex", justifyContent: "center", alignItems: "center" }}>
-        <Button variant="contained" onClick={() => downloadCSV(convertToCSV(), 'books.csv')} sx={{ width: '75%' }}>
-          <Stack direction="column" spacing={2} alignItems="center">
-            <Box sx={{ flexGrow: 1 }} />
-            <FileDownload fontSize='large' />
-            <div>CSVをダウンロード</div>
-          </Stack>
-        </Button>
-        <Button variant="outlined" onClick={() => fileInputRef.current && fileInputRef.current.click()} sx={{ width: '75%' }}>
-          <Stack direction="column" spacing={2} alignItems="center">
-            <Box sx={{ flexGrow: 1 }} />
-            <FileUpload fontSize='large' />
-            <div>CSVを読み込ませる</div>
-          </Stack>
-        </Button>
-        <input ref={fileInputRef} type="file" accept=".csv" style={{ display: 'none' }} onChange={handleImportCSV} />
-        <a ref={anchorRef} style={{ display: 'none' }}>download</a>
-      </Stack >
+    <Modal open={CSVopen} onClose={() => setCSVOpen(false)} closeAfterTransition sx={{
+      position: 'absolute',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}>
+      <Grow in={CSVopen}>
+        <Box spacing={2} sx={{ ...MODAL_STYLE, display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <Button variant="contained" onClick={() => downloadCSV(convertToCSV(), 'books.csv')} sx={{ width: '75%' }}>
+            <Stack direction="column" spacing={2} alignItems="center">
+              <Box sx={{ flexGrow: 1 }} />
+              <FileDownload fontSize='large' />
+              <div>CSVをダウンロード</div>
+            </Stack>
+          </Button>
+          <Button variant="outlined" onClick={() => fileInputRef.current && fileInputRef.current.click()} sx={{ width: '75%' }}>
+            <Stack direction="column" spacing={2} alignItems="center">
+              <Box sx={{ flexGrow: 1 }} />
+              <FileUpload fontSize='large' />
+              <div>CSVを読み込ませる</div>
+            </Stack>
+          </Button>
+          <input ref={fileInputRef} type="file" accept=".csv" style={{ display: 'none' }} onChange={handleImportCSV} />
+          <a ref={anchorRef} style={{ display: 'none' }}>download</a>
+        </Box >
+      </Grow>
     </Modal >
   );
 }
