@@ -1,12 +1,18 @@
 import { Box, Button, Modal, List, ListItem, ListItemText } from '@mui/material';
 import listFormatter from './listFormatterPie';
 import { useRef, useLayoutEffect, useState } from 'react';
-import { MODAL_STYLE } from '../../constant';
-
 
 const AuthorModal = ({ open, setOpen, blurProps, selectedAuthor, setSelectedAuthor, bookInfo }) => {
   const buttonRef = useRef(null);
   const [listMaxHeight, setListMaxHeight] = useState('100%');
+  const modalStyle = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bgcolor: 'background.paper',
+    width: '100%',
+    height: '100%',
+  }
 
   const handleClose = () => {
     setOpen(false);
@@ -30,7 +36,7 @@ const AuthorModal = ({ open, setOpen, blurProps, selectedAuthor, setSelectedAuth
 
   return (
     <Modal open={open} onClose={handleClose}>
-      <Box sx={MODAL_STYLE}>
+      <Box sx={modalStyle}>
         <Button ref={buttonRef} onClick={handleClose}>Close</Button>
         <Box sx={{ maxHeight: listMaxHeight, overflowY: 'auto' }}>
           <List>
