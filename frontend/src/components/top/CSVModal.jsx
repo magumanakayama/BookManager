@@ -8,9 +8,7 @@ const CSVModal = ({ CSVopen, setCSVOpen, bookInfo, setBookInfo, setAlert }) => {
   const fileInputRef = useRef(null);
 
   const handleImport = (importBook) => {
-    localStorage.removeItem("books");
-    localStorage.setItem("books", JSON.stringify(importBook));
-    setBookInfo(JSON.parse(localStorage.getItem('books')));
+    setBookInfo(importBook);
     setAlert({ open: true, message: '書籍情報を登録しました', severity: 'success' });
     setCSVOpen(false);
   }

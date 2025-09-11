@@ -3,23 +3,21 @@ import BaseModalParts from './BaseModalParts'
 import { MODAL_STYLE } from '../../constant';
 
 
-const ControlModal = ({ modalMode, open, setOpen, setBookInfo = () => { }, inputBooks, setInputBooks, setAlert = () => { }, handleSubmit = () => { } }) => {
+const ControlModal = ({ modalMode, open, setOpen, bookInfo, setBookInfo = () => { }, inputBooks, setInputBooks, setAlert = () => { }, handleSubmit = () => { } }) => {
   const handleEdit = (mode) => {
-    const books = JSON.parse(localStorage.getItem('books')) || [];
-    const index = books.findIndex(book => book.isbn === inputBooks.isbn);
+    const index = bookInfo.findIndex(book => book.isbn === inputBooks.isbn);
     const editFunc = {
       edit: () => {
-        books[index] = { ...books[index], ...inputBooks };
+        bookInfo[index] = { ...bookInfo[index], ...inputBooks };
         setAlert({ open: true, message: '書籍情報を更新しました', severity: 'success' });
       },
       delete: () => {
-        books.splice(index, 1);
+        bookInfo.splice(index, 1);
         setAlert({ open: true, message: '書籍情報を削除しました', severity: 'success' });
       }
     }
     editFunc[mode]();
-    localStorage.setItem('books', JSON.stringify(books));
-    setBookInfo(JSON.parse(localStorage.getItem('books')));
+    setBookInfo(bookInfo);
     handleClose();
   };
 

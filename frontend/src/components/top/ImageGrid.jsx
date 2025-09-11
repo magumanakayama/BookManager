@@ -16,6 +16,7 @@ const ImageGrid = ({ bookInfo, setBookInfo, sort, setAlert }) => {
     modalMode: "edit",
     open,
     setOpen,
+    bookInfo,
     setBookInfo,
     inputBooks,
     setInputBooks,

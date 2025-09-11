@@ -28,7 +28,7 @@ const TopPage = ({ bookInfo, setBookInfo, alert, setAlert, handleSubmit }) => {
       <Box sx={{ mb: 2 }}>
         <ImageGrid bookInfo={bookInfo} setBookInfo={setBookInfo} sort={sort} setAlert={setAlert} />
         <CustomAlert alert={alert} setAlert={setAlert} />
-        <ControlModal modalMode={"submit"} open={open} setOpen={setOpen} inputBooks={inputBooks} setInputBooks={setInputBooks} handleSubmit={handleSubmit} />
+        <ControlModal modalMode={"submit"} open={open} setOpen={setOpen} bookInfo={bookInfo} inputBooks={inputBooks} setInputBooks={setInputBooks} handleSubmit={handleSubmit} />
         <CSVModal CSVopen={CSVopen} setCSVOpen={setCSVOpen} bookInfo={bookInfo} setBookInfo={setBookInfo} setAlert={setAlert} />
         <SpeedDialButtons setOpen={setOpen} setCSVOpen={setCSVOpen} setInputBooks={setInputBooks} />
       </Box>
