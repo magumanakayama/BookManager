@@ -3,9 +3,8 @@ import { Button, Grid } from '@mui/material';
 import ControlModal from './ControlModal';
 import { BOOK_SHADOW } from '../../constant';
 
-const ImageGrid = ({ bookInfo, setBookInfo, sort, setAlert }) => {
+const ImageGrid = ({ bookInfo, setBookInfo, sort, setAlert, inputBooks, setInputBooks }) => {
   const [open, setOpen] = useState(false)
-  const [inputBooks, setInputBooks] = useState({ title: '', author: '', date: '' });
 
   const handleEditOpen = (book) => {
     setOpen(true);

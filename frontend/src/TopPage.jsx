@@ -17,8 +17,8 @@ const TopPage = ({ bookInfo, setBookInfo, alert, setAlert, handleSubmit }) => {
   const [sort, setSort] = useState("new");
   const [open, setOpen] = useState(false);
   const [CSVopen, setCSVOpen] = useState(false);
-  const [inputBooks, setInputBooks] = useState({ title: '', author: '', date: '' });
-
+  const [inputBooks, setInputBooks] = useState({ title: '', author: '', date: '', largeImageUrl: '', isbn: '' });
+  // console.log('inputBooks1', inputBooks, 'レンダリング');
 
   return (
     <ThemeProvider theme={theme}>
@@ -26,7 +26,7 @@ const TopPage = ({ bookInfo, setBookInfo, alert, setAlert, handleSubmit }) => {
         <TopHeader sort={sort} setSort={setSort} setOpen={setOpen} />
       </HeaderLayout>
       <Box sx={{ mb: 2 }}>
-        <ImageGrid bookInfo={bookInfo} setBookInfo={setBookInfo} sort={sort} setAlert={setAlert} />
+        <ImageGrid bookInfo={bookInfo} setBookInfo={setBookInfo} sort={sort} setAlert={setAlert} inputBooks={inputBooks} setInputBooks={setInputBooks} />
         <CustomAlert alert={alert} setAlert={setAlert} />
         <ControlModal modalMode={"submit"} open={open} setOpen={setOpen} bookInfo={bookInfo} inputBooks={inputBooks} setInputBooks={setInputBooks} handleSubmit={handleSubmit} />
         <CSVModal CSVopen={CSVopen} setCSVOpen={setCSVOpen} bookInfo={bookInfo} setBookInfo={setBookInfo} setAlert={setAlert} />

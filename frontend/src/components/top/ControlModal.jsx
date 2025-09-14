@@ -1,23 +1,35 @@
-import { Button, Modal, Box, Grow } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Button, Modal, Box } from '@mui/material';
 import BaseModalParts from './BaseModalParts'
 import { MODAL_STYLE } from '../../constant';
 
 
 const ControlModal = ({ modalMode, open, setOpen, bookInfo, setBookInfo = () => { }, inputBooks, setInputBooks, setAlert = () => { }, handleSubmit = () => { } }) => {
+  const [initialInputBooks, setInitialInputBooks] = useState(JSON.stringify(inputBooks));
+  // 特定状況だけでステート更新しないと無限レンダリングになる
+  useEffect(() => {
+    if (open) setInitialInputBooks(JSON.stringify(inputBooks));
+  }, [open]);
+  const isChanged = JSON.stringify(inputBooks) !== initialInputBooks;
+
   const handleEdit = (mode) => {
+    const updateBookInfo = [...bookInfo];
     const index = bookInfo.findIndex(book => book.isbn === inputBooks.isbn);
     const editFunc = {
       edit: () => {
-        bookInfo[index] = { ...bookInfo[index], ...inputBooks };
-        setAlert({ open: true, message: '書籍情報を更新しました', severity: 'success' });
+        updateBookInfo[index] = { ...updateBookInfo[index], ...inputBooks };
+        const message = '書籍情報を更新しました';
+        return { message };
       },
       delete: () => {
-        bookInfo.splice(index, 1);
-        setAlert({ open: true, message: '書籍情報を削除しました', severity: 'success' });
+        updateBookInfo.splice(index, 1);
+        const message = '書籍情報を削除しました';
+        return { message };
       }
     }
-    editFunc[mode]();
-    setBookInfo(bookInfo);
+    const { message } = editFunc[mode]();
+    setBookInfo(updateBookInfo);
+    setAlert({ open: true, message, severity: 'success' });
     handleClose();
   };
 
@@ -44,7 +56,7 @@ const ControlModal = ({ modalMode, open, setOpen, bookInfo, setBookInfo = () => 
           <Box sx={{ flexGrow: 1 }} />
           <Button variant="outlined" onClick={handleClose}>閉じる</Button>
           {modalMode === "submit" && <Button variant="contained" onClick={handleSubmitCustom}>登録</Button>}
-          {modalMode === "edit" && <Button variant="contained" onClick={() => handleEdit("edit")}>完了</Button>}
+          {modalMode === "edit" && <Button variant="contained" disabled={!isChanged} onClick={() => handleEdit("edit")}>完了</Button>}
         </Box>
       </Box>
     </Modal >

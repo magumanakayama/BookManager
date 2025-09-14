@@ -5,7 +5,6 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { ja } from 'date-fns/locale';
 
 const BaseModalParts = ({ inputBooks, setInputBooks }) => {
-
   const handleInput = (param, inputValue) => setInputBooks({ ...inputBooks, [param]: inputValue });
 
   // モバイル版ではMM/DDのStringを直接Date型にするエラーになるため、丁寧にパースする
@@ -23,9 +22,11 @@ const BaseModalParts = ({ inputBooks, setInputBooks }) => {
         <DatePicker
           label="読了日"
           slotProps={{
-            textField: { inputProps: { 'aria-label': '読了日入力欄' } }
+            textField: {
+              label: '読了日',
+              inputProps: { 'aria-label': '読了日入力欄' }
+            }
           }}
-          // そもそもDate型をローカルストレージに置くのもあり
           value={parseDate(inputBooks.date)}
           onChange={(newValue) => {
             const yyyy = String(newValue.getFullYear());
