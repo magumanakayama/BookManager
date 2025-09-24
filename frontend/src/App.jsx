@@ -19,7 +19,7 @@ function App() {
   const [alert, setAlert] = useState({ open: false, message: '', severity: '' });
 
   const handleSubmit = (submitBook) => {
-    setBookInfo([...bookInfo, { title: submitBook.title, author: submitBook.author || '著者不明', date: submitBook.date || generateTodayString(), image: submitBook.largeImageUrl, isbn: submitBook.isbn }]);
+    setBookInfo([...bookInfo, { title: submitBook.title || 'タイトル不明', author: submitBook.author || '著者不明', date: submitBook.date || generateTodayString(), image: submitBook.largeImageUrl, isbn: submitBook.isbn }]);
     setAlert({ open: true, message: '書籍情報を登録しました', severity: 'success' });
   }
 

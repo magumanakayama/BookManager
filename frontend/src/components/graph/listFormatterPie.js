@@ -9,16 +9,17 @@ const listFormatterPie = (bookInfo, MAX_DISPLAY = 5) => {
     }, {});
 
     // 本の数で降順ソート
-    const sortedAuthors = Object.entries(authorCounts).sort((a, b) => b[1] - a[1]);
+    const _sortedAuthors = Object.entries(authorCounts).sort((a, b) => b[1] - a[1]);
+    const sortedAuthors = _sortedAuthors.map(([author, count]) => ({ author, count }));
 
     // 上位MAX_DISPLAY件とその他のオブジェクト
     const tmp = {
-        top5: sortedAuthors.slice(0, MAX_DISPLAY),
-        others: sortedAuthors.length > MAX_DISPLAY && ['その他', sortedAuthors.slice(MAX_DISPLAY).reduce((sum, [, count]) => sum + count, 0)],
+        top: _sortedAuthors.slice(0, MAX_DISPLAY),
+        others: _sortedAuthors.length > MAX_DISPLAY && ['その他', _sortedAuthors.slice(MAX_DISPLAY).reduce((sum, [, count]) => sum + count, 0)],
     };
 
     // グラフ用判例データ、その他が無い時はfileterで除外
-    const legendData = [...tmp.top5, tmp.others].filter(Boolean);
+    const legendData = [...tmp.top, tmp.others].filter(Boolean).map(([author, count]) => ({ author, count }));
 
     return { authorFormattedBookList, sortedAuthors, legendData };
 };

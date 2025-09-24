@@ -9,9 +9,9 @@ const AuthorList = ({ bookInfo, sortedAuthors }) => {
   const [selectedAuthor, setSelectedAuthor] = useState(null);
 
   // Authorごとの代表的な本の画像を取得
-  const BookImageList = sortedAuthors.map(([author,], index) => {
+  const BookImageList = sortedAuthors.map(({ author }, index) => {
     const bookImage = bookInfo.find((b) => b.author.replace(/\s+/g, '') === author).image;
-    return [...sortedAuthors[index], bookImage];
+    return { ...sortedAuthors[index], bookImage };
   });
 
   const blurProps = {
@@ -35,13 +35,13 @@ const AuthorList = ({ bookInfo, sortedAuthors }) => {
   return (
     <>
       <List>
-        {sortedAuthors.map(([author, value], index) => (
+        {sortedAuthors.map(({ author, count }, index) => (
           <React.Fragment key={author}>
             <ListItem sx={{ overflow: 'hidden' }}>
-              <Box sx={{ ...blurProps, backgroundImage: `url(${BookImageList[index][2]})` }} />
+              <Box sx={{ ...blurProps, backgroundImage: `url(${BookImageList[index].bookImage})` }} />
               <ListItemButton onClick={() => handleOpen(author)} sx={{ zIndex: 1, width: '100%', display: 'flex', alignItems: 'center' }}>
-                <ListItemText primary={author} secondary={`${value}冊`} />
-                <img src={BookImageList[index][2]} alt={author} style={{ maxHeight: 104, display: 'block' }} />
+                <ListItemText primary={author} secondary={`${count}冊`} />
+                <img src={BookImageList[index].bookImage} alt={author} style={{ maxHeight: 104, display: 'block' }} />
               </ListItemButton>
             </ListItem>
           </React.Fragment>

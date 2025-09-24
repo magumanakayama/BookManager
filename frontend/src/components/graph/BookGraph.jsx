@@ -20,7 +20,7 @@ const BookGraph = ({ bookInfo }) => {
   const [year, setYear] = useState(new Date().getFullYear());
 
   const { sortedAuthors, legendData } = listFormatterPie(bookInfo, MAX_DISPLAY);
-  const { totalCount, yearlyList, monthlyListByYearZeroPlum } = listFormatterBar(bookInfo);
+  const { totalCount, yearlyList, monthlyList } = listFormatterBar(bookInfo);
 
 
   return (
@@ -38,8 +38,8 @@ const BookGraph = ({ bookInfo }) => {
       {graphMode === "monthly" &&
         <>
           <YearSelect yearlyList={yearlyList} year={year} setYear={setYear} />
-          <MonthlyGraph monthlyList={monthlyListByYearZeroPlum.find(item => item.year === year)['months']} />
-          <MonthlyList totalCount={totalCount} thisYearMonthlyList={monthlyListByYearZeroPlum.find(item => item.year === new Date().getFullYear())['months']} />
+          <MonthlyGraph monthlyList={monthlyList.find(item => item.year === year)['months']} />
+          <MonthlyList totalCount={totalCount} thisYearMonthlyList={monthlyList.find(item => item.year === new Date().getFullYear())['months']} />
         </>
       }
     </Box >

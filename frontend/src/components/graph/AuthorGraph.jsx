@@ -6,10 +6,10 @@ const AuthorGraph = ({ legendData }) => {
     <PieChart
       series={[
         {
-          data: legendData.map(([label, value], index) => ({
+          data: legendData.map(({ author, count }, index) => ({
             id: index,
-            value,
-            label,
+            value: count,
+            label: author,
           })),
           arcLabel: 'value',
           paddingAngle: 2,
