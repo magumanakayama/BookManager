@@ -101,16 +101,4 @@ describe('異常系', () => {
     expect(monthlyList).toEqual([]);
   });
 
-  // it('日付なしデータのテスト', () => {
-  //   const sampleBooks = [
-  //     { title: 'Book1' },
-  //     { title: 'Book2', date: '' },
-  //     { title: 'Book3', date: null },
-  //   ];
-  //   const { totalCount, yearlyList, monthlyList } = listFormatterBar(sampleBooks);
-  //   expect(totalCount).toBe(3);
-  //   expect(yearlyList).toEqual([]);
-  //   expect(monthlyList).toEqual([]);
-  // });
-
 });

@@ -11,7 +11,7 @@ const AuthorList = ({ bookInfo, sortedAuthors }) => {
   // Authorごとの代表的な本の画像を取得
   const BookImageList = sortedAuthors.map(({ author }, index) => {
     const bookImage = bookInfo.find((b) => b.author.replace(/\s+/g, '') === author).image;
-    return { ...sortedAuthors[index], bookImage };
+    return { ...sortedAuthors[index], image: bookImage };
   });
 
   const blurProps = {
@@ -38,10 +38,10 @@ const AuthorList = ({ bookInfo, sortedAuthors }) => {
         {sortedAuthors.map(({ author, count }, index) => (
           <React.Fragment key={author}>
             <ListItem sx={{ overflow: 'hidden' }}>
-              <Box sx={{ ...blurProps, backgroundImage: `url(${BookImageList[index].bookImage})` }} />
+              <Box sx={{ ...blurProps, backgroundImage: `url(${BookImageList[index].image})` }} />
               <ListItemButton onClick={() => handleOpen(author)} sx={{ zIndex: 1, width: '100%', display: 'flex', alignItems: 'center' }}>
                 <ListItemText primary={author} secondary={`${count}冊`} />
-                <img src={BookImageList[index].bookImage} alt={author} style={{ maxHeight: 104, display: 'block' }} />
+                <img src={BookImageList[index].image} alt={author} style={{ maxHeight: 104, display: 'block' }} />
               </ListItemButton>
             </ListItem>
           </React.Fragment>
