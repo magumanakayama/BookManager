@@ -28,6 +28,8 @@ const SearchBox = ({ query, setQuery, handleSearch, loading }) => {
         <Button variant="contained" onClick={() => setQuery({ ...query, author: '湊かなえ' })}>湊かなえ</Button>
         <Button variant="contained" loading={loading} loadingIndicator="検索中" onClick={handleSearchCustom} disabled={!isQueryChanged} sx={{ width: 88 }}>検索</Button>
       </Stack>
+      {/* ToDo： サムネが無い場合は適当な画像を入れたい */}
+      {/* ToDo： サイズ指定多すぎ */}
     </Stack>
   );
 };
