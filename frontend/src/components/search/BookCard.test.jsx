@@ -36,12 +36,16 @@ describe('BookCardのテスト', () => {
     expect(result.getByRole('img', { name: 'ドキュメント' })).toHaveAttribute('src', bookMock.Item.largeImageUrl);
   });
 
-  it('書籍/登録ボタンのテスト', async () => {
-    const { result, setSelectedBook, setOpen, handleSubmit } = renderBookCard(bookMock);
+  it('書籍ボタンのテスト', async () => {
+    const { result, setSelectedBook, setOpen } = renderBookCard(bookMock);
 
     fireEvent.click(result.getByRole('button', { name: new RegExp(bookMock.Item.title) }));
     expect(setSelectedBook).toHaveBeenCalledWith(bookMock);
     expect(setOpen).toHaveBeenCalledWith(true);
+  });
+
+  it('登録ボタンのテスト', async () => {
+    const { result, handleSubmit } = renderBookCard(bookMock);
 
     fireEvent.click(result.getByRole('button', { name: '登録' }));
     expect(handleSubmit).toHaveBeenCalledWith(bookMock.Item);
