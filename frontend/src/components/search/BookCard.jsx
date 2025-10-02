@@ -29,7 +29,7 @@ const BookCard = ({ book, setSelectedBook, setOpen, handleSubmit }) => {
         />
         <CardContent>
           {book.Item.title?.length > 8 ? `${book.Item.title.slice(0, 8)}...` : book.Item.title}
-          <p>{book.Item.author?.length > 8 ? `${book.Item.author.slice(0, 8)} ...` : book.Item.author || '著者不明'}</p>
+          <p>{book.Item.author?.length > 8 ? `${book.Item.author.slice(0, 8)}...` : book.Item.author || '著者不明'}</p>
         </CardContent>
       </CardActionArea>
       <CardActions sx={{ justifyContent: 'center' }}>

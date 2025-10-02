@@ -18,7 +18,7 @@ const renderModal = (modalMode, open, initialInputBooks) => {
     { title: '贖罪', author: '湊かなえ', date: '2025/03/01', image: '', isbn: '9784334776963' },
   ];
 
-  // ラッパー
+  // Reacrフックを使うためにラッパー生成
   const Wrapper = () => {
     const [inputBooks, setInputBooks] = useState(initialInputBooks);
     return (
