@@ -13,14 +13,19 @@ const BookSearch = ({ handleSubmit }) => {
   // detailModalのモーダルのオープン状態
   const [open, setOpen] = useState(false)
   const [selectedBook, setSelectedBook] = useState(null);
-  const handleSearch = () => setRequest(createUrl(query, page));
+  const [searching, setSearching] = useState(false);
+
+  const handleSearch = () => {
+    setSearching(true);
+    setRequest(createUrl(query, page)); // keyを変えることで同じURLでも再レンダリングされるようにする、保険
+  };
+
 
   return (
     <>
-      {/* <SearchBox query={query} setQuery={setQuery} handleSearch={handleSearch} loading={loading} /> */}
-      <SearchBox query={query} setQuery={setQuery} handleSearch={handleSearch} />
+      <SearchBox query={query} setQuery={setQuery} handleSearch={handleSearch} searching={searching} />
       {request && (
-        <SearchComponent request={request} setSelectedBook={setSelectedBook} setOpen={setOpen} handleSubmit={handleSubmit} setPage={setPage} page={page} handleSearch={handleSearch} />
+        <SearchComponent request={request} setSelectedBook={setSelectedBook} setOpen={setOpen} handleSubmit={handleSubmit} setPage={setPage} page={page} handleSearch={handleSearch} setSearching={setSearching} />
       )}
       <DetailModal open={open} setOpen={setOpen} book={selectedBook} handleSubmit={handleSubmit} />
     </>

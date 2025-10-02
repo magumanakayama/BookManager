@@ -4,7 +4,7 @@ import { Grid, Pagination } from '@mui/material';
 import SearchResultInfo from './SearchResultInfo';
 import BookCard from './BookCard';
 
-const SearchComponent = ({ request, setSelectedBook, setOpen, handleSubmit, setPage, page, handleSearch }) => {
+const SearchComponent = ({ request, setSelectedBook, setOpen, handleSubmit, setPage, page, handleSearch, setSearching }) => {
   const { data, loading, error } = useFetch(request);
   const pageCount = data?.pageCount || 0;
 
@@ -16,6 +16,12 @@ const SearchComponent = ({ request, setSelectedBook, setOpen, handleSubmit, setP
   // ステートの更新は非同期なのでhandlePageChangeの中でhandlesearchしても前のページが参照されうまくいかない
   // よってuseEffectが必須となる
   useEffect(() => handleSearch(), [page]);
+
+  useEffect(() => {
+    // !loadingだと false→undefinedの時にも反応してしまう
+    if (loading == false) setSearching(false);
+  }, [loading]);
+
 
   return (
     <>

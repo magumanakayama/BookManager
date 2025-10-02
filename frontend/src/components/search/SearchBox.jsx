@@ -1,7 +1,7 @@
 import { TextField, Button, Stack } from '@mui/material';
 import { useState } from 'react';
 
-const SearchBox = ({ query, setQuery, handleSearch, loading }) => {
+const SearchBox = ({ query, setQuery, handleSearch, searching }) => {
   const [prevQuery, setPrevQuery] = useState(JSON.stringify(query));
   const isQueryChanged = JSON.stringify(query) !== prevQuery;
 
@@ -26,7 +26,7 @@ const SearchBox = ({ query, setQuery, handleSearch, loading }) => {
       <Stack direction="row" justifyContent="flex-end" spacing={1}>
         <Button variant="outlined" onClick={() => window.history.back()} >戻る</Button>
         <Button variant="contained" onClick={() => setQuery({ ...query, author: '湊かなえ' })}>湊かなえ</Button>
-        <Button variant="contained" loading={loading} loadingIndicator="検索中" onClick={handleSearchCustom} disabled={!isQueryChanged} sx={{ width: 88 }}>検索</Button>
+        <Button variant="contained" loading={searching} loadingIndicator="検索中" onClick={handleSearchCustom} disabled={!isQueryChanged} sx={{ width: 88 }}>検索</Button>
       </Stack>
       {/* ToDo： サムネが無い場合は適当な画像を入れたい */}
       {/* ToDo： サイズ指定多すぎ */}
