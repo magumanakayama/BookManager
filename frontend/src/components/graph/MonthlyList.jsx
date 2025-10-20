@@ -1,6 +1,8 @@
-import { List, ListItem, Typography, Divider } from '@mui/material';
+import { Box, List, ListItem, Typography, Divider } from '@mui/material';
 
 const MonthlyList = ({ totalCount, thisYearMonthlyList }) => {
+  if (!thisYearMonthlyList) return null;
+
   const annualCount = thisYearMonthlyList.reduce((acc, { count }) => acc + count, 0);
   const currentMonthCount = thisYearMonthlyList[new Date().getMonth()].count;
 

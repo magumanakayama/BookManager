@@ -1,18 +1,26 @@
 import { Box, InputLabel, MenuItem, FormControl, Select } from '@mui/material';
 
+
+export const ERROR_MESSAGE = '月次グラフを表示できません。ブラウザバックしてください。';
+
 const YearSelect = ({ yearlyList, year, setYear }) => {
-  const handleChange = (event) => {
-    setYear(event.target.value);
-  };
+  if (!yearlyList) {
+    return (
+      <Box sx={{ color: 'red', mt: 2 }}>
+        {ERROR_MESSAGE}
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
-        <InputLabel>とし</InputLabel>
+        <InputLabel id="year-select-label">年</InputLabel>
         <Select
+          labelId="year-select-label"
           value={year}
-          label="とし"
-          onChange={handleChange}
+          label="年"
+          onChange={(event) => setYear(event.target.value)}
         >
           {yearlyList.map(({ year }) => (
             <MenuItem key={year} value={year}>

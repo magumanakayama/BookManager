@@ -1,7 +1,15 @@
 import { BarChart } from '@mui/x-charts';
 import { Box } from '@mui/material';
 
-const MonthlyGraph = ({ monthlyList }) => {
+const MonthlyGraph = ({ year, monthlyList }) => {
+  if (!monthlyList) {
+    return (
+      <Box sx={{ color: 'red', mt: 2 }}>
+        {year}年のデータがありません。
+      </Box>
+    );
+  }
+
   return (
     <Box sx={{ width: '100%' }}>
       <BarChart

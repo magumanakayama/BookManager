@@ -16,6 +16,7 @@ import listFormatterBar from './listFormatterBar';
 const BookGraph = ({ bookInfo }) => {
   const MAX_DISPLAY = 5;
   const [graphMode, setGraphMode] = useState("author");
+
   // yearステートは移動予定
   const [year, setYear] = useState(new Date().getFullYear());
 
@@ -38,8 +39,8 @@ const BookGraph = ({ bookInfo }) => {
       {graphMode === "monthly" &&
         <>
           <YearSelect yearlyList={yearlyList} year={year} setYear={setYear} />
-          <MonthlyGraph monthlyList={monthlyList.find(item => item.year === year)['months']} />
-          <MonthlyList totalCount={totalCount} thisYearMonthlyList={monthlyList.find(item => item.year === new Date().getFullYear())['months']} />
+          <MonthlyGraph year={year} monthlyList={monthlyList.find(item => item.year === year)?.['months']} />
+          <MonthlyList totalCount={totalCount} thisYearMonthlyList={monthlyList.find(item => item.year === year)?.['months']} />
         </>
       }
     </Box >

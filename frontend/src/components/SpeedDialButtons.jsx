@@ -15,9 +15,7 @@ const SpeedDialButtons = ({ setOpen, setCSVOpen, setInputBooks }) => {
     setInputBooks({ title: '', author: '', date: generateTodayString() });
     setOpen(true);
   };
-  const handleCSVExport = () => {
-    setCSVOpen(true);
-  };
+  const handleCSVExport = () => setCSVOpen(true);
 
   const actions = [
     { icon: <Search />, name: 'Search', onClick: handleSearch },

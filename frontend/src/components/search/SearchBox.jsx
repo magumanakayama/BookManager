@@ -10,13 +10,19 @@ const SearchBox = ({ query, setQuery, handleSearch, searching }) => {
     handleSearch();
   }
 
+  const queryToLabel = {
+    title: 'タイトル',
+    author: '著者',
+    // 他のフィールドのラベルもここに追加
+  };
+
   return (
     <Stack direction="column" sx={{ m: 2 }} spacing={1}>
       <Stack direction="row" spacing={1}>
         {Object.keys(query).map(key => (
           <TextField
             key={key}
-            label={key === 'title' ? 'タイトル' : key === 'author' ? '著者' : key}
+            label={queryToLabel[key]}
             value={query[key]}
             onChange={e => setQuery({ ...query, [key]: e.target.value })}
             size="small"
