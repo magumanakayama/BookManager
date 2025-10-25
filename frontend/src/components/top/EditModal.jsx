@@ -5,7 +5,7 @@ import useStorageHook from '../hook/storageHook';
 import { MODAL_STYLE } from '../../constant';
 
 
-const EditModal = ({ modalMode, bookInfo, setBookInfo, setOpen, selectedBookISBN, triggerAlert }) => {
+const EditModal = ({ bookInfo, setBookInfo, setOpen, selectedBookISBN, triggerAlert }) => {
   const { getBookInfo } = useStorageHook();
   const [initialBooks, setInitialBooks] = useState(getBookInfo(selectedBookISBN));
   // ToDO: diffを取るロジックをカスタムフック内に作るのも視野、暫定これでも良い
@@ -30,7 +30,7 @@ const EditModal = ({ modalMode, bookInfo, setBookInfo, setOpen, selectedBookISBN
         <img src={initialBooks.image} alt={initialBooks.title} style={{ paddingBottom: 16 }} />
         <BaseModalParts initialBooks={initialBooks} setInitialBooks={setInitialBooks} />
         <Box sx={{ display: 'flex', mt: 2, gap: 1 }}>
-          {modalMode === "edit" && <Button variant="contained" color="error" onClick={() => handleEditOrDelete('delete')}>削除</Button>}
+          <Button variant="contained" color="error" onClick={() => handleEditOrDelete('delete')}>削除</Button>
           <Box sx={{ flexGrow: 1 }} />
           <Button variant="outlined" onClick={() => setOpen(false)}>閉じる</Button>
           <Button variant="contained" disabled={!isChanged} onClick={() => handleEditOrDelete('edit')}>完了</Button>

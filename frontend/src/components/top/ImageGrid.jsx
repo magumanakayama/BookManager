@@ -17,7 +17,6 @@ const ImageGrid = ({ bookInfo, setBookInfo, sort }) => {
   };
 
   const modalProps = {
-    modalMode: "edit",
     setOpen,
     bookInfo,
     setBookInfo,
