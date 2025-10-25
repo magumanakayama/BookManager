@@ -6,10 +6,10 @@ const useStorageHook = () => {
 
   const handleSubmit = (submitBook, setAlert = () => { }) => {
     setBookStorage(makeBookInfo(submitBook, bookStorage));
-    // setAlert({ open: true, message: '書籍情報を登録しました', severity: 'success' });
+    setAlert();
   }
 
-  return { bookStorage, setBookStorage, handleSubmit };
+  return { bookStorage, setBookStorage, handleSubmit, getBookInfo: getBookInfo(bookStorage) };
 };
 
 const makeBookInfo = (submitBook, bookStorage) => {
@@ -27,3 +27,5 @@ const makeBookInfo = (submitBook, bookStorage) => {
 };
 
 export default useStorageHook;
+
+export const getBookInfo = (bookStorage) => (isbn) => bookStorage.find(book => book.isbn === isbn);

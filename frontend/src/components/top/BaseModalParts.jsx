@@ -4,8 +4,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { ja } from 'date-fns/locale';
 
-const BaseModalParts = ({ inputBooks, setInputBooks }) => {
-  const handleInput = (param, inputValue) => setInputBooks({ ...inputBooks, [param]: inputValue });
+const BaseModalParts = ({ initialBooks, setInitialBooks }) => {
+  const handleInput = (param, inputValue) => setInitialBooks({ ...initialBooks, [param]: inputValue });
 
   // モバイル版ではMM/DDのStringを直接Date型にするエラーになるため、丁寧にパースする
   const parseDate = (dateStr) => {
@@ -16,8 +16,8 @@ const BaseModalParts = ({ inputBooks, setInputBooks }) => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-      <TextField label="タイトル" variant="outlined" value={inputBooks.title} onChange={e => handleInput('title', e.target.value)} />
-      <TextField label="著者" variant="outlined" value={inputBooks.author} onChange={e => handleInput('author', e.target.value)} />
+      <TextField label="タイトル" variant="outlined" value={initialBooks.title} onChange={e => handleInput('title', e.target.value)} />
+      <TextField label="著者" variant="outlined" value={initialBooks.author} onChange={e => handleInput('author', e.target.value)} />
       <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ja}>
         <DatePicker
           label="読了日"
@@ -27,7 +27,7 @@ const BaseModalParts = ({ inputBooks, setInputBooks }) => {
               inputProps: { 'aria-label': '読了日入力欄' }
             }
           }}
-          value={parseDate(inputBooks.date)}
+          value={parseDate(initialBooks.date)}
           onChange={(newValue) => {
             const yyyy = String(newValue.getFullYear());
             const mm = String(newValue.getMonth() + 1).padStart(2, '0');

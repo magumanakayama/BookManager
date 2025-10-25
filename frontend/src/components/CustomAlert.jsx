@@ -7,7 +7,7 @@ const ALERT_VALUE = {
   timeout: { enter: 300, exit: 1000 }
 };
 
-const CustomAlert = ({ alert, setAlert }) => {
+const CustomAlert = ({ alert, close }) => {
   const { open, message, severity } = alert;
 
   // openだけだと2秒後のopen=false時に再レンダリングが走るので、フェードアウトする前にコンポーネント全体が再レンダリングされてしまう
@@ -17,17 +17,15 @@ const CustomAlert = ({ alert, setAlert }) => {
   useEffect(() => {
     if (open) {
       setShowAlert(true);
-      const timer = setTimeout(() => setShowAlert(false), ALERT_VALUE.duration);
+      const timer = setTimeout(() => {
+        setShowAlert(false);
+      }, ALERT_VALUE.duration);
       return () => clearTimeout(timer);
     }
   }, [open]);
 
-  // exitアニメーションが終わるまでAlertを残す
-  const handleExited = () => setAlert({ open: false, message: '', severity: '' });;
-
-
   return (
-    <Fade in={showAlert} timeout={ALERT_VALUE.timeout} onExited={handleExited}>
+    <Fade in={showAlert} timeout={ALERT_VALUE.timeout} onExited={close}>
       <Alert severity={severity} sx={ALERT_VALUE.position}>
         {message}
       </Alert>

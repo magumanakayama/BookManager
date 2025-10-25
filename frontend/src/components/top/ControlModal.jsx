@@ -1,25 +1,26 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button, Modal, Box } from '@mui/material';
 import BaseModalParts from './BaseModalParts'
+import CustomAlert from '../CustomAlert';
 import useStorageHook from '../hook/storageHook';
+import useAlertHook from '../hook/alertHook';
 import { MODAL_STYLE } from '../../constant';
 
 
-const ControlModal = ({ modalMode, open, setOpen, inputBooks, setInputBooks, setAlert = () => { } }) => {
-  const [initialInputBooks, setInitialInputBooks] = useState(JSON.stringify(inputBooks));
-  const { bookStorage, setBookStorage, handleSubmit } = useStorageHook();
-  // 特定状況だけでステート更新しないと無限レンダリングになる
-  useEffect(() => {
-    if (open) setInitialInputBooks(JSON.stringify(inputBooks));
-  }, [open]);
-  const isChanged = JSON.stringify(inputBooks) !== initialInputBooks;
+const ControlModal = ({ modalMode, setOpen, selectedBookISBN }) => {
+  const { bookStorage, setBookStorage, handleSubmit, getBookInfo } = useStorageHook();
+  const { alert, triggerAlert } = useAlertHook();
+
+  const [initialBooks, setInitialBooks] = useState(getBookInfo(selectedBookISBN));
+  // ToDO: diffを取るロジックをカスタムフック内に作るのも視野、暫定これでも良い
+  const isChanged = JSON.stringify(initialBooks) !== JSON.stringify(getBookInfo(selectedBookISBN));
 
   const handleEdit = (mode) => {
     const updateBookInfo = [...bookStorage];
-    const index = bookStorage.findIndex(book => book.isbn === inputBooks.isbn);
+    const index = bookStorage.findIndex(book => book.isbn === initialBooks.isbn);
     const editFunc = {
       edit: () => {
-        updateBookInfo[index] = { ...updateBookInfo[index], ...inputBooks };
+        updateBookInfo[index] = { ...updateBookInfo[index], ...initialBooks };
         const message = '書籍情報を更新しました';
         return { message };
       },
@@ -29,39 +30,36 @@ const ControlModal = ({ modalMode, open, setOpen, inputBooks, setInputBooks, set
         return { message };
       }
     }
-    const { message } = editFunc[mode]();
+    editFunc[mode]();
     setBookStorage(updateBookInfo);
-    setAlert({ open: true, message, severity: 'success' });
-    handleClose();
+    triggerAlert(mode);
+    setOpen(false);
   };
 
   const handleSubmitCustom = () => {
-    const dummyImage = `https://placehold.jp/140x200.png?text=${encodeURIComponent(inputBooks.title || 'No Title')}`;
+    const dummyImage = `https://placehold.jp/140x200.png?text=${encodeURIComponent(initialBooks.title || 'No Title')}`;
     const randomIsbn = String(Math.floor(Math.random() * 1e10)).padStart(10, '0');
-    handleSubmit({ ...inputBooks, largeImageUrl: dummyImage, isbn: randomIsbn });
-    handleClose();
-  };
-
-  const handleClose = () => {
+    handleSubmit({ ...initialBooks, largeImageUrl: dummyImage, isbn: randomIsbn }, triggerAlert('submit'));
     setOpen(false);
-    setInputBooks({ title: '', author: '', date: '' });
   };
-
 
   return (
-    <Modal open={open} onClose={handleClose}>
-      <Box sx={MODAL_STYLE}>
-        <img src={inputBooks.image} alt={inputBooks.title} style={{ paddingBottom: 16 }} />
-        <BaseModalParts inputBooks={inputBooks} setInputBooks={setInputBooks} />
-        <Box sx={{ display: 'flex', mt: 2, gap: 1 }}>
-          {modalMode === "edit" && <Button variant="contained" color="error" onClick={() => handleEdit("delete")}>削除</Button>}
-          <Box sx={{ flexGrow: 1 }} />
-          <Button variant="outlined" onClick={handleClose}>閉じる</Button>
-          {modalMode === "submit" && <Button variant="contained" onClick={handleSubmitCustom}>登録</Button>}
-          {modalMode === "edit" && <Button variant="contained" disabled={!isChanged} onClick={() => handleEdit("edit")}>完了</Button>}
+    <>
+      <Modal open={open} onClose={() => setOpen(false)}>
+        <Box sx={MODAL_STYLE}>
+          <img src={initialBooks.image} alt={initialBooks.title} style={{ paddingBottom: 16 }} />
+          <BaseModalParts initialBooks={initialBooks} setInitialBooks={setInitialBooks} />
+          <Box sx={{ display: 'flex', mt: 2, gap: 1 }}>
+            {modalMode === "edit" && <Button variant="contained" color="error" onClick={() => handleEdit('delete')}>削除</Button>}
+            <Box sx={{ flexGrow: 1 }} />
+            <Button variant="outlined" onClick={() => setOpen(false)}>閉じる</Button>
+            {modalMode === "submit" && <Button variant="contained" onClick={handleSubmitCustom}>登録</Button>}
+            {modalMode === "edit" && <Button variant="contained" disabled={!isChanged} onClick={() => handleEdit('edit')}>完了</Button>}
+          </Box>
         </Box>
-      </Box>
-    </Modal >
+      </Modal>
+      <CustomAlert alert={alert} fireAlert={(alert) => triggerAlert(alert)} />
+    </>
   );
 }
 

@@ -1,25 +1,28 @@
 import { useState } from 'react'
 import { Button, Grid } from '@mui/material';
-import ControlModal from './ControlModal';
+import EditModal from './EditModal';
+import CustomAlert from '../CustomAlert';
+import useAlertHook from '../hook/alertHook';
 import { BOOK_SHADOW } from '../../constant';
 
-const ImageGrid = ({ bookInfo, setBookInfo, sort, setAlert, inputBooks, setInputBooks }) => {
+
+const ImageGrid = ({ bookInfo, setBookInfo, sort }) => {
   const [open, setOpen] = useState(false)
+  const [selectedBookISBN, setSelectedBookISBN] = useState('');
+  const { alert, triggerAlert, close } = useAlertHook();
 
   const handleEditOpen = (book) => {
     setOpen(true);
-    setInputBooks({ title: book.title, author: book.author, date: book.date, image: book.image, isbn: book.isbn });
+    setSelectedBookISBN(book.isbn);
   };
 
   const modalProps = {
     modalMode: "edit",
-    open,
     setOpen,
     bookInfo,
     setBookInfo,
-    inputBooks,
-    setInputBooks,
-    setAlert
+    selectedBookISBN,
+    triggerAlert
   };
 
   const sortedList = {
@@ -42,7 +45,8 @@ const ImageGrid = ({ bookInfo, setBookInfo, sort, setAlert, inputBooks, setInput
           </Grid>
         ))}
       </Grid >
-      <ControlModal {...modalProps} />
+      {open && <EditModal {...modalProps} />}
+      <CustomAlert alert={alert} close={close} />
     </>
   )
 }
