@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Button, Modal, Box } from '@mui/material';
 import BaseModalParts from './BaseModalParts'
+import useStorageHook from '../hook/storageHook';
 import { MODAL_STYLE } from '../../constant';
 
 
-const ControlModal = ({ modalMode, open, setOpen, bookInfo, setBookInfo = () => { }, inputBooks, setInputBooks, setAlert = () => { }, handleSubmit = () => { } }) => {
+const ControlModal = ({ modalMode, open, setOpen, inputBooks, setInputBooks, setAlert = () => { } }) => {
   const [initialInputBooks, setInitialInputBooks] = useState(JSON.stringify(inputBooks));
+  const { bookStorage, setBookStorage, handleSubmit } = useStorageHook();
   // 特定状況だけでステート更新しないと無限レンダリングになる
   useEffect(() => {
     if (open) setInitialInputBooks(JSON.stringify(inputBooks));
@@ -13,8 +15,8 @@ const ControlModal = ({ modalMode, open, setOpen, bookInfo, setBookInfo = () => 
   const isChanged = JSON.stringify(inputBooks) !== initialInputBooks;
 
   const handleEdit = (mode) => {
-    const updateBookInfo = [...bookInfo];
-    const index = bookInfo.findIndex(book => book.isbn === inputBooks.isbn);
+    const updateBookInfo = [...bookStorage];
+    const index = bookStorage.findIndex(book => book.isbn === inputBooks.isbn);
     const editFunc = {
       edit: () => {
         updateBookInfo[index] = { ...updateBookInfo[index], ...inputBooks };
@@ -28,7 +30,7 @@ const ControlModal = ({ modalMode, open, setOpen, bookInfo, setBookInfo = () => 
       }
     }
     const { message } = editFunc[mode]();
-    setBookInfo(updateBookInfo);
+    setBookStorage(updateBookInfo);
     setAlert({ open: true, message, severity: 'success' });
     handleClose();
   };

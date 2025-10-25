@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLocalStorage } from 'react-use';
 import { Box, Button } from '@mui/material';
 import HeaderLayout from '../HeaderLayout';
 import GraphHeader from './GraphHeader';
@@ -13,10 +14,11 @@ import YearSelect from './YearSelect.jsx';
 import listFormatterBar from './listFormatterBar';
 
 
-const BookGraph = ({ bookInfo }) => {
+const BookGraph = () => {
   const MAX_DISPLAY = 5;
-  const [graphMode, setGraphMode] = useState("author");
 
+  const [bookInfo, _] = useLocalStorage('books', []);
+  const [graphMode, setGraphMode] = useState("author");
   // yearステートは移動予定
   const [year, setYear] = useState(new Date().getFullYear());
 

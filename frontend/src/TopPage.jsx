@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLocalStorage } from 'react-use';
 import { Box } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme'
@@ -13,12 +14,14 @@ import SpeedDialButtons from './components/SpeedDialButtons';
 import CSVModal from './components/top/CSVModal';
 
 
-const TopPage = ({ bookInfo, setBookInfo, alert, setAlert, handleSubmit }) => {
+const TopPage = () => {
+  const [bookInfo, setBookInfo] = useLocalStorage('books', []);
+  const [alert, setAlert] = useState({ open: false, message: '', severity: '' })
   const [sort, setSort] = useState("new");
   const [open, setOpen] = useState(false);
   const [CSVopen, setCSVOpen] = useState(false);
   const [inputBooks, setInputBooks] = useState({ title: '', author: '', date: '', largeImageUrl: '', isbn: '' });
-  // console.log('inputBooks1', inputBooks, 'レンダリング');
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -28,7 +31,7 @@ const TopPage = ({ bookInfo, setBookInfo, alert, setAlert, handleSubmit }) => {
       <Box sx={{ mb: 2 }}>
         <ImageGrid bookInfo={bookInfo} setBookInfo={setBookInfo} sort={sort} setAlert={setAlert} inputBooks={inputBooks} setInputBooks={setInputBooks} />
         <CustomAlert alert={alert} setAlert={setAlert} />
-        <ControlModal modalMode={"submit"} open={open} setOpen={setOpen} bookInfo={bookInfo} inputBooks={inputBooks} setInputBooks={setInputBooks} handleSubmit={handleSubmit} />
+        <ControlModal modalMode={"submit"} open={open} setOpen={setOpen} bookInfo={bookInfo} inputBooks={inputBooks} setInputBooks={setInputBooks} />
         <CSVModal CSVopen={CSVopen} setCSVOpen={setCSVOpen} bookInfo={bookInfo} setBookInfo={setBookInfo} setAlert={setAlert} />
         <SpeedDialButtons setOpen={setOpen} setCSVOpen={setCSVOpen} setInputBooks={setInputBooks} />
       </Box>

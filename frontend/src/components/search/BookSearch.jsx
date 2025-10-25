@@ -5,7 +5,7 @@ import createUrl from './createUrl';
 import SearchComponent from './SearchComponent';
 
 
-const BookSearch = ({ handleSubmit }) => {
+const BookSearch = () => {
   const [query, setQuery] = useState({ author: '', title: '' });
   const [request, setRequest] = useState(null);
   const [page, setPage] = useState(1);
@@ -25,9 +25,9 @@ const BookSearch = ({ handleSubmit }) => {
     <>
       <SearchBox query={query} setQuery={setQuery} handleSearch={handleSearch} searching={searching} />
       {request && (
-        <SearchComponent request={request} setSelectedBook={setSelectedBook} setOpen={setOpen} handleSubmit={handleSubmit} setPage={setPage} page={page} handleSearch={handleSearch} setSearching={setSearching} />
+        <SearchComponent request={request} setSelectedBook={setSelectedBook} setOpen={setOpen} setPage={setPage} page={page} handleSearch={handleSearch} setSearching={setSearching} />
       )}
-      <DetailModal open={open} setOpen={setOpen} book={selectedBook} handleSubmit={handleSubmit} />
+      <DetailModal open={open} setOpen={setOpen} book={selectedBook} />
     </>
   );
 };

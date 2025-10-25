@@ -1,11 +1,13 @@
 import { Button } from '@mui/material';
 import { Card, CardContent, CardMedia, CardActions, CardActionArea } from '@mui/material';
+import useStorageHook from '../hook/storageHook';
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../../constant';
 
-const BookCard = ({ book, setSelectedBook, setOpen, handleSubmit }) => {
+const BookCard = ({ book, setSelectedBook, setOpen }) => {
   const CARD_SIZE = 176;
   const CARD_MEDIA_SIZE = { height: 210, width: 148 };
+  const { handleSubmit } = useStorageHook();
 
   const navigate = useNavigate();
   const handleSubmitCustom = (submitBook) => {

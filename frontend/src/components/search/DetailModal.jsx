@@ -1,6 +1,8 @@
 import { Button, Modal, Box, Stack } from '@mui/material'
+import useStorageHook from '../hook/storageHook';
 
-const DetailModal = ({ open, setOpen, book, handleSubmit }) => {
+const DetailModal = ({ open, setOpen, book }) => {
+  const { handleSubmit } = useStorageHook();
 
   const handleSubmitCustom = (book) => {
     setOpen(false);
