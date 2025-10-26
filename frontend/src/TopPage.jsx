@@ -19,7 +19,6 @@ const TopPage = () => {
   const [sort, setSort] = useState("new");
   const [open, setOpen] = useState(false);
   const [CSVopen, setCSVOpen] = useState(false);
-  const [inputBooks, setInputBooks] = useState({ title: '', author: '', date: '', largeImageUrl: '', isbn: '' });
   const { bookStorage, setBookStorage, handleSubmit } = useStorageHook();
   const { alert, triggerAlert, close } = useAlertHook();
 
@@ -36,7 +35,7 @@ const TopPage = () => {
         {open && <SubmitModal setOpen={setOpen} handleSubmit={handleSubmit} triggerAlert={triggerAlert} />}
         <CustomAlert alert={alert} close={close} />
         <CSVModal CSVopen={CSVopen} setCSVOpen={setCSVOpen} bookInfo={bookStorage} setBookInfo={setBookStorage} />
-        <SpeedDialButtons setOpen={setOpen} setCSVOpen={setCSVOpen} setInputBooks={setInputBooks} />
+        <SpeedDialButtons setOpen={setOpen} setCSVOpen={setCSVOpen} />
       </Box>
     </ThemeProvider >
   )
