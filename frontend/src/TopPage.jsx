@@ -27,7 +27,7 @@ const TopPage = () => {
   return (
     <ThemeProvider theme={theme}>
       <HeaderLayout>
-        <TopHeader sort={sort} setSort={setSort} setOpen={setOpen} />
+        <TopHeader sort={sort} setSort={setSort} />
       </HeaderLayout>
       <Box sx={{ mb: 2 }}>
         <ImageGrid bookInfo={bookStorage} setBookInfo={setBookStorage} sort={sort} />
@@ -36,7 +36,7 @@ const TopPage = () => {
         {CSVopen && <CSVModal setCSVOpen={setCSVOpen} bookInfo={bookStorage} setBookInfo={setBookStorage} />}
         <SpeedDialButtons setOpen={setOpen} setCSVOpen={setCSVOpen} />
       </Box>
-    </ThemeProvider >
+    </ThemeProvider>
   )
 }
 

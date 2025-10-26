@@ -1,6 +1,6 @@
 import { ToggleButton, ToggleButtonGroup } from '@mui/material'
 
-const TopHeader = ({ sort, setSort, }) => {
+const TopHeader = ({ sort, setSort }) => {
   const control = {
     value: sort,
     onChange: (_, newValue) => {
