@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Button, Grid } from '@mui/material';
-import EditModal from './EditModal';
+import EditModal from './modal/EditModal';
 import CustomAlert from '../CustomAlert';
 import useAlertHook from '../hook/alertHook';
 import { BOOK_SHADOW } from '../../constant';

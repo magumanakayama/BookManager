@@ -9,7 +9,7 @@ import MockComponent from './MockComponent';
 import theme from './theme'
 import './App.css'
 
-
+// Search側で登録した際のアラート表示が出来ていない(10/26(日))
 function App() {
   return (
     <Router>
