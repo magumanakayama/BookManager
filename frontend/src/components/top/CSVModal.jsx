@@ -5,7 +5,7 @@ import useAlertHook from '../hook/alertHook';
 import { useRef } from 'react';
 import { MODAL_STYLE } from '../../constant';
 
-const CSVModal = ({ CSVopen, setCSVOpen, bookInfo, setBookInfo }) => {
+const CSVModal = ({ setCSVOpen, bookInfo, setBookInfo }) => {
   const anchorRef = useRef(null);
   const fileInputRef = useRef(null);
   const { alert, triggerAlert } = useAlertHook();
@@ -61,7 +61,7 @@ const CSVModal = ({ CSVopen, setCSVOpen, bookInfo, setBookInfo }) => {
 
   return (
     <>
-      <Modal open={CSVopen} onClose={() => setCSVOpen(false)}>
+      <Modal open={true} onClose={() => setCSVOpen(false)}>
         <Stack spacing={2} sx={{ ...MODAL_STYLE, display: "flex", justifyContent: "center", alignItems: "center" }}>
           <Button variant="contained" onClick={() => downloadCSV(convertToCSV(), 'books.csv')} sx={{ width: '75%' }}>
             <Stack direction="column" spacing={2} alignItems="center">

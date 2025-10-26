@@ -18,7 +18,7 @@ const SubmitModal = ({ setOpen, handleSubmit, triggerAlert }) => {
   };
 
   return (
-    <Modal open={open} onClose={() => setOpen(false)}>
+    <Modal open={true} onClose={() => setOpen(false)}>
       <Box sx={MODAL_STYLE}>
         <img src={initialBooks.image} alt={initialBooks.title} style={{ paddingBottom: 16 }} />
         <BaseModalParts initialBooks={initialBooks} setInitialBooks={setInitialBooks} />
