@@ -4,6 +4,8 @@ import useStorageHook from '../hook/storageHook';
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../../constant';
 
+const QUERY_PARAMS = `${BASE_URL}/?alertOpen=true&severity=success&message=登録が完了しました`;
+
 const BookCard = ({ book, setSelectedBook, setOpen }) => {
   const CARD_SIZE = 176;
   const CARD_MEDIA_SIZE = { height: 210, width: 148 };
@@ -12,7 +14,7 @@ const BookCard = ({ book, setSelectedBook, setOpen }) => {
   const navigate = useNavigate();
   const handleSubmitCustom = (submitBook) => {
     handleSubmit(submitBook);
-    navigate(`${BASE_URL}/`)
+    navigate(QUERY_PARAMS);
   };
 
   const openDetailModal = (book) => {

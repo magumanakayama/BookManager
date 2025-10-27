@@ -1,18 +1,29 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 const useAlertHook = () => {
-  const [alert, setAlert] = useState({ open: false, message: '', severity: '' });
+  // クエリパラメータの取得
+  const [searchParams] = useSearchParams();
+  const alertOpen = searchParams.get('alertOpen') ?? false;
+  const message = searchParams.get('message') ?? '';
+  const severity = searchParams.get('severity') ?? '';
+  const [alert, setAlert] = useState({ open: alertOpen, message, severity });
 
-  const triggerAlert = (category) => {
-    if (!category) return;
-    const { message, severity } = CATEGORIES[category];
-    setAlert({ open: true, message, severity });
-  };
+  // 画面リロード時にクエリパラメータを消す
+  useEffect(() => {
+    if (window.location.search) window.history.replaceState({}, '', window.location.pathname);
+  }, []);
 
-  return { alert, triggerAlert, close: () => setAlert({ open: false, message: '', severity: '' }) };
+  return { alert, triggerAlert: triggerAlert(setAlert), close: () => setAlert({ open: false, message: '', severity: '' }) };
 };
 
 export default useAlertHook;
+
+export const triggerAlert = (dispatcher) => (category) => {
+  if (!category) return;
+  const { message, severity } = CATEGORIES[category];
+  dispatcher({ open: true, message, severity });
+};
 
 export const CATEGORIES = {
   submit: { message: '書籍情報を登録しました', severity: 'success' },

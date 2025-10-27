@@ -2,14 +2,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { BASE_URL } from './constant';
 
-import TopPage from './TopPage';
+import TopPage from './components/top/TopPage';
 import BookSearch from './components/search/BookSearch';
 import BookGraph from './components/graph/BookGraph';
 import MockComponent from './MockComponent';
 import theme from './theme'
 import './App.css'
 
-// Search側で登録した際のアラート表示が出来ていない(10/26(日))
 function App() {
   return (
     <Router>
