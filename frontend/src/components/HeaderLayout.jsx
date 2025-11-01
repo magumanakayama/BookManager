@@ -1,15 +1,23 @@
 import { AppBar, Toolbar } from '@mui/material'
 
-
 const HeaderLayout = ({ children }) => {
+  const appBarSx = {
+    width: '100%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  };
+  const toolbarSx = {
+    mb: 2,
+  };
+
   return (
     <>
-      <AppBar position="fixed" sx={{ width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
+      <AppBar position="fixed" sx={appBarSx}>
         <Toolbar>
           {children}
         </Toolbar>
       </AppBar>
-      <Toolbar sx={{ mb: 2 }} />
+      <Toolbar sx={toolbarSx} />
     </>
   );
 };

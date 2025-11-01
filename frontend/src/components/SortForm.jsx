@@ -1,6 +1,5 @@
 import { Box, InputLabel, Select, MenuItem, FormControl } from '@mui/material'
 
-
 const SortForm = ({ sort, setSort }) => {
   const handleChange = (event) => {
     setSort(event.target.value);

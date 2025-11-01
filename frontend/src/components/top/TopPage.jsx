@@ -8,9 +8,7 @@ import '../../App.css'
 import ImageGrid from './ImageGrid';
 import HeaderLayout from '../HeaderLayout';
 import TopHeader from './TopHeader';
-import SubmitModal from './modal/SubmitModal';
-import SpeedDialButtons from '../SpeedDialButtons';
-import CSVModal from './CSVModal';
+import SpeedDialButtons from './SpeedDialButtons';
 import CustomAlert from '../CustomAlert';
 
 // カスタムフック
@@ -19,8 +17,6 @@ import useStorageHook from '../hook/storageHook';
 
 const TopPage = () => {
   const [sort, setSort] = useState("new");
-  const [open, setOpen] = useState(false);
-  const [CSVopen, setCSVOpen] = useState(false);
   const { bookStorage, setBookStorage, handleSubmit } = useStorageHook();
   const { alert, triggerAlert, close } = useAlertHook();
 
@@ -31,10 +27,8 @@ const TopPage = () => {
       </HeaderLayout>
       <Box sx={{ mb: 2 }}>
         <ImageGrid bookInfo={bookStorage} setBookInfo={setBookStorage} sort={sort} />
-        {open && <SubmitModal setOpen={setOpen} handleSubmit={handleSubmit} triggerAlert={triggerAlert} />}
         <CustomAlert alert={alert} close={close} />
-        {CSVopen && <CSVModal setCSVOpen={setCSVOpen} bookInfo={bookStorage} setBookInfo={setBookStorage} />}
-        <SpeedDialButtons setOpen={setOpen} setCSVOpen={setCSVOpen} />
+        <SpeedDialButtons bookStorage={bookStorage} setBookStorage={setBookStorage} handleSubmit={handleSubmit} triggerAlert={triggerAlert} />
       </Box>
     </ThemeProvider>
   )
