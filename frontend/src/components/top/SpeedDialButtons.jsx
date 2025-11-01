@@ -3,11 +3,11 @@ import { Box, SpeedDial, SpeedDialIcon, SpeedDialAction } from '@mui/material';
 import { Search, BarChart, Add, ImportExport } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import SubmitModal from './modal/SubmitModal';
-import CSVModal from '../top/CSVModal';
+import CsvModal from '../top/modal/CsvModal';
 import useDialHook from '../hook/dialHook';
 import { BASE_URL } from '../../constant';
 
-const SpeedDialButtons = ({ bookStorage, setBookStorage, handleSubmit, triggerAlert }) => {
+const SpeedDialButtons = ({ bookStorage, setBookStorage, submitBook, triggerAlert }) => {
   const { dialOpen, setDialOpen, generateActions } = useDialHook();
   const [submitOpen, setSubmitOpen] = useState(false);
   const [csvOpen, setCsvOpen] = useState(false);
@@ -27,8 +27,8 @@ const SpeedDialButtons = ({ bookStorage, setBookStorage, handleSubmit, triggerAl
           {actions.map((action) => <SpeedDialAction key={action.name} icon={action.icon} onClick={action.onClick} />)}
         </SpeedDial>
       </SpeedDialLayout>
-      {submitOpen && <SubmitModal setOpen={setSubmitOpen} handleSubmit={handleSubmit} triggerAlert={triggerAlert} />}
-      {csvOpen && <CSVModal setOpen={setCsvOpen} bookInfo={bookStorage} setBookInfo={setBookStorage} />}
+      {submitOpen && <SubmitModal setOpen={setSubmitOpen} submitBook={submitBook} triggerAlert={triggerAlert} />}
+      {csvOpen && <CsvModal setOpen={setCsvOpen} bookInfo={bookStorage} setBookInfo={setBookStorage} />}
     </>
   );
 };

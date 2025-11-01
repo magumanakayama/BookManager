@@ -17,7 +17,7 @@ import useStorageHook from '../hook/storageHook';
 
 const TopPage = () => {
   const [sort, setSort] = useState("new");
-  const { bookStorage, setBookStorage, handleSubmit } = useStorageHook();
+  const { bookStorage, setBookStorage, getBookInfo, submitBook, editBook, deleteBook } = useStorageHook();
   const { alert, triggerAlert, close } = useAlertHook();
 
   return (
@@ -26,9 +26,9 @@ const TopPage = () => {
         <TopHeader sort={sort} setSort={setSort} />
       </HeaderLayout>
       <Box sx={{ mb: 2 }}>
-        <ImageGrid bookInfo={bookStorage} setBookInfo={setBookStorage} sort={sort} />
+        <ImageGrid bookInfo={bookStorage} getBookInfo={getBookInfo} editBook={editBook} deleteBook={deleteBook} sort={sort} triggerAlert={triggerAlert} />
         <CustomAlert alert={alert} close={close} />
-        <SpeedDialButtons bookStorage={bookStorage} setBookStorage={setBookStorage} handleSubmit={handleSubmit} triggerAlert={triggerAlert} />
+        <SpeedDialButtons bookStorage={bookStorage} setBookStorage={setBookStorage} submitBook={submitBook} triggerAlert={triggerAlert} />
       </Box>
     </ThemeProvider>
   )

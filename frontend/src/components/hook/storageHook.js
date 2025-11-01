@@ -4,15 +4,32 @@ import generateTodayString from './generateTodayString';
 const useStorageHook = () => {
   const [bookStorage, setBookStorage] = useLocalStorage('books', []);
 
-  const handleSubmit = (submitBook, setAlert = () => { }) => {
-    setBookStorage(makeBookInfo(submitBook, bookStorage));
-    setAlert();
-  }
+  return {
+    bookStorage,
+    setBookStorage,
+    getBookInfo: getBookInfo(bookStorage),
+    submitBook: submitBook(bookStorage, setBookStorage),
+    editBook: editBook(bookStorage, setBookStorage),
+    deleteBook: deleteBook(bookStorage, setBookStorage),
+  };
+};
+export default useStorageHook;
 
-  return { bookStorage, setBookStorage, handleSubmit, getBookInfo: getBookInfo(bookStorage) };
+export const getBookInfo = (bookStorage) => (isbn) => bookStorage.find(book => book.isbn === isbn);
+export const submitBook = (storage, dispatcher) => (book) => dispatcher(genBlankBook(book, storage));
+export const editBook = (storage, dispatcher) => (book) => {
+  const { updateBookInfo, index } = common(storage, book);
+  updateBookInfo[index] = { ...updateBookInfo[index], ...book };
+  dispatcher(updateBookInfo);
+};
+export const deleteBook = (storage, dispatcher) => (book) => {
+  const { updateBookInfo, index } = common(storage, book);
+  updateBookInfo.splice(index, 1);
+  dispatcher(updateBookInfo);
 };
 
-const makeBookInfo = (submitBook, bookStorage) => {
+// 空本登録時の補完処理
+const genBlankBook = (submitBook, bookStorage) => {
   const { title, author, date, largeImageUrl, isbn } = submitBook;
   return [
     ...bookStorage,
@@ -26,6 +43,9 @@ const makeBookInfo = (submitBook, bookStorage) => {
   ];
 };
 
-export default useStorageHook;
-
-export const getBookInfo = (bookStorage) => (isbn) => bookStorage.find(book => book.isbn === isbn);
+// edit/Deleteの共通処理
+const common = (storage, book) => {
+  const updateBookInfo = [...storage];
+  const index = storage.findIndex(b => b.isbn === book.isbn);
+  return { updateBookInfo, index };
+};
