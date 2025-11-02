@@ -4,7 +4,7 @@ import { Grid, Pagination } from '@mui/material';
 import SearchResultInfo from './SearchResultInfo';
 import BookCard from './BookCard';
 
-const SearchComponent = ({ request, setSelectedBook, setOpen, handleSubmit, setPage, page, handleSearch, setSearching }) => {
+const SearchComponent = ({ request, setPage, page, handleSearch, setSearching }) => {
   const { data, loading, error } = useFetch(request);
   const pageCount = data?.pageCount || 0;
 
@@ -29,7 +29,7 @@ const SearchComponent = ({ request, setSelectedBook, setOpen, handleSubmit, setP
       <Grid container spacing={1} sx={{ width: '100%', justifyContent: 'center' }}>
         {(data?.Items ?? []).map(book => (
           <Grid key={book.Item.isbn}>
-            <BookCard book={book} setSelectedBook={setSelectedBook} setOpen={setOpen} handleSubmit={handleSubmit} />
+            <BookCard book={book} />
           </Grid>
         ))}
       </Grid>
