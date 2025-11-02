@@ -4,7 +4,7 @@ import EditModal from './modal/EditModal';
 import { BOOK_SHADOW } from '../../constant';
 
 
-const ImageGrid = ({ bookInfo, getBookInfo, editBook, deleteBook, sort, triggerAlert }) => {
+const ImageGrid = ({ getBookInfo, editBook, deleteBook, sortBooks, sort, triggerAlert }) => {
   const [open, setOpen] = useState(false)
   const [selectedBookISBN, setSelectedBookISBN] = useState('');
   const handleEditOpen = (book) => {
@@ -21,24 +21,17 @@ const ImageGrid = ({ bookInfo, getBookInfo, editBook, deleteBook, sort, triggerA
     triggerAlert
   };
 
-  const sortedList = {
-    new: [...bookInfo].sort((a, b) => new Date(b.date) - new Date(a.date)),
-    old: [...bookInfo].sort((a, b) => new Date(a.date) - new Date(b.date)),
-    // title: [...bookInfo].sort((a, b) => a.title.localeCompare(b.title)),
-    // author: [...bookInfo].sort((a, b) => a.author.localeCompare(b.author)),
-    // 他のソート条件も追加可能
-    off: [...bookInfo]
-  };
-
   return (
     <>
       <ContainerLayout>
-        {(sortedList[sort]).map(book => <BookItem key={book.isbn} book={book} onClick={handleEditOpen} />)}
+        {(sortBooks(sort)).map(book => <BookItem key={book.isbn} book={book} onClick={handleEditOpen} />)}
       </ContainerLayout>
       {open && <EditModal {...modalProps} />}
     </>
   )
-}
+};
+
+export default ImageGrid;
 
 const ContainerLayout = ({ children }) => (
   <Grid container spacing={2} sx={{ width: '100dvw', px: 2 }}>
@@ -53,5 +46,3 @@ const BookItem = ({ book, onClick }) => (
     </Button>
   </Grid>
 );
-
-export default ImageGrid;

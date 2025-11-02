@@ -3,17 +3,36 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { ja } from 'date-fns/locale';
+import genDayString from '../../hook/genDayString';
 
-const BookFormFields = ({ initialBooks, setInitialBooks }) => {
-  const handleInput = (param, inputValue) => setInitialBooks({ ...initialBooks, [param]: inputValue });
+const BookFormFields = ({ book, setBook }) => {
+  const handleInput = (param, inputValue) => setBook({ ...book, [param]: inputValue });
+  const textFields = [
+    { label: 'タイトル', param: 'title' },
+    { label: '著者', param: 'author' }
+  ];
 
-  const handleChange = (newValue) => {
-    const yyyy = String(newValue.getFullYear());
-    const mm = String(newValue.getMonth() + 1).padStart(2, '0');
-    const dd = String(newValue.getDate()).padStart(2, '0');
-    handleInput('date', `${yyyy}/${mm}/${dd}`);
-  };
+  return (
+    <FieldsLayout>
+      {textFields.map(({ label, param }) => {
+        return <TextFieldLayout key={param} label={label} value={book[param]} onChange={e => handleInput(param, e.target.value)} />;
+      })}
+      <DateField book={book} setBook={handleInput} />
+    </FieldsLayout>
+  );
+};
 
+export default BookFormFields;
+
+const FieldsLayout = ({ children }) => (
+  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>{children}</Box>
+);
+
+const TextFieldLayout = ({ label, value, onChange }) => (
+  <TextField label={label} variant="outlined" required value={value} onChange={onChange} />
+);
+
+const DateField = ({ book, setBook }) => {
   // モバイル版ではMM/DDのStringを直接Date型にするエラーになるため、丁寧にパースする
   const parseDate = (dateStr) => {
     if (!dateStr) return null;
@@ -22,25 +41,19 @@ const BookFormFields = ({ initialBooks, setInitialBooks }) => {
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-      <TextField label="タイトル" variant="outlined" required value={initialBooks.title} onChange={e => handleInput('title', e.target.value)} />
-      <TextField label="著者" variant="outlined" required value={initialBooks.author} onChange={e => handleInput('author', e.target.value)} />
-      <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ja}>
-        <DatePicker
-          label="読了日"
-          slotProps={{
-            textField: {
-              label: '読了日',
-              inputProps: { 'aria-label': '読了日入力欄' }
-            }
-          }}
-          value={parseDate(initialBooks.date)}
-          onChange={(v) => handleChange(v)}
-          format="yyyy/MM/dd"
-        />
-      </LocalizationProvider>
-    </Box>
+    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ja}>
+      <DatePicker
+        label="読了日"
+        slotProps={{
+          textField: {
+            label: '読了日',
+            inputProps: { 'aria-label': '読了日入力欄' }
+          }
+        }}
+        value={parseDate(book.date)}
+        onChange={(v) => setBook('date', genDayString(v))}
+        format="yyyy/MM/dd"
+      />
+    </LocalizationProvider>
   );
 };
-
-export default BookFormFields;

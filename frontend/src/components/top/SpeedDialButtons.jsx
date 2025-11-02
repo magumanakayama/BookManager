@@ -22,10 +22,8 @@ const SpeedDialButtons = ({ bookStorage, setBookStorage, submitBook, triggerAler
 
   return (
     <>
-      <SpeedDialLayout>
-        <SpeedDial ariaLabel="SpeedDial" open={dialOpen} onClick={() => setDialOpen(!dialOpen)} icon={<SpeedDialIcon />}>
-          {actions.map((action) => <SpeedDialAction key={action.name} icon={action.icon} onClick={action.onClick} />)}
-        </SpeedDial>
+      <SpeedDialLayout open={dialOpen} setOpen={setDialOpen}>
+        {actions.map((action) => <SpeedDialAction key={action.name} icon={action.icon} onClick={action.onClick} />)}
       </SpeedDialLayout>
       {submitOpen && <SubmitModal setOpen={setSubmitOpen} submitBook={submitBook} triggerAlert={triggerAlert} />}
       {csvOpen && <CsvModal setOpen={setCsvOpen} bookInfo={bookStorage} setBookInfo={setBookStorage} />}
@@ -33,10 +31,12 @@ const SpeedDialButtons = ({ bookStorage, setBookStorage, submitBook, triggerAler
   );
 };
 
-const SpeedDialLayout = ({ children }) => {
+const SpeedDialLayout = ({ children, open, setOpen }) => {
   return (
     <Box sx={{ position: 'fixed', bottom: 32, right: 32 }}>
-      {children}
+      <SpeedDial ariaLabel="SpeedDial" open={open} onClick={() => setOpen(!open)} icon={<SpeedDialIcon />}>
+        {children}
+      </SpeedDial>
     </Box>
   );
 }

@@ -6,20 +6,18 @@ import ModalButtons from './ModalButtons';
 const NEW_BOOK_TEMPLATE = { title: '', author: '', date: '', largeImageUrl: '', isbn: '' };
 
 const SubmitModal = ({ setOpen, submitBook, triggerAlert }) => {
-  const [initialBooks, setInitialBooks] = useState(NEW_BOOK_TEMPLATE);
-  const isRequiredFilled = initialBooks.title && initialBooks.author;
+  const [book, setbook] = useState(NEW_BOOK_TEMPLATE);
+  const isRequiredFilled = book.title && book.author;
 
   const handleSubmit = () => {
-    const dummyImage = `https://placehold.jp/140x200.png?text=${encodeURIComponent(initialBooks.title || 'No Title')}`;
-    const randomIsbn = String(Math.floor(Math.random() * 1e10)).padStart(10, '0');
-    submitBook({ ...initialBooks, largeImageUrl: dummyImage, isbn: randomIsbn });
+    submitBook(book);
     triggerAlert('submit');
     setOpen(false);
   };
 
   return (
     <ModalLayout setOpen={setOpen}>
-      <BookFormFields initialBooks={initialBooks} setInitialBooks={setInitialBooks} />
+      <BookFormFields book={book} setbook={setbook} />
       <ModalButtons setOpen={setOpen} require={isRequiredFilled} handlePositive={handleSubmit} />
     </ModalLayout>
   );
