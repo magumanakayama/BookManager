@@ -6,7 +6,7 @@ import ModalButtons from './ModalButtons';
 const NEW_BOOK_TEMPLATE = { title: '', author: '', date: '', largeImageUrl: '', isbn: '' };
 
 const SubmitModal = ({ setOpen, submitBook, triggerAlert }) => {
-  const [book, setbook] = useState(NEW_BOOK_TEMPLATE);
+  const [book, setBook] = useState(NEW_BOOK_TEMPLATE);
   const isRequiredFilled = book.title && book.author;
 
   const handleSubmit = () => {
@@ -17,7 +17,7 @@ const SubmitModal = ({ setOpen, submitBook, triggerAlert }) => {
 
   return (
     <ModalLayout setOpen={setOpen}>
-      <BookFormFields book={book} setbook={setbook} />
+      <BookFormFields book={book} setBook={setBook} />
       <ModalButtons setOpen={setOpen} require={isRequiredFilled} handlePositive={handleSubmit} />
     </ModalLayout>
   );

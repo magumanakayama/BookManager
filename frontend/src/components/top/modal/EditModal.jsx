@@ -21,7 +21,7 @@ const EditModal = ({ getBookInfo, editBook, deleteBook, setOpen, selectedBookISB
   return (
     <ModalLayout setOpen={setOpen}>
       <img src={editingBook.image} alt={editingBook.title} style={{ paddingBottom: 16 }} />
-      <BookFormFields book={editingBook} setbook={setEditingBook} />
+      <BookFormFields book={editingBook} setBook={setEditingBook} />
       <ModalButtons setOpen={setOpen} require={isChanged} handlePositive={handleEdit} handleDelete={handleDelete} />
     </ModalLayout>
   );

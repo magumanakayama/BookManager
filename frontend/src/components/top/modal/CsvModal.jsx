@@ -1,6 +1,6 @@
 import { Box, Button, Stack } from '@mui/material';
 import { FileDownload, FileUpload } from '@mui/icons-material';
-import CustomAlert from '../../CustomAlert';
+import CustomAlert from '../CustomAlert';
 import useCsv from '../../hook/csvHook';
 import useAlertHook from '../../hook/alertHook';
 import ModalLayout from './ModalLayout';

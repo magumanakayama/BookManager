@@ -9,7 +9,7 @@ import ImageGrid from './ImageGrid';
 import HeaderLayout from '../HeaderLayout';
 import TopHeader from './TopHeader';
 import SpeedDialButtons from './SpeedDialButtons';
-import CustomAlert from '../CustomAlert';
+import CustomAlert from './CustomAlert';
 
 // カスタムフック
 import useAlertHook from '../hook/alertHook';
