@@ -9,7 +9,6 @@ const QUERY_PARAMS = `${BASE_URL}/?alertOpen=true&severity=success&message=登�
 
 const BookCard = ({ book }) => {
   const CARD_MEDIA_SIZE = { height: 210, width: 148 };
-  const [open, setOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
   const navigate = useNavigate();
   const handleSubmit = (book) => {
@@ -20,26 +19,16 @@ const BookCard = ({ book }) => {
     submitBook(books, dispatcher)(book);
     navigate(QUERY_PARAMS);
   };
-  const openDetailModal = (book) => {
-    setSelectedBook(book);
-    setOpen(true);
-  };
 
   return (
     <>
       <CardLayout>
-        <CardActionArea onClick={() => openDetailModal(book)} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <CardMediaImage src={book.Item.largeImageUrl} title={book.Item.title} size={CARD_MEDIA_SIZE} />
-          <CardContent>
-            {lengthCut(book.Item.title, 8)}
-            <p>{lengthCut(book.Item.author, 8) || '著者不明'}</p>
-          </CardContent>
-        </CardActionArea>
+        <CardActionAreaComp onClick={() => setSelectedBook(book)} book={book} size={CARD_MEDIA_SIZE} />
         <CardActions sx={{ justifyContent: 'center' }}>
-          <CardActionsButton onClick={() => handleSubmit(book.Item)} name="登録" />
+          <CardActionsButton onClick={() => handleSubmit(book)} name="登録" />
         </CardActions>
       </CardLayout>
-      {open && <DetailModal setOpen={setOpen} book={selectedBook} handleSubmit={handleSubmit} />}
+      {selectedBook && <DetailModal setOpen={setSelectedBook} book={selectedBook} handleSubmit={handleSubmit} />}
     </>
   );
 }
@@ -50,6 +39,18 @@ const CardLayout = ({ children }) => {
   const CARD_SIZE = 176;
   return <Card sx={{ width: CARD_SIZE }}>{children}</Card>;
 };
+
+const CardActionAreaComp = ({ onClick, book, size }) => {
+  return (
+    <CardActionArea onClick={onClick} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <CardMediaImage src={book.largeImageUrl} title={book.title} size={size} />
+      <CardContent>
+        {lengthCut(book.title, 8)}
+        <p>{lengthCut(book.author, 8) || '著者不明'}</p>
+      </CardContent>
+    </CardActionArea>
+  );
+}
 
 const CardMediaImage = ({ src, title, size }) => {
   return (

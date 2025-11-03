@@ -8,7 +8,7 @@ const SearchComponent = ({ request, setPage, page, handleSearch, setSearching })
   const { data, loading, error } = useFetch(request);
   const pageCount = data?.pageCount || 0;
 
-  const handlePageChange = (value) => {
+  const handlePage = (value) => {
     setPage(value);
     window.scrollTo({ top: 0, behavior: 'auto' }); // ページの一番上までスクロール
   };
@@ -16,12 +16,10 @@ const SearchComponent = ({ request, setPage, page, handleSearch, setSearching })
   // ステートの更新は非同期なのでhandlePageChangeの中でhandlesearchしても前のページが参照されうまくいかない
   // よってuseEffectが必須となる
   useEffect(() => handleSearch(), [page]);
-
   useEffect(() => {
     // !loadingだと false→undefinedの時にも反応してしまう
     if (loading == false) setSearching(false);
   }, [loading]);
-
 
   return (
     <>
@@ -29,11 +27,13 @@ const SearchComponent = ({ request, setPage, page, handleSearch, setSearching })
       <Grid container spacing={1} sx={{ width: '100%', justifyContent: 'center' }}>
         {(data?.Items ?? []).map(book => (
           <Grid key={book.Item.isbn}>
-            <BookCard book={book} />
+            <BookCard book={book.Item} />
           </Grid>
         ))}
       </Grid>
-      {(data?.Items?.length > 0) && <Pagination sx={{ display: "flex", justifyContent: 'center', mt: 2, mb: 6 }} count={pageCount} color="primary" onChange={(_, value) => handlePageChange(value)} />}
+      {(data?.Items?.length > 0) &&
+        <Pagination sx={{ display: "flex", justifyContent: 'center', mt: 2, mb: 6 }} page={page} count={pageCount} onChange={(_, value) => handlePage(value)} />
+      }
     </>
   )
 }

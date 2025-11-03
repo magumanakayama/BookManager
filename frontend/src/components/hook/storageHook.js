@@ -20,7 +20,7 @@ export default useStorageHook;
 //// 書籍取得
 export const getBookInfo = (bookStorage) => (isbn) => bookStorage.find(book => book.isbn === isbn);
 //// 登録
-export const submitBook = (storage, dispatcher) => (book) => dispatcher(genBlankBook(book, storage));
+export const submitBook = (storage, dispatcher) => (book) => dispatcher([...storage, genBlankBook(book)]);
 //// 編集
 export const editBook = (storage, dispatcher) => (book) => {
   const { updateBookInfo, index } = common(storage, book);
@@ -48,18 +48,15 @@ export const sortBooks = (bookStorage) => (type) => {
 
 // その他処理
 //// 空本登録時の補完処理
-const genBlankBook = (submitBook, bookStorage) => {
+const genBlankBook = (submitBook) => {
   const { title, author, date, largeImageUrl, isbn } = submitBook;
-  return [
-    ...bookStorage,
-    {
-      title: title || 'タイトル不明',
-      author: author || '著者不明',
-      date: date || genDayString(),
-      image: largeImageUrl || `https://placehold.jp/140x200.png?text=${encodeURIComponent(title || 'No Title')}`,
-      isbn: isbn || String(Math.floor(Math.random() * 1e10)).padStart(10, '0')
-    }
-  ];
+  return {
+    title: title || 'タイトル不明',
+    author: author || '著者不明',
+    date: date || genDayString(),
+    image: largeImageUrl || `https://placehold.jp/140x200.png?text=${encodeURIComponent(title || 'No Title')}`,
+    isbn: isbn || String(Math.floor(Math.random() * 1e10)).padStart(10, '0')
+  };
 };
 
 //// edit/Deleteの共通処理

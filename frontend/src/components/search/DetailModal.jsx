@@ -2,7 +2,7 @@ import { Button, Modal, Box, Stack } from '@mui/material'
 
 const DetailModal = ({ setOpen, book, handleSubmit }) => {
   const ButtonList = [
-    { onClick: () => handleSubmit(book.Item), label: '登録' },
+    { onClick: () => handleSubmit(book), label: '登録' },
     { onClick: () => setOpen(false), label: '閉じる' },
   ];
 
@@ -28,14 +28,14 @@ const ModalLayout = ({ children, onClose }) => {
 };
 
 const Info = ({ book }) => {
-  const FONT_SIZE = book?.Item?.title.length > 20 && '1rem';
+  const FONT_SIZE = book?.title.length > 20 && '1rem';
   return (
     <Stack direction="row">
-      <img src={book?.Item?.largeImageUrl} alt={book?.Item?.title} />
+      <img src={book?.largeImageUrl} alt={book?.title} />
       <Box sx={{ ml: 2 }}>
-        <h2 style={{ fontSize: FONT_SIZE }}>{book?.Item?.title}</h2>
-        <p>{book?.Item?.author || '著者不明'}</p>
-        <p>{book?.Item?.size}</p>
+        <h2 style={{ fontSize: FONT_SIZE }}>{book?.title}</h2>
+        <p>{book?.author || '著者不明'}</p>
+        <p>{book?.size}</p>
       </Box>
     </Stack>
   );
@@ -44,7 +44,7 @@ const Info = ({ book }) => {
 const Caption = ({ book }) => {
   return (
     <Box sx={{ my: 2, maxHeight: '50dvh', overflowY: 'auto' }}>
-      <p>{book?.Item?.itemCaption}</p>
+      <p>{book?.itemCaption}</p>
     </Box>
   );
 };
