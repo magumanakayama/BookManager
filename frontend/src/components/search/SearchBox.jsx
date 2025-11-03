@@ -1,29 +1,27 @@
 import { TextField, Button, Stack } from '@mui/material';
 import { useState } from 'react';
-import searchHook from '../hook/searchHook';
+import useSearch from '../hook/searchHook';
 import SearchComponent from './SearchComponent';
 
 const SearchBox = () => {
-  const { query, setQuery, setPrevQuery, diff, createUrl } = searchHook();
-  const [request, setRequest] = useState(null);
+  // promiseをstateかつキーにすることでuseを制御
+  //// promiseが変数だとrequestが変わるたびに再レンダリングされてしまうため発火タイミング制御が難しくなる
+  const { query, setQuery, setPrevQuery, booksPromise, loading, diff, bookSearch } = useSearch();
   const [page, setPage] = useState(1);
-  const [searching, setSearching] = useState(false);
 
   const handleSearch = () => {
     setPrevQuery(query);
-    setSearching(true);
-    setRequest(createUrl(page)); // keyを変えることで同じURLでも再レンダリングされるようにする、保険
+    bookSearch(page);
   };
 
   return (
     <>
       <Stack direction="column" sx={{ m: 2 }} spacing={1}>
         <InputField query={query} setQuery={setQuery} />
-        <Buttons handleSearch={handleSearch} query={query} setQuery={setQuery} isQueryChanged={diff} searching={searching} />
-        {/* ToDo： サムネが無い場合は適当な画像を入れたい */}
+        <Buttons loading={loading} loadingIndicator={'検索中'} handleSearch={handleSearch} query={query} setQuery={setQuery} isQueryChanged={diff} />
       </Stack>
-      {request && (
-        <SearchComponent key={request} request={request} setPage={setPage} page={page} handleSearch={handleSearch} setSearching={setSearching} />
+      {booksPromise && (
+        <SearchComponent key={booksPromise} promise={booksPromise} setPage={setPage} page={page} bookSearch={bookSearch} />
       )}
     </>
   );
@@ -53,11 +51,11 @@ const InputField = ({ query, setQuery }) => {
   );
 };
 
-const Buttons = ({ handleSearch, query, setQuery, isQueryChanged, searching }) => (
+const Buttons = ({ loading, handleSearch, query, setQuery, isQueryChanged }) => (
   <Stack direction="row" justifyContent="flex-end" spacing={1}>
     <Button variant="outlined" onClick={() => window.history.back()} >戻る</Button>
     <DebugButton query={query} setQuery={setQuery} />
-    <Button variant="contained" loading={searching} loadingIndicator="検索中" onClick={handleSearch} disabled={!isQueryChanged} sx={{ width: 88 }}>検索</Button>
+    <Button variant="contained" loading={loading} loadingIndicator="検索中" onClick={handleSearch} disabled={!isQueryChanged} sx={{ width: 88 }}>検索</Button>
   </Stack>
 );
 

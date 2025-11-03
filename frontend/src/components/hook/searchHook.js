@@ -3,14 +3,17 @@ import { useState } from 'react';
 const useSearch = () => {
   const [query, setQuery] = useState({ author: '', title: '' });
   const [prevQuery, setPrevQuery] = useState(query);
+  const [booksPromise, setBooksPromise] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   return {
     query,
     setQuery,
-    prevQuery,
     setPrevQuery,
+    booksPromise,
+    loading,
     diff: checkDiff(query, prevQuery),
-    createUrl: createUrl(query),
+    bookSearch: bookSearch(createUrl(query), setBooksPromise, setLoading),
   };
 };
 
@@ -28,4 +31,19 @@ export const createUrl = (query) => (page) => {
   const and = title && author ? '&' : '';
 
   return `${BASE_URI}?${titleQuery}${and}${authorQuery}&${pageQuery}`;
+};
+
+// 書籍検索関数のカリー化
+export const bookSearch = (createUrl, setBooksPromise, setLoading) => (page) => {
+  setBooksPromise(fetchBooks(createUrl(page), () => setLoading(false)));
+  setLoading(true);
+};
+
+// fetch実行関数
+export const fetchBooks = async (request, func) => {
+  const response = await fetch(request);
+  if (!response.ok) throw new Error("Failed to fetch books");
+  const data = await response.json();
+  func();
+  return data;
 };
