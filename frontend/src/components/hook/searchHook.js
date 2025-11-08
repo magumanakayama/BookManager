@@ -1,10 +1,17 @@
 import { useState } from 'react';
+import { setPromiseState, fetchWithCallback } from './fetch';
 
 const useSearch = () => {
   const [query, setQuery] = useState({ author: '', title: '' });
   const [prevQuery, setPrevQuery] = useState(query);
   const [booksPromise, setBooksPromise] = useState(null);
   const [loading, setLoading] = useState(false);
+  const fetchStopLoading = fetchWithCallback(() => setLoading(false));
+
+  const bookSearch = (page) => {
+    setPromiseState(fetchStopLoading, setBooksPromise)(createUrl(query)(page))
+    setLoading(true);
+  }
 
   return {
     query,
@@ -13,7 +20,7 @@ const useSearch = () => {
     booksPromise,
     loading,
     diff: checkDiff(query, prevQuery),
-    bookSearch: bookSearch(createUrl(query), setBooksPromise, setLoading),
+    bookSearch,
   };
 };
 
@@ -30,20 +37,6 @@ export const createUrl = (query) => (page) => {
   const pageQuery = `page=${page}`;
   const and = title && author ? '&' : '';
 
-  return `${BASE_URI}?${titleQuery}${and}${authorQuery}&${pageQuery}`;
-};
-
-// 書籍検索関数のカリー化
-export const bookSearch = (createUrl, setBooksPromise, setLoading) => (page) => {
-  setBooksPromise(fetchBooks(createUrl(page), () => setLoading(false)));
-  setLoading(true);
-};
-
-// fetch実行関数
-export const fetchBooks = async (request, func) => {
-  const response = await fetch(request);
-  if (!response.ok) throw new Error("Failed to fetch books");
-  const data = await response.json();
-  func();
-  return data;
+  return 'https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404?applicationId=7777&title=%E5%A4%AA%E9%99%BD';
+  // return `${BASE_URI}?${titleQuery}${and}${authorQuery}&${pageQuery}`;
 };
