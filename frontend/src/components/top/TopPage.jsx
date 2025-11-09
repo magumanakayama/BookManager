@@ -16,7 +16,7 @@ import useStorageHook from '../hook/storageHook';
 const TopPage = () => {
   const { bookStorage, setBookStorage, getBookInfo, submitBook, editBook, deleteBook, sortBooks } = useStorageHook();
   const { alert, triggerAlert, close } = useAlertHook();
-  const sort = useCustomParams().getParam()?.val;
+  const sort = useCustomParams().getParam().val;
 
   return (
     <ThemeProvider theme={theme}>

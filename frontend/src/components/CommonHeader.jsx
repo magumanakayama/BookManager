@@ -10,11 +10,11 @@ const CommonHeader = () => {
     const topNavi = genNavigate('sort')();
     const graphNavi = genNavigate('mode')('/BookGraph');
     return {
-      [BASE_URL]: [
+      [`${BASE_URL}/`]: [
         { value: 'new', label: '新しい順', navi: () => topNavi('new') },
         { value: 'old', label: '古い順', navi: () => topNavi('old') },
       ],
-      [BASE_URL + '/BookGraph']: [
+      [`${BASE_URL}/BookGraph`]: [
         { value: 'author', label: '著者', navi: () => graphNavi('author') },
         { value: 'monthly', label: '月次', navi: () => graphNavi('monthly') },
       ]
@@ -22,7 +22,7 @@ const CommonHeader = () => {
   };
 
   const control = {
-    value: getParam()?.val,
+    value: getParam().val,
     onChange: (_, newValue) => {
       if (newValue === null) return;
       toggleList()[path].find(item => item.value === newValue)?.navi();

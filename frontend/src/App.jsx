@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Outlet, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { BASE_URL } from './constant';
 
@@ -17,8 +17,8 @@ function App() {
     <Router>
       <ThemeProvider theme={theme}>
         <Routes>
-          <Route path={BASE_URL} element={<MockConsole />}>
-            <Route path={BASE_URL} element={<TopPage />} />
+          <Route path={`${BASE_URL}`} element={<MockConsole />}>
+            <Route path={`${BASE_URL}`} element={<TopPage />} />
             <Route path={`${BASE_URL}/BookGraph`} element={<BookGraph />} />
           </Route>
           <Route path={`${BASE_URL}/BookSearch`} element={<BookSearch />} />

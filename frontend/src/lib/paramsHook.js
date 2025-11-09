@@ -21,13 +21,13 @@ export default useCustomParams;
 
 // パスを取得して、対応するクエリパラメータの値を返す関数
 export const getParam = (path) => (searchParams) => {
-  if (path === BASE_URL) {
+  if (path === `${BASE_URL}/`) {
     return { val: searchParams.get('sort') || 'new', path: path };
-  } else if (path === BASE_URL + '/BookGraph') {
+  } else if (path === `${BASE_URL}/BookGraph`) {
     return { val: searchParams.get('mode') || 'author', path: path };
   }
 };
 
-export const genUrl = (query) => (value) => (addPath = '') => {
+export const genUrl = (query) => (value) => (addPath = '/') => {
   return `${BASE_URL}${addPath}?${new URLSearchParams({ [query]: value })}`;
 };
