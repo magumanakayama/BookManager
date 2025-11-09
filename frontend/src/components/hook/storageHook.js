@@ -17,6 +17,7 @@ const useStorageHook = () => {
 export default useStorageHook;
 
 // 書籍ストレージ操作関数群
+// ToDo: 全体的にカリー化する
 //// 書籍取得
 export const getBookInfo = (bookStorage) => (isbn) => bookStorage.find(book => book.isbn === isbn);
 //// 登録

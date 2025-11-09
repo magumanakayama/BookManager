@@ -10,6 +10,7 @@ const CsvModal = ({ setOpen, bookInfo, setBookInfo }) => {
   const { alert, triggerAlert } = useAlertHook();
   const handleImport = (importBook) => {
     setBookInfo(importBook);
+    // ToDo： open=falseになるためアラートが出ないのを修正
     triggerAlert('submit');
     setOpen(false);
   }

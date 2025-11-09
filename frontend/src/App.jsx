@@ -17,8 +17,8 @@ function App() {
     <Router>
       <ThemeProvider theme={theme}>
         <Routes>
-          <Route path={`${BASE_URL}`} element={<MockConsole />}>
-            <Route path={`${BASE_URL}`} element={<TopPage />} />
+          <Route path={`${BASE_URL}/`} element={<MockConsole />}>
+            <Route path={`${BASE_URL}/`} element={<TopPage />} />
             <Route path={`${BASE_URL}/BookGraph`} element={<BookGraph />} />
           </Route>
           <Route path={`${BASE_URL}/BookSearch`} element={<BookSearch />} />
