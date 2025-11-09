@@ -23,7 +23,7 @@ const BookGraph = () => {
   const { sortedAuthors, legendData } = listFormatterPie(bookInfo, MAX_DISPLAY);
   const { totalCount, yearlyList, monthlyList } = listFormatterBar(bookInfo);
 
-  const graphMode = useCustomParams().getParam().val;
+  const graphMode = useCustomParams().getParam()?.val;
 
   return (
     <Box sx={{ maxWidth: 600 }}>

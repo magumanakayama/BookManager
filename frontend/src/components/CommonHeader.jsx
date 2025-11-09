@@ -22,7 +22,7 @@ const CommonHeader = () => {
   };
 
   const control = {
-    value: getParam().val,
+    value: getParam()?.val,
     onChange: (_, newValue) => {
       if (newValue === null) return;
       toggleList()[path].find(item => item.value === newValue)?.navi();
