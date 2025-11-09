@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useLocalStorage } from 'react-use';
-import { Box, Button } from '@mui/material';
-import HeaderLayout from '../HeaderLayout';
-import GraphHeader from './GraphHeader';
+import { Box } from '@mui/material';
+import useCustomParams from '../../lib/paramsHook';
 
 import AuthorGraph from './AuthorGraph';
 import AuthorList from './AuthorList';
@@ -18,27 +17,23 @@ const BookGraph = () => {
   const MAX_DISPLAY = 5;
 
   const [bookInfo, _] = useLocalStorage('books', []);
-  const [graphMode, setGraphMode] = useState("author");
   // yearステートは移動予定
   const [year, setYear] = useState(new Date().getFullYear());
 
   const { sortedAuthors, legendData } = listFormatterPie(bookInfo, MAX_DISPLAY);
   const { totalCount, yearlyList, monthlyList } = listFormatterBar(bookInfo);
 
+  const graphMode = useCustomParams().getParam().val;
 
   return (
     <Box sx={{ maxWidth: 600 }}>
-      <HeaderLayout>
-        <GraphHeader graphMode={graphMode} setGraphMode={setGraphMode} />
-      </HeaderLayout>
-      {/* <Button variant="outlined" onClick={() => window.history.back()} >戻る</Button> */}
-      {graphMode === "author" &&
+      {graphMode === 'author' &&
         <>
           <AuthorGraph legendData={legendData} />
           <AuthorList bookInfo={bookInfo} sortedAuthors={sortedAuthors} />
         </>
       }
-      {graphMode === "monthly" &&
+      {graphMode === 'monthly' &&
         <>
           <YearSelect yearlyList={yearlyList} year={year} setYear={setYear} />
           <MonthlyGraph year={year} monthlyList={monthlyList.find(item => item.year === year)?.['months']} />

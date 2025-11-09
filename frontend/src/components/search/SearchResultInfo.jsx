@@ -1,3 +1,4 @@
+// 未使用のコンポーネント
 import { Box } from '@mui/material';
 
 const SearchResultInfo = ({ data, loading, error }) => {

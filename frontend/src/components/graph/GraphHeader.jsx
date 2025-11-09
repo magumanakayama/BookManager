@@ -1,9 +1,7 @@
 import { ToggleButton, ToggleButtonGroup } from '@mui/material'
 
-
 const GraphHeader = ({ graphMode, setGraphMode }) => {
   const control = {
-    // 選択している値
     value: graphMode,
     onChange: (_, newValue) => {
       if (newValue === null) return;

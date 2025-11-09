@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet, useLocation } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { BASE_URL } from './constant';
 
@@ -9,14 +9,19 @@ import MockComponent from './MockComponent';
 import theme from './theme'
 import './App.css'
 
+import HeaderLayout from './components/HeaderLayout';
+import CommonHeader from './components/CommonHeader';
+
 function App() {
   return (
     <Router>
       <ThemeProvider theme={theme}>
         <Routes>
-          <Route path={`${BASE_URL}/`} element={<TopPage />} />
+          <Route path={BASE_URL} element={<MockConsole />}>
+            <Route path={BASE_URL} element={<TopPage />} />
+            <Route path={`${BASE_URL}/BookGraph`} element={<BookGraph />} />
+          </Route>
           <Route path={`${BASE_URL}/BookSearch`} element={<BookSearch />} />
-          <Route path={`${BASE_URL}/BookGraph`} element={<BookGraph />} />
           <Route path={`${BASE_URL}/Mock`} element={<MockComponent />} />
         </Routes>
       </ThemeProvider>
@@ -24,4 +29,15 @@ function App() {
   )
 }
 
-export default App
+export default App;
+
+const MockConsole = () => {
+  return (
+    <>
+      <HeaderLayout>
+        <CommonHeader />
+      </HeaderLayout>
+      <Outlet />
+    </>
+  );
+};

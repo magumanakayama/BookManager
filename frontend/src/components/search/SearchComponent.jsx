@@ -11,7 +11,7 @@ const SearchComponent = ({ promise, setPage, page, bookSearch }) => {
   };
 
   return (
-    <ErrorBoundary fallbackRender={errorInfo}>
+    <ErrorBoundary fallbackRender={ErrorInfo}>
       <Suspense fallback={<></>}>
         <CardGrid promise={promise} page={page} handlePage={handlePage} />
       </Suspense>
@@ -40,7 +40,8 @@ const CardGrid = ({ promise, page, handlePage }) => {
   );
 };
 
-const errorInfo = ({ error }) => {
+// エラーメッセージ表示コンポーネント
+const ErrorInfo = ({ error }) => {
   return (
     <Box sx={{ color: 'red', mt: 2 }}>
       {handleSearchError(error.cause)}
@@ -48,6 +49,7 @@ const errorInfo = ({ error }) => {
   );
 };
 
+// エラーハンドリング関数
 const handleSearchError = ({ status, body }) => {
   const errorCode = body?.error_description;
   switch (status) {

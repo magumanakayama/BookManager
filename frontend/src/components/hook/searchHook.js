@@ -37,6 +37,7 @@ export const createUrl = (query) => (page) => {
   const pageQuery = `page=${page}`;
   const and = title && author ? '&' : '';
 
-  return 'https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404?applicationId=7777&title=%E5%A4%AA%E9%99%BD';
-  // return `${BASE_URI}?${titleQuery}${and}${authorQuery}&${pageQuery}`;
+  // デバッグ用URL、故意にエラーを発生させる
+  // return 'https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404?applicationId=7777&title=%E5%A4%AA%E9%99%BD';
+  return `${BASE_URI}?${titleQuery}${and}${authorQuery}&${pageQuery}`;
 };
