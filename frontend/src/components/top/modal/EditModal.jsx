@@ -2,18 +2,26 @@ import { useState } from 'react';
 import ModalLayout from './ModalLayout';
 import BookFormFields from './BookFormFields';
 import ModalButtons from './ModalButtons';
+import { getBookInfo, editBook, deleteBook } from '../../hook/storageHook';
 
-const EditModal = ({ getBookInfo, editBook, deleteBook, setOpen, selectedBookISBN, triggerAlert }) => {
-  const [editingBook, setEditingBook] = useState(getBookInfo(selectedBookISBN));
+const EditModal = ({ bookStorage, setBookStorage, setOpen, selectedBookISBN, triggerAlert }) => {
+  // フック関数を部分適用
+  const selectedBookInfo = () => getBookInfo(bookStorage)(selectedBookISBN);
+  const editSelectedBook = editBook(bookStorage)(setBookStorage);
+  const deleteSelectedBook = deleteBook(bookStorage)(setBookStorage);
+
+  const [editingBook, setEditingBook] = useState(selectedBookInfo());
   // ToDo: diffを取るロジックをカスタムフック内に作るのも視野、暫定これでも良い
-  const isChanged = (JSON.stringify(editingBook) !== JSON.stringify(getBookInfo(selectedBookISBN))) && editingBook.title && editingBook.author;
+  const isChanged = (JSON.stringify(editingBook) !== JSON.stringify(selectedBookInfo())) && editingBook.title && editingBook.author;
+  // 更新ハンドラー
   const handleEdit = () => {
-    editBook(editingBook);
+    editSelectedBook(editingBook);
     triggerAlert('edit');
     setOpen(false);
   }
+  // 削除ハンドラー
   const handleDelete = () => {
-    deleteBook(editingBook);
+    deleteSelectedBook(editingBook);
     triggerAlert('delete');
     setOpen(false);
   }

@@ -23,6 +23,7 @@ const BookGraph = () => {
   const { sortedAuthors, legendData } = listFormatterPie(bookInfo, MAX_DISPLAY);
   const { totalCount, yearlyList, monthlyList } = listFormatterBar(bookInfo);
 
+  // クエリパラメータmodeに応じて表示を切り替え
   const graphMode = useCustomParams().getParam().val;
 
   return (

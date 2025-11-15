@@ -16,7 +16,7 @@ const BookCard = ({ book }) => {
     const books = JSON.parse(localStorage.getItem('books')) || [];
     const dispatcher = (b) => localStorage.setItem('books', JSON.stringify(b));
 
-    submitBook(books, dispatcher)(book);
+    submitBook(books)(dispatcher)(book);
     navigate(QUERY_PARAMS);
   };
 

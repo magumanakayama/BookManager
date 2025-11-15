@@ -14,16 +14,25 @@ import useAlertHook from '../hook/alertHook';
 import useStorageHook from '../hook/storageHook';
 
 const TopPage = () => {
-  const { bookStorage, setBookStorage, getBookInfo, submitBook, editBook, deleteBook, sortBooks } = useStorageHook();
+  const { bookStorage, setBookStorage } = useStorageHook();
   const { alert, triggerAlert, close } = useAlertHook();
+  // クエリパラメータsortに応じて表示を切り替え
   const sort = useCustomParams().getParam().val;
+
+  // ImageGrid用props
+  const imageGridProps = {
+    bookStorage,
+    setBookStorage,
+    sort,
+    triggerAlert
+  };
 
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ mb: 2 }}>
-        <ImageGrid getBookInfo={getBookInfo} editBook={editBook} deleteBook={deleteBook} sortBooks={sortBooks} sort={sort} triggerAlert={triggerAlert} />
+        <ImageGrid {...imageGridProps} />
         <CustomAlert alert={alert} close={close} />
-        <SpeedDialButtons bookStorage={bookStorage} setBookStorage={setBookStorage} submitBook={submitBook} triggerAlert={triggerAlert} />
+        <SpeedDialButtons bookStorage={bookStorage} setBookStorage={setBookStorage} />
       </Box>
     </ThemeProvider>
   )

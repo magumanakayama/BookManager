@@ -1,36 +1,32 @@
 import { useLocalStorage } from 'react-use';
 import genDayString from './genDayString';
 
+// カスタムフック：書籍ストレージ管理
 const useStorageHook = () => {
   const [bookStorage, setBookStorage] = useLocalStorage('books', []);
 
   return {
     bookStorage,
     setBookStorage,
-    getBookInfo: getBookInfo(bookStorage),
-    submitBook: submitBook(bookStorage, setBookStorage),
-    editBook: editBook(bookStorage, setBookStorage),
-    deleteBook: deleteBook(bookStorage, setBookStorage),
-    sortBooks: sortBooks(bookStorage)
+    editBook: editBook(bookStorage)(setBookStorage),
   };
 };
 export default useStorageHook;
 
 // 書籍ストレージ操作関数群
-// ToDo: 全体的にカリー化する
 //// 書籍取得
 export const getBookInfo = (bookStorage) => (isbn) => bookStorage.find(book => book.isbn === isbn);
 //// 登録
-export const submitBook = (storage, dispatcher) => (book) => dispatcher([...storage, genBlankBook(book)]);
+export const submitBook = (storage) => (dispatcher) => (book) => dispatcher([...storage, genBlankBook(book)]);
 //// 編集
-export const editBook = (storage, dispatcher) => (book) => {
-  const { updateBookInfo, index } = common(storage, book);
+export const editBook = (storage) => (dispatcher) => (book) => {
+  const { updateBookInfo, index } = common(storage)(book);
   updateBookInfo[index] = { ...updateBookInfo[index], ...book };
   dispatcher(updateBookInfo);
 };
 //// 削除
-export const deleteBook = (storage, dispatcher) => (book) => {
-  const { updateBookInfo, index } = common(storage, book);
+export const deleteBook = (storage) => (dispatcher) => (book) => {
+  const { updateBookInfo, index } = common(storage)(book);
   updateBookInfo.splice(index, 1);
   dispatcher(updateBookInfo);
 };
@@ -61,7 +57,7 @@ const genBlankBook = (submitBook) => {
 };
 
 //// edit/Deleteの共通処理
-const common = (storage, book) => {
+const common = (storage) => (book) => {
   const updateBookInfo = [...storage];
   const index = storage.findIndex(b => b.isbn === book.isbn);
   return { updateBookInfo, index };

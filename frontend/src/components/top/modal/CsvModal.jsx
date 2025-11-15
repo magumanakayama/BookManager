@@ -1,16 +1,12 @@
 import { Box, Button, Stack } from '@mui/material';
 import { FileDownload, FileUpload } from '@mui/icons-material';
-import CustomAlert from '../CustomAlert';
 import useCsv from '../../hook/csvHook';
-import useAlertHook from '../../hook/alertHook';
 import ModalLayout from './ModalLayout';
 
-const CsvModal = ({ setOpen, bookInfo, setBookInfo }) => {
+const CsvModal = ({ setOpen, bookInfo, setBookInfo, triggerAlert }) => {
   const { anchor, fileInput, convertToCsv, downloadCsv, importCsv } = useCsv(bookInfo);
-  const { alert, triggerAlert } = useAlertHook();
   const handleImport = (importBook) => {
     setBookInfo(importBook);
-    // ToDo： open=falseになるためアラートが出ないのを修正
     triggerAlert('submit');
     setOpen(false);
   }
@@ -25,7 +21,6 @@ const CsvModal = ({ setOpen, bookInfo, setBookInfo }) => {
           <a ref={anchor} style={{ display: 'none' }}>download</a>
         </Stack >
       </ModalLayout>
-      <CustomAlert alert={alert} fireAlert={(alert) => triggerAlert(alert)} />
     </>
   );
 }

@@ -2,9 +2,9 @@ import { useState } from 'react'
 import { Button, Grid } from '@mui/material';
 import EditModal from './modal/EditModal';
 import { BOOK_SHADOW } from '../../constant';
+import { sortBooks } from '../hook/storageHook';
 
-
-const ImageGrid = ({ getBookInfo, editBook, deleteBook, sortBooks, sort, triggerAlert }) => {
+const ImageGrid = ({ bookStorage, setBookStorage, sort, triggerAlert }) => {
   const [open, setOpen] = useState(false)
   const [selectedBookISBN, setSelectedBookISBN] = useState('');
   const handleEditOpen = (book) => {
@@ -13,10 +13,9 @@ const ImageGrid = ({ getBookInfo, editBook, deleteBook, sortBooks, sort, trigger
   };
 
   const modalProps = {
+    bookStorage,
+    setBookStorage,
     setOpen,
-    getBookInfo,
-    editBook,
-    deleteBook,
     selectedBookISBN,
     triggerAlert
   };
@@ -24,7 +23,7 @@ const ImageGrid = ({ getBookInfo, editBook, deleteBook, sortBooks, sort, trigger
   return (
     <>
       <ContainerLayout>
-        {(sortBooks(sort)).map(book => <BookItem key={book.isbn} book={book} onClick={handleEditOpen} />)}
+        {(sortBooks(bookStorage)(sort)).map(book => <BookItem key={book.isbn} book={book} onClick={handleEditOpen} />)}
       </ContainerLayout>
       {open && <EditModal {...modalProps} />}
     </>
