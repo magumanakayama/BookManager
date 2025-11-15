@@ -1,10 +1,13 @@
 import { useState } from 'react'
 import { Button, Grid } from '@mui/material';
 import EditModal from './modal/EditModal';
+import CustomAlert from './CustomAlert';
 import { BOOK_SHADOW } from '../../constant';
 import { sortBooks } from '../hook/storageHook';
+import useAlertHook from '../hook/alertHook';
 
-const ImageGrid = ({ bookStorage, setBookStorage, sort, triggerAlert }) => {
+const ImageGrid = ({ bookStorage, setBookStorage, sort }) => {
+  const { alert, close, triggerAlert } = useAlertHook();
   const [open, setOpen] = useState(false)
   const [selectedBookISBN, setSelectedBookISBN] = useState('');
   const handleEditOpen = (book) => {
@@ -26,6 +29,7 @@ const ImageGrid = ({ bookStorage, setBookStorage, sort, triggerAlert }) => {
         {(sortBooks(bookStorage)(sort)).map(book => <BookItem key={book.isbn} book={book} onClick={handleEditOpen} />)}
       </ContainerLayout>
       {open && <EditModal {...modalProps} />}
+      <CustomAlert alert={alert} close={close} />
     </>
   )
 };

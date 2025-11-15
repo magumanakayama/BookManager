@@ -3,10 +3,8 @@ import { useSearchParams } from 'react-router-dom';
 
 const useAlertHook = () => {
   // クエリパラメータの取得
-  const [searchParams] = useSearchParams();
-  const alertOpen = searchParams.get('alertOpen') ?? false;
-  const message = searchParams.get('message') ?? '';
-  const severity = searchParams.get('severity') ?? '';
+  const [searchParams] = useSearchParams({ alertOpen: 'false', message: '', severity: '' });
+  const { alertOpen, message, severity } = Object.fromEntries(searchParams.entries());
   const [alert, setAlert] = useState({ open: alertOpen, message, severity });
 
   // 画面リロード時にクエリパラメータを消す
@@ -14,7 +12,11 @@ const useAlertHook = () => {
     if (window.location.search) window.history.replaceState({}, '', window.location.pathname);
   }, []);
 
-  return { alert, triggerAlert: triggerAlert(setAlert), close: () => setAlert({ open: false, message: '', severity: '' }) };
+  return {
+    alert,
+    triggerAlert: triggerAlert(setAlert),
+    close: () => setAlert({ open: false, message: '', severity: '' })
+  };
 };
 
 export default useAlertHook;
