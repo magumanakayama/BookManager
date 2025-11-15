@@ -11,7 +11,7 @@ const EditModal = ({ bookStorage, setBookStorage, setOpen, selectedBookISBN, tri
   const deleteSelectedBook = deleteBook(bookStorage)(setBookStorage);
 
   const [editingBook, setEditingBook] = useState(selectedBookInfo());
-  // ToDo: diffを取るロジックをカスタムフック内に作るのも視野、暫定これでも良い
+  // ToDo: diffを取るロジックを別カスタムフック化、submitと統合する
   const isChanged = (JSON.stringify(editingBook) !== JSON.stringify(selectedBookInfo())) && editingBook.title && editingBook.author;
   // 更新ハンドラー
   const handleEdit = () => {

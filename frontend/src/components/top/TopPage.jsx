@@ -15,7 +15,6 @@ const TopPage = () => {
   const { bookStorage, setBookStorage } = useStorageHook();
   // クエリパラメータsortに応じて表示を切り替え
   const sort = useCustomParams().getParam().val;
-  console.log('sort:', sort);
 
   // ImageGrid用props
   const imageGridProps = {

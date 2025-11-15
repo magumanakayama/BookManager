@@ -33,13 +33,6 @@ const TextFieldLayout = ({ label, value, onChange }) => (
 );
 
 const DateField = ({ book, setBook }) => {
-  // モバイル版ではMM/DDのStringを直接Date型にするエラーになるため、丁寧にパースする
-  const parseDate = (dateStr) => {
-    if (!dateStr) return null;
-    const [yyyy, mm, dd] = dateStr.split('/');
-    return new Date(Number(yyyy), Number(mm) - 1, Number(dd));
-  };
-
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ja}>
       <DatePicker
@@ -56,4 +49,12 @@ const DateField = ({ book, setBook }) => {
       />
     </LocalizationProvider>
   );
+};
+
+// モバイル版ではMM/DDのStringを直接Date型にするエラーになるため、丁寧にパースする
+export const parseDate = (dateStr) => {
+  if (!dateStr) return null;
+  const [yyyy, mm, dd] = dateStr.split('/');
+  if (!yyyy || !mm || !dd) return null;
+  return new Date(Number(yyyy), Number(mm) - 1, Number(dd));
 };
