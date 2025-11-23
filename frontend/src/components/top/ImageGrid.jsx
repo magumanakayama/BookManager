@@ -3,30 +3,42 @@ import { Button, Grid } from '@mui/material';
 import EditModal from './modal/EditModal';
 import CustomAlert from './CustomAlert';
 import { BOOK_SHADOW } from '../../constant';
-import { sortBooks } from '../hook/storageHook';
 import useAlertHook from '../hook/alertHook';
 
-const ImageGrid = ({ bookStorage, setBookStorage, sort }) => {
+const ImageGrid = ({ bookStorageInstance, sort }) => {
+  const { getBookInfo, editBook, deleteBook, sortBooks } = bookStorageInstance;
   const { alert, close, triggerAlert } = useAlertHook();
   const [open, setOpen] = useState(false)
   const [selectedBookISBN, setSelectedBookISBN] = useState('');
+
+  // 更新モーダルを開くハンドラー
   const handleEditOpen = (book) => {
     setOpen(true);
     setSelectedBookISBN(book.isbn);
   };
 
+  // ボタン共通ハンドラー
+  const commonHandler = (callback, alertType) => (book) => {
+    callback(book);
+    triggerAlert(alertType);
+    setOpen(false);
+  }
+
+  // 書籍情報を取得
+  const selectedBookInfo = getBookInfo(selectedBookISBN);
+
+  // 更新モーダル用props
   const modalProps = {
-    bookStorage,
-    setBookStorage,
-    setOpen,
-    selectedBookISBN,
-    triggerAlert
+    onClose: () => setOpen(false),
+    selectedBookInfo,
+    handleEdit: commonHandler(editBook, 'edit'),
+    handleDelete: commonHandler(deleteBook, 'delete'),
   };
 
   return (
     <>
       <ContainerLayout>
-        {(sortBooks(bookStorage)(sort)).map(book => <BookItem key={book.isbn} book={book} onClick={handleEditOpen} />)}
+        {sortBooks(sort).map(b => <BookItem key={b.isbn} book={b} onClick={handleEditOpen} />)}
       </ContainerLayout>
       {open && <EditModal {...modalProps} />}
       <CustomAlert alert={alert} close={close} />

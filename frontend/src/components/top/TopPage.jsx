@@ -12,22 +12,17 @@ import SpeedDialButtons from './SpeedDialButtons';
 import useStorageHook from '../hook/storageHook';
 
 const TopPage = () => {
-  const { bookStorage, setBookStorage } = useStorageHook();
+  // 書籍インスタンスを生成
+  const bookStorageInstance = useStorageHook();
+
   // クエリパラメータsortに応じて表示を切り替え
   const sort = useCustomParams().getParam().val;
-
-  // ImageGrid用props
-  const imageGridProps = {
-    bookStorage,
-    setBookStorage,
-    sort,
-  };
 
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ mb: 2 }}>
-        <ImageGrid {...imageGridProps} />
-        <SpeedDialButtons bookStorage={bookStorage} setBookStorage={setBookStorage} />
+        <ImageGrid bookStorageInstance={bookStorageInstance} sort={sort} />
+        <SpeedDialButtons bookStorageInstance={bookStorageInstance} />
       </Box>
     </ThemeProvider>
   )

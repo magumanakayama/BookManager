@@ -9,27 +9,41 @@ import useAlertHook from '../hook/alertHook';
 import CustomAlert from './CustomAlert';
 import { BASE_URL } from '../../constant';
 
-const SpeedDialButtons = ({ bookStorage, setBookStorage }) => {
+const SpeedDialButtons = ({ bookStorageInstance }) => {
+  const { bookStorage, setBookStorage, submitBook } = bookStorageInstance;
   const { dialOpen, setDialOpen, generateActions } = useDialHook();
   const { alert, triggerAlert } = useAlertHook();
-  const [submitOpen, setSubmitOpen] = useState(false);
-  const [csvOpen, setCsvOpen] = useState(false);
+
+  const [modalComponent, setModalComponent] = useState(undefined);
   const navigate = useNavigate();
 
+  // アクションボタン共通ハンドラー
+  const submitHandler = (callback) => (book) => {
+    callback(book);
+    triggerAlert('submit');
+    setModalComponent(undefined);
+  }
+
+  // モーダルコンポーネントリスト
+  const modalList = {
+    submit: <SubmitModal onClose={() => setModalComponent(undefined)} handleSubmit={submitHandler(submitBook)} />,
+    csv: <CsvModal onClose={() => setModalComponent(undefined)} bookInfo={bookStorage} handleImport={submitHandler(setBookStorage)} />
+  };
+
+  // スピードダイアル用アクションボタン群生成
   const actions = generateActions([
     [<Search />, 'Search', () => navigate(`${BASE_URL}/BookSearch`)],
     [<BarChart />, 'Graph', () => navigate(`${BASE_URL}/BookGraph`)],
-    [<Add />, 'Add', () => setSubmitOpen(true)],
-    [<ImportExport />, 'Close', () => setCsvOpen(true)],
+    [<Add />, 'Submit', () => setModalComponent(modalList['submit'])],
+    [<ImportExport />, 'CSV', () => setModalComponent(modalList['csv'])]
   ]);
 
   return (
     <>
       <SpeedDialLayout open={dialOpen} setOpen={setDialOpen}>
-        {actions.map((action) => <SpeedDialAction key={action.name} icon={action.icon} onClick={action.onClick} />)}
+        {actions.map(({ icon, name, onClick }) => <SpeedDialAction key={name} icon={icon} onClick={onClick} />)}
       </SpeedDialLayout>
-      {submitOpen && <SubmitModal bookStorage={bookStorage} setBookStorage={setBookStorage} setOpen={setSubmitOpen} triggerAlert={triggerAlert} />}
-      {csvOpen && <CsvModal setOpen={setCsvOpen} bookInfo={bookStorage} setBookInfo={setBookStorage} triggerAlert={triggerAlert} />}
+      {modalComponent}
       <CustomAlert alert={alert} close={close} />
     </>
   );

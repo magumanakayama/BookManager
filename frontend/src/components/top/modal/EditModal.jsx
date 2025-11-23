@@ -2,35 +2,28 @@ import { useState } from 'react';
 import ModalLayout from './ModalLayout';
 import BookFormFields from './BookFormFields';
 import ModalButtons from './ModalButtons';
-import { getBookInfo, editBook, deleteBook } from '../../hook/storageHook';
+import { bookIsChanged } from '../../hook/storageHook';
 
-const EditModal = ({ bookStorage, setBookStorage, setOpen, selectedBookISBN, triggerAlert }) => {
-  // フック関数を部分適用
-  const selectedBookInfo = () => getBookInfo(bookStorage)(selectedBookISBN);
-  const editSelectedBook = editBook(bookStorage)(setBookStorage);
-  const deleteSelectedBook = deleteBook(bookStorage)(setBookStorage);
+const EditModal = ({ onClose, selectedBookInfo, handleEdit, handleDelete }) => {
+  // 編集用state
+  const [editingBook, setEditingBook] = useState(selectedBookInfo);
 
-  const [editingBook, setEditingBook] = useState(selectedBookInfo());
   // ToDo: diffを取るロジックを別カスタムフック化、submitと統合する
-  const isChanged = (JSON.stringify(editingBook) !== JSON.stringify(selectedBookInfo())) && editingBook.title && editingBook.author;
-  // 更新ハンドラー
-  const handleEdit = () => {
-    editSelectedBook(editingBook);
-    triggerAlert('edit');
-    setOpen(false);
-  }
-  // 削除ハンドラー
-  const handleDelete = () => {
-    deleteSelectedBook(editingBook);
-    triggerAlert('delete');
-    setOpen(false);
-  }
+  const isChanged =
+    bookIsChanged(editingBook, selectedBookInfo) &&
+    editingBook.title &&
+    editingBook.author;
 
   return (
-    <ModalLayout setOpen={setOpen}>
+    <ModalLayout onClose={onClose}>
       <img src={editingBook.image} alt={editingBook.title} style={{ paddingBottom: 16 }} />
       <BookFormFields book={editingBook} setBook={setEditingBook} />
-      <ModalButtons setOpen={setOpen} require={isChanged} handlePositive={handleEdit} handleDelete={handleDelete} />
+      <ModalButtons
+        onClose={onClose}
+        require={isChanged}
+        handlePositive={() => handleEdit(editingBook)}
+        handleDelete={() => handleDelete(editingBook)}
+      />
     </ModalLayout>
   );
 }

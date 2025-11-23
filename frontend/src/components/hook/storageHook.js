@@ -8,6 +8,10 @@ const useStorageHook = () => {
   return {
     bookStorage,
     setBookStorage,
+    getBookInfo: getBookInfo(bookStorage),
+    submitBook: submitBook(bookStorage)(setBookStorage),
+    deleteBook: deleteBook(bookStorage)(setBookStorage),
+    sortBooks: sortBooks(bookStorage),
     editBook: editBook(bookStorage)(setBookStorage),
   };
 };
@@ -42,6 +46,9 @@ export const sortBooks = (bookStorage) => (type) => {
   };
   return sortedBooks[type];
 };
+
+//// diff取得
+export const bookIsChanged = (original, edited) => JSON.stringify(original) !== JSON.stringify(edited);
 
 // その他処理
 //// 空本登録時の補完処理

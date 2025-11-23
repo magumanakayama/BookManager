@@ -3,17 +3,12 @@ import { FileDownload, FileUpload } from '@mui/icons-material';
 import useCsv from '../../hook/csvHook';
 import ModalLayout from './ModalLayout';
 
-const CsvModal = ({ setOpen, bookInfo, setBookInfo, triggerAlert }) => {
+const CsvModal = ({ onClose, bookInfo, handleImport }) => {
   const { anchor, fileInput, convertToCsv, downloadCsv, importCsv } = useCsv(bookInfo);
-  const handleImport = (importBook) => {
-    setBookInfo(importBook);
-    triggerAlert('submit');
-    setOpen(false);
-  }
 
   return (
     <>
-      <ModalLayout setOpen={setOpen}>
+      <ModalLayout onClose={onClose}>
         <Stack spacing={2} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
           <CsvButton type="output" onClick={() => downloadCsv(convertToCsv(), 'books.csv')} />
           <CsvButton type="input" onClick={() => fileInput.current && fileInput.current.click()} />
