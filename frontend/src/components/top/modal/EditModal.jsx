@@ -21,6 +21,7 @@ const EditModal = ({ onClose, selectedBookInfo, handleEdit, handleDelete }) => {
       <ModalButtons
         onClose={onClose}
         require={isChanged}
+        name="更新"
         handlePositive={() => handleEdit(editingBook)}
         handleDelete={() => handleDelete(editingBook)}
       />

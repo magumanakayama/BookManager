@@ -1,12 +1,12 @@
 import { Box, Button } from '@mui/material';
 
-const ModalButtons = ({ onClose, require = true, handlePositive, handleDelete = () => { } }) => {
+const ModalButtons = ({ onClose, require = true, name, handlePositive, handleDelete = () => { } }) => {
   return (
     <Box sx={{ display: 'flex', mt: 2, gap: 1 }}>
       {handleDelete && <Button variant="contained" color="error" onClick={handleDelete}>削除</Button>}
       <Box sx={{ flexGrow: 1 }} />
       <Button variant="outlined" onClick={onClose}>閉じる</Button>
-      <Button variant="contained" disabled={!require} onClick={handlePositive}>完了</Button>
+      <Button variant="contained" disabled={!require} onClick={handlePositive}>{name}</Button>
     </Box>
   );
 };

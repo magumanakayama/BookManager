@@ -2,8 +2,7 @@ import { useState } from 'react';
 import ModalLayout from './ModalLayout';
 import BookFormFields from './BookFormFields';
 import ModalButtons from './ModalButtons';
-
-const NEW_BOOK_TEMPLATE = { title: '', author: '', date: '', largeImageUrl: '', isbn: '' };
+import { NEW_BOOK_TEMPLATE } from '../../../constant';
 
 const SubmitModal = ({ handleSubmit, onClose }) => {
   const [book, setBook] = useState(NEW_BOOK_TEMPLATE);
@@ -12,7 +11,10 @@ const SubmitModal = ({ handleSubmit, onClose }) => {
   return (
     <ModalLayout onClose={onClose}>
       <BookFormFields book={book} setBook={setBook} />
-      <ModalButtons onClose={onClose} require={isRequiredFilled} handlePositive={() => handleSubmit(book)} />
+      <ModalButtons
+        onClose={onClose}
+        require={isRequiredFilled} name="登録"
+        handlePositive={() => handleSubmit(book)} />
     </ModalLayout>
   );
 }

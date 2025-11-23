@@ -10,3 +10,5 @@ export const MODAL_STYLE = {
   width: 280,
   p: 4,
 };
+
+export const NEW_BOOK_TEMPLATE = { title: '', author: '', date: '', largeImageUrl: '', isbn: '' };
