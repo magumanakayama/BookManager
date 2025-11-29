@@ -5,6 +5,7 @@ import { BASE_URL } from './constant';
 import TopPage from './components/top/TopPage';
 import BookSearch from './components/search/BookSearch';
 import BookGraph from './components/graph/BookGraph';
+import DeveloperMode from './components/developer/DeveloperMode';
 import MockComponent from './MockComponent';
 import theme from './theme'
 import './App.css'
@@ -22,6 +23,7 @@ function App() {
             <Route path={'BookGraph'} element={<BookGraph />} />
           </Route>
           <Route path={'/BookSearch'} element={<BookSearch />} />
+          <Route path={'/DeveloperMode'} element={<DeveloperMode />} />
           <Route path={'/Mock'} element={<MockComponent />} />
         </Routes>
       </ThemeProvider>

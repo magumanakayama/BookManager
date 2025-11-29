@@ -35,7 +35,7 @@ const SpeedDialButtons = ({ bookStorageInstance }) => {
     [<BarChart />, 'Graph', () => navigate('/BookGraph')],
     [<Add />, 'Submit', () => setModalComponent(modalList['submit'])],
     [<ImportExport />, 'CSV', () => setModalComponent(modalList['csv'])],
-    [<DeveloperMode />, 'Developer Mode', () => navigate('/build-info.json')]
+    [<DeveloperMode />, 'Developer Mode', () => navigate('/DeveloperMode')]
   ]);
 
   return (
