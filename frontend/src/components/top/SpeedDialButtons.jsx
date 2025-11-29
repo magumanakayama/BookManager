@@ -32,8 +32,8 @@ const SpeedDialButtons = ({ bookStorageInstance }) => {
 
   // スピードダイアル用アクションボタン群生成
   const actions = generateActions([
-    [<Search />, 'Search', () => navigate(`${BASE_URL}/BookSearch`)],
-    [<BarChart />, 'Graph', () => navigate(`${BASE_URL}/BookGraph`)],
+    [<Search />, 'Search', () => navigate('/BookSearch')],
+    [<BarChart />, 'Graph', () => navigate('/BookGraph')],
     [<Add />, 'Submit', () => setModalComponent(modalList['submit'])],
     [<ImportExport />, 'CSV', () => setModalComponent(modalList['csv'])]
   ]);

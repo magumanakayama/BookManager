@@ -2,6 +2,9 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa';
 
+// 定数ファイル
+import { BASE_URL } from './src/constants/config';
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
@@ -42,5 +45,5 @@ export default defineConfig({
   // baseオプションは、GitHub Pagesでホスティングする際に必要
   // リポジトリ名に合わせて変更する
   // 例: https://ユーザー名.github.io/リポジトリ名
-  base: '/BookManager/',
+  base: BASE_URL,
 })
