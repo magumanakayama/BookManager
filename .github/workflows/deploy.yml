@@ -30,6 +30,10 @@ jobs:
         run: yarn build
         working-directory: frontend
 
+      - name: ls
+        run: ls -alh frontend/dist
+        working-directory: frontend
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
