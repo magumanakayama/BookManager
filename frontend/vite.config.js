@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa';
 
 // 定数ファイル
-import { BASE_URL } from './src/constants/config';
+import { BASE_URL } from './src/constant';
 
 // https://vite.dev/config/
 export default defineConfig({
