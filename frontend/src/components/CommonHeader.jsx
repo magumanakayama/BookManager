@@ -21,23 +21,23 @@ const CommonHeader = () => {
 
 export default CommonHeader;
 
-export const toggleList = (genNavigate) => {
+const toggleList = (genNavigate) => {
   // ナビゲーション関数を部分適用して生成
   const topNavi = genNavigate('sort')();
   const graphNavi = genNavigate('mode')('/BookGraph');
   return {
-    [`${BASE_URL}/`]: [
+    ['/']: [
       { value: 'new', label: '新しい順', navi: () => topNavi('new') },
       { value: 'old', label: '古い順', navi: () => topNavi('old') },
     ],
-    [`${BASE_URL}/BookGraph`]: [
+    ['/BookGraph']: [
       { value: 'author', label: '著者', navi: () => graphNavi('author') },
       { value: 'monthly', label: '月次', navi: () => graphNavi('monthly') },
     ]
   };
 };
 
-export const handleChange = (path) => (newValue) => (list) => {
+const handleChange = (path) => (newValue) => (list) => {
   if (newValue === null) return;
   list[path].find(item => item.value === newValue)?.navi();
 };

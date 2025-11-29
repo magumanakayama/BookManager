@@ -14,15 +14,15 @@ import CommonHeader from './components/CommonHeader';
 
 function App() {
   return (
-    <Router>
+    <Router basename={BASE_URL}>
       <ThemeProvider theme={theme}>
         <Routes>
-          <Route path={`${BASE_URL}/`} element={<MockConsole />}>
-            <Route path={`${BASE_URL}/`} element={<TopPage />} />
-            <Route path={`${BASE_URL}/BookGraph`} element={<BookGraph />} />
+          <Route path={'/'} element={<MockConsole />}>
+            <Route index element={<TopPage />} />
+            <Route path={'BookGraph'} element={<BookGraph />} />
           </Route>
-          <Route path={`${BASE_URL}/BookSearch`} element={<BookSearch />} />
-          <Route path={`${BASE_URL}/Mock`} element={<MockComponent />} />
+          <Route path={'/BookSearch'} element={<BookSearch />} />
+          <Route path={'/Mock'} element={<MockComponent />} />
         </Routes>
       </ThemeProvider>
     </Router>

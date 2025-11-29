@@ -19,15 +19,14 @@ const useCustomParams = () => {
 
 export default useCustomParams;
 
-// パスを取得して、対応するクエリパラメータの値を返す関数
 export const getParam = (path) => (searchParams) => {
-  if (path === `${BASE_URL}/`) {
+  if (path === '/') {
     return { val: searchParams.get('sort') || 'new', path: path };
-  } else if (path === `${BASE_URL}/BookGraph`) {
+  } else if (path === '/BookGraph') {
     return { val: searchParams.get('mode') || 'author', path: path };
   }
 };
 
 export const genUrl = (query) => (value) => (addPath = '/') => {
-  return `${BASE_URL}${addPath}?${new URLSearchParams({ [query]: value })}`;
+  return `${addPath}?${new URLSearchParams({ [query]: value })}`;
 };
