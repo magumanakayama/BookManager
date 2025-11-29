@@ -1,26 +1,14 @@
 import { useState } from 'react';
-import { setPromiseState, fetchWithCallback } from './fetch';
 
 const useSearch = () => {
   const [query, setQuery] = useState({ author: '', title: '' });
   const [prevQuery, setPrevQuery] = useState(query);
-  const [booksPromise, setBooksPromise] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const fetchStopLoading = fetchWithCallback(() => setLoading(false));
-
-  const bookSearch = (page) => {
-    setPromiseState(fetchStopLoading, setBooksPromise)(createUrl(query)(page))
-    setLoading(true);
-  }
 
   return {
     query,
     setQuery,
     setPrevQuery,
-    booksPromise,
-    loading,
     diff: checkDiff(query, prevQuery),
-    bookSearch,
   };
 };
 
