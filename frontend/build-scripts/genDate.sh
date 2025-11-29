@@ -4,4 +4,4 @@
 mkdir -p ./public
 
 # ビルド時刻をUTC形式でJSONファイルに出力するスクリプト
-echo "{\"buildTime\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\"}" > ./public/build-info.json
+echo "{\"buildTime\": \"$(TZ='Asia/Tokyo' date +"%Y-%m-%dT%H:%M:%S%z")\"}" > ./public/build-info.json

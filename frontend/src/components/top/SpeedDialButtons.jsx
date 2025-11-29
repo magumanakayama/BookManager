@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { Box, SpeedDial, SpeedDialIcon, SpeedDialAction } from '@mui/material';
-import { Search, BarChart, Add, ImportExport } from '@mui/icons-material';
+import { Search, BarChart, Add, ImportExport, DeveloperMode } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import SubmitModal from './modal/SubmitModal';
 import CsvModal from '../top/modal/CsvModal';
 import useDialHook from '../hook/dialHook';
 import useAlertHook from '../hook/alertHook';
 import CustomAlert from './CustomAlert';
-import { BASE_URL } from '../../constant';
 
 const SpeedDialButtons = ({ bookStorageInstance }) => {
   const { bookStorage, setBookStorage, submitBook } = bookStorageInstance;
@@ -35,7 +34,8 @@ const SpeedDialButtons = ({ bookStorageInstance }) => {
     [<Search />, 'Search', () => navigate('/BookSearch')],
     [<BarChart />, 'Graph', () => navigate('/BookGraph')],
     [<Add />, 'Submit', () => setModalComponent(modalList['submit'])],
-    [<ImportExport />, 'CSV', () => setModalComponent(modalList['csv'])]
+    [<ImportExport />, 'CSV', () => setModalComponent(modalList['csv'])],
+    [<DeveloperMode />, 'Developer Mode', () => navigate('/build-info.json')]
   ]);
 
   return (

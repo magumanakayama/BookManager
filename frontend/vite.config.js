@@ -42,12 +42,6 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
   },
-  // workbox: {
-  //   globPatterns: [
-  //     '**/*.{js,css,html,png,webmanifest,json}' // ← jsonを追加
-  //   ]
-  // },
-  // includeAssets: ['build-info.json'],
   // baseオプションは、GitHub Pagesでホスティングする際に必要
   // リポジトリ名に合わせて変更する
   // 例: https://ユーザー名.github.io/リポジトリ名
