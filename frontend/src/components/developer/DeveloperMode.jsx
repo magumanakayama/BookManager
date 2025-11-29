@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
+import { BASE_URL } from '../../constant';
 
 const DeveloperMode = () => {
   const [buildInfo, setBuildInfo] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('/build-info.json')
+    fetch(`${BASE_URL}/build-info.json`)
       .then((res) => {
         if (!res.ok) throw new Error('取得に失敗しました');
         return res.json();
