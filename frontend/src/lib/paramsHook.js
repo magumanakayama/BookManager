@@ -1,32 +1,39 @@
 import { useLocation, useSearchParams, useNavigate } from 'react-router-dom';
-import { BASE_URL } from '../constant';
 
 const useCustomParams = () => {
-  const path = useLocation().pathname;
   const navigate = useNavigate();
+
+  // URLのパスを取得
+  const path = useLocation().pathname;
+
+  // クエリパラメータを取得
   const [searchParams] = useSearchParams();
-  // navigateを純粋関数に切り出せないため、カスタムフック内でラップする
-  const genNavigate = (query) => (addPath) => (value) => {
-    navigate(genUrl(query)(value)(addPath), { replace: true });
+
+  // 以下を付与したURLへnavigateする関数
+  //// '/' 以降の追加パス、クエリパラメータキー
+  //// クエリパラメータ値
+  const naviAddUrl = (path, key) => (value) => {
+    const url = genUrl(path, key, value);
+    navigate(url, { replace: true }); // replace：trueで、ブラウザの履歴を残さないようにする
   };
 
   return {
     path,
-    getParam: () => getParam(path)(searchParams),
-    genNavigate,
+    query: getParam(path, searchParams),
+    naviAddUrl,
   };
 };
 
 export default useCustomParams;
 
-export const getParam = (path) => (searchParams) => {
+export const getParam = (path, searchParams) => {
   if (path === '/') {
-    return { val: searchParams.get('sort') || 'new', path: path };
+    return { key: 'sort', value: searchParams.get('sort') || 'new' };
   } else if (path === '/BookGraph') {
-    return { val: searchParams.get('mode') || 'author', path: path };
+    return { key: 'mode', query: searchParams.get('mode') || 'author' };
   }
 };
 
-export const genUrl = (query) => (value) => (addPath = '/') => {
+export const genUrl = (addPath = '/', query, value) => {
   return `${addPath}?${new URLSearchParams({ [query]: value })}`;
 };

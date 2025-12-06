@@ -24,7 +24,7 @@ const BookGraph = () => {
   const { totalCount, yearlyList, monthlyList } = listFormatterBar(bookInfo);
 
   // クエリパラメータmodeに応じて表示を切り替え
-  const graphMode = useCustomParams().getParam().val;
+  const graphMode = useCustomParams().query.value;
 
   return (
     <Box sx={{ maxWidth: 600 }}>

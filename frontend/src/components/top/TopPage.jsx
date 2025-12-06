@@ -16,7 +16,7 @@ const TopPage = () => {
   const bookStorageInstance = useStorageHook();
 
   // クエリパラメータsortに応じて表示を切り替え
-  const sort = useCustomParams().getParam().val;
+  const sort = useCustomParams().query.value;
 
   return (
     <ThemeProvider theme={theme}>
