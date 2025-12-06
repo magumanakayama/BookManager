@@ -37,7 +37,7 @@ const addNavi = (toggleValue, naviQueryVal) => {
 };
 
 // 入力値(newValue)から、navigate関数を探索して返す関数
-const selectNavi = (toggleList, newValue) => {
+const selectNavi = (togglesViewModel, newValue) => {
   if (newValue === null) return;
-  return toggleList.find(i => i.value === newValue)?.navi;
+  return togglesViewModel.find(i => i.value === newValue)?.navi;
 };
