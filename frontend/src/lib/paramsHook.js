@@ -1,5 +1,16 @@
 import { useLocation, useSearchParams, useNavigate } from 'react-router-dom';
 
+export const QUERY_PARAMS = {
+  ['/']: {
+    key: 'sort',
+    default: 'new',
+  },
+  ['/BookGraph']: {
+    key: 'mode',
+    default: 'author',
+  },
+};
+
 const useCustomParams = () => {
   const navigate = useNavigate();
 
@@ -19,19 +30,19 @@ const useCustomParams = () => {
 
   return {
     path,
-    query: getParam(path, searchParams),
+    query: getQuery(path, searchParams),
     naviAddUrl,
   };
 };
 
 export default useCustomParams;
 
-export const getParam = (path, searchParams) => {
-  if (path === '/') {
-    return { key: 'sort', value: searchParams.get('sort') || 'new' };
-  } else if (path === '/BookGraph') {
-    return { key: 'mode', query: searchParams.get('mode') || 'author' };
-  }
+export const getQuery = (path, searchParams) => {
+  const querys = {
+    key: QUERY_PARAMS[path].key,
+    value: searchParams.get(QUERY_PARAMS[path].key) ?? QUERY_PARAMS[path].default,
+  };
+  return querys;
 };
 
 export const genUrl = (addPath = '/', query, value) => {
