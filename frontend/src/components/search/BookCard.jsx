@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import DetailModal from './DetailModal'
 import { submitBook } from '../hook/storageHook';
 import { CATEGORIES } from '../hook/alertHook';
-import { BASE_URL } from '../../constant';
 
-const QUERY_PARAMS = `${BASE_URL}/?alertOpen=true&severity=success&message=${encodeURIComponent(CATEGORIES.submit.message)}`;
+const QUERY_PARAMS = {
+  pathname: '/',
+  search: `?alertOpen=true&severity=success&message=${encodeURIComponent(CATEGORIES.submit.message)}`,
+};
 
 const BookCard = ({ book }) => {
   const CARD_MEDIA_SIZE = { height: 210, width: 148 };
