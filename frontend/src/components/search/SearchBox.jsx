@@ -1,52 +1,25 @@
+// MUI
 import { TextField, Button, Stack } from '@mui/material';
-import { useState } from 'react';
-import useSearch from '../hook/searchHook';
-import FetchComponent from '../../lib/FetchComponent';
-import CardGrid from './CardGrid';
-import ErrorInfo from './SearchError';
-import useFetchPromise from '../hook/fetch';
-import { createUrl } from '../hook/searchHook';
 
-const SearchBox = () => {
-  // promiseをstateかつキーにすることでuseを制御
-  //// promiseが変数だとrequestが変わるたびに再レンダリングされてしまうため発火タイミング制御が難しくなる
-  const { query, setQuery, setPrevQuery, diff } = useSearch();
-  const { fetchPromise: booksPromise, loading, setRequest } = useFetchPromise();
-  const [page, setPage] = useState(1);
-  const bookSearch = (page) => setRequest(createUrl(query)(page));
+// 汎用コンポーネント
+// ToDo: @から始まる絶対パスでインポートできるようにする
+import { BackButton, FetchButton } from '../../lib/Buttons';
 
-  const handleSearch = () => {
-    setPrevQuery(query);
-    bookSearch(page);
-  };
-
-  const handlePage = (value) => {
-    setPage(value);
-    bookSearch(value);
-    window.scrollTo({ top: 0, behavior: 'auto' }); // ページの一番上までスクロール
-  };
-
+// 検索ボックスコンポーネント
+const SearchBox = ({ fetchInstance, searchInstance }) => {
   return (
-    <>
-      <Stack direction="column" sx={{ m: 2 }} spacing={1}>
-        <InputField query={query} setQuery={setQuery} />
-        <Buttons loading={loading} handleSearch={handleSearch} query={query} setQuery={setQuery} isQueryChanged={diff} />
-      </Stack>
-      {booksPromise && (
-        <FetchComponent
-          promise={booksPromise}
-          Success={(bookList) => <CardGrid bookList={bookList} page={page} handlePage={handlePage} />}
-          Loading={() => <></>}
-          Error={ErrorInfo}
-        />
-      )}
-    </>
+    <Stack direction="column" sx={{ m: 2 }} spacing={1}>
+      <InputField searchInstance={searchInstance} />
+      <SearchButtons fetchInstance={fetchInstance} searchInstance={searchInstance} />
+    </Stack>
   );
 };
 
 export default SearchBox;
 
-const InputField = ({ query, setQuery }) => {
+// 入力フィールド
+const InputField = ({ searchInstance }) => {
+  const { query, setQuery } = searchInstance;
   const queryToLabel = {
     title: 'タイトル',
     author: '著者',
@@ -68,14 +41,27 @@ const InputField = ({ query, setQuery }) => {
   );
 };
 
-const Buttons = ({ loading, handleSearch, query, setQuery, isQueryChanged }) => {
+// 検索用ボタン群
+const SearchButtons = ({ fetchInstance, searchInstance }) => {
+  // カスタムフックから必要なステート・関数を取得
+  // promiseをstateかつキーにすることでuseを制御
+  //// promiseが変数だとrequestが変わるたびに再レンダリングされてしまうため発火タイミング制御が難しくなる
+  const { loading, beginRequest } = fetchInstance;
+  const { query, setQuery, page, setPrevQuery, diff, requestUrl } = searchInstance;
+
+  // 検索ボタン押下時のハンドラ
+  const handleSearch = () => {
+    setPrevQuery(query); // 前回の検索語句をステートに保存
+    beginRequest(requestUrl(page)); // ページをセットし、フェッチを発火
+  };
+
   // ToDo: ローディング表示にならないのを治す
-  console.log(loading ? 'Loading...' : 'Ready');
+  console.log(loading === true);
   return (
     <Stack direction="row" justifyContent="flex-end" spacing={1}>
-      <Button variant="outlined" onClick={() => window.history.back()} >戻る</Button>
+      <BackButton />
       <DebugButton query={query} setQuery={setQuery} />
-      <Button variant="contained" loading={loading} loadingIndicator="検索中" onClick={handleSearch} disabled={!isQueryChanged} sx={{ width: 88 }}>検索</Button>
+      <FetchButton loading={loading} onClick={handleSearch} disabled={!diff} />
     </Stack>
   );
 };

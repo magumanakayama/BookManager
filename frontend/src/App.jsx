@@ -5,7 +5,7 @@ import { ThemeProvider } from '@mui/material/styles';
 // 独自定義コンポーネント
 import AppHeader from './components/AppHeader';
 import TopPage from './components/top/TopPage';
-import BookSearch from './components/search/BookSearch';
+import BookSearch from './components/search';
 import BookGraph from './components/graph/BookGraph';
 import DeveloperMode from './components/developer/DeveloperMode';
 import MockComponent from './MockComponent';

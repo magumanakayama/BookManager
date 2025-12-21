@@ -28,7 +28,7 @@ const useFetchPromise = () => {
   return {
     fetchPromise,
     loading,
-    setRequest: (request) => setFetchPromise(fetchWithLoading(request)),
+    beginRequest: (request) => setFetchPromise(fetchWithLoading(request)),
   };
 };
 
