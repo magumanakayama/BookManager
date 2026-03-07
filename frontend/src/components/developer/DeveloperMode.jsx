@@ -1,4 +1,10 @@
+// React
 import { useEffect, useState } from 'react';
+
+// 汎用コンポーネント
+import { BackButton } from '../../lib/Buttons';
+
+// 定数
 import { BASE_URL } from '../../constant';
 
 const DeveloperMode = () => {
@@ -16,16 +22,19 @@ const DeveloperMode = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Developer Mode</h1>
-      <p>build-info.json の内容:</p>
-      {error && <div style={{ color: 'red' }}>エラー: {error}</div>}
-      {buildInfo ? (
-        <pre>{JSON.stringify(buildInfo, null, 2)}</pre>
-      ) : (
-        !error && <div>読み込み中...</div>
-      )}
-    </div>
+    <>
+      <div>
+        <h1>Developer Mode</h1>
+        <p>build-info.json の内容:</p>
+        {error && <div style={{ color: 'red' }}>エラー: {error}</div>}
+        {buildInfo ? (
+          <pre>{JSON.stringify(buildInfo, null, 2)}</pre>
+        ) : (
+          !error && <div>読み込み中...</div>
+        )}
+      </div>
+      <BackButton />
+    </>
   );
 };
 

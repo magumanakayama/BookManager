@@ -4,11 +4,17 @@ const useSearch = () => {
   const [query, setQuery] = useState({ author: '', title: '' });
   const [prevQuery, setPrevQuery] = useState(query);
 
+  // ページネーション用のステート
+  const [page, setPage] = useState(1);
+
   return {
     query,
     setQuery,
+    page,
+    setPage,
     setPrevQuery,
     diff: checkDiff(query, prevQuery),
+    requestUrl: createUrl(query), // ページを受け取って、URL生成する関数
   };
 };
 
