@@ -5,9 +5,9 @@ const useFetchPromise = () => {
   const [loading, setLoading] = useState(false);
 
   // fetch実行関数
-  const fetchWithLoading = async (request) => {
+  const fetchWithLoading = async (url) => {
     setLoading(true);
-    return fetch(request)
+    return fetch(url)
       .then(res => {
         // レスポンスがエラーの場合はエラーをスロー
         if (!res.ok) throw new Error('Network response was not ok', { cause: res });
@@ -28,7 +28,7 @@ const useFetchPromise = () => {
   return {
     fetchPromise,
     loading,
-    setRequest: (request) => setFetchPromise(fetchWithLoading(request)),
+    setRequest: (url) => setFetchPromise(fetchWithLoading(url)),
   };
 };
 
