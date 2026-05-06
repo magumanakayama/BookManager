@@ -44,7 +44,8 @@ const Info = ({ book }) => {
 const Caption = ({ book }) => {
   return (
     <Box sx={{ my: 2, maxHeight: '50dvh', overflowY: 'auto' }}>
-      <p>{book?.itemCaption}</p>
+      {/* 外観モードに依存させないために文字色を白に固定 */}
+      <Box component="p" sx={{ color: '#ffeeeeff' }}>{book?.itemCaption}</Box>
     </Box>
   );
 };
