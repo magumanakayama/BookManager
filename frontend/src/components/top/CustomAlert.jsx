@@ -14,15 +14,15 @@ const CustomAlert = ({ alert, close }) => {
   // よってステートを分けることでアラートの表示(showAlert)とコンポーネント全体のレンダリング判定(open)を別にする
   const [showAlert, setShowAlert] = useState(false);
 
-  useEffect(() => {
-    if (open) {
-      setShowAlert(true);
-      const timer = setTimeout(() => {
-        setShowAlert(false);
-      }, ALERT_VALUE.duration);
-      return () => clearTimeout(timer);
-    }
-  }, [open]);
+  // useEffect(() => {
+  //   if (open) {
+  //     setShowAlert(true);
+  //     const timer = setTimeout(() => {
+  //       setShowAlert(false);
+  //     }, ALERT_VALUE.duration);
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [open]);
 
   return (
     <Fade in={showAlert} timeout={ALERT_VALUE.timeout} onExited={close}>
