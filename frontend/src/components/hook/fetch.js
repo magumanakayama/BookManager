@@ -1,12 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const useFetchPromise = () => {
   const [fetchPromise, setFetchPromise] = useState(undefined);
   const [loading, setLoading] = useState(false);
+  // ToDo: useEffectにurlを渡すためだけにステートになっている、本来ステートにする必要はないはず
+  const [url, setUrl] = useState(undefined);
+
+  // pendingUrlが変化したらfetchを発火（loading=trueのレンダリング後に実行される）
+  //// useEffectにすることでloadingが更新されたタイミングでまず再レンダリングが走り、そのあとfetchが発火するようになる（loadingの変化による再レンダリングが上手くいかなかったのでこの処理にしている）
+  useEffect(() => {
+    if (!loading) return;
+    setFetchPromise(fetchFunc(url));
+    setUrl(undefined);
+  }, [loading]);
 
   // fetch実行関数
-  const fetchWithLoading = async (url) => {
-    setLoading(true);
+  const fetchFunc = async (url) => {
     return fetch(url)
       .then(res => {
         // レスポンスがエラーの場合はエラーをスロー
@@ -28,7 +37,10 @@ const useFetchPromise = () => {
   return {
     fetchPromise,
     loading,
-    beginRequest: (url) => setFetchPromise(fetchWithLoading(url)),
+    beginRequest: (url) => {
+      setLoading(true);
+      setUrl(url); // useEffectでfetchを発火させる
+    },
   };
 };
 

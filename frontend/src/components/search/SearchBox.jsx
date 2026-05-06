@@ -1,5 +1,5 @@
 // MUI
-import { TextField, Button, Stack } from '@mui/material';
+import { TextField, Stack } from '@mui/material';
 
 // 汎用コンポーネント
 // ToDo: @から始まる絶対パスでインポートできるようにする
@@ -47,7 +47,9 @@ const SearchButtons = ({ fetchInstance, searchInstance }) => {
   // promiseをstateかつキーにすることでuseを制御
   //// promiseが変数だとrequestが変わるたびに再レンダリングされてしまうため発火タイミング制御が難しくなる
   const { loading, beginRequest } = fetchInstance;
-  const { query, setQuery, page, setPrevQuery, diff, requestUrl } = searchInstance;
+  const { query, page, setPrevQuery, diff, requestUrl } = searchInstance;
+
+  console.log('SearchButtons loading:', loading);
 
   // 検索ボタン押下時のハンドラ
   const handleSearch = () => {
@@ -56,17 +58,10 @@ const SearchButtons = ({ fetchInstance, searchInstance }) => {
   };
 
   // ToDo: ローディング表示にならないのを治す
-  console.log(loading === true);
   return (
     <Stack direction="row" justifyContent="flex-end" spacing={1}>
       <BackButton />
-      <DebugButton query={query} setQuery={setQuery} />
-      <FetchButton loading={loading} onClick={handleSearch} disabled={!diff} />
+      <FetchButton loading={loading} onClick={handleSearch} disabled={!diff || loading} />
     </Stack>
   );
 };
-
-// デバッグ用ボタン
-const DebugButton = ({ query, setQuery }) => (
-  <Button variant="contained" onClick={() => setQuery({ ...query, author: '湊かなえ' })}>湊かなえ</Button>
-);

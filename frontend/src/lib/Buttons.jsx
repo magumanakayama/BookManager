@@ -13,8 +13,15 @@ export const BackButton = () => {
 };
 
 // 汎用Fetchボタン
-export const FetchButton = ({ loading, onClick, disabled }) => (
-  <Button variant="contained" onClick={onClick} disabled={disabled} sx={{ width: 88 }}>
-    {loading ? '検索中' : '検索'}
-  </Button>
-);
+export const FetchButton = ({ loading, onClick, disabled }) => {
+  return (
+    <Button variant="contained" onClick={onClick} disabled={disabled} sx={{ width: 88 }}>
+      {genMessage(loading)}
+    </Button>
+  );
+};
+
+const genMessage = (loading) => {
+  if (loading) return '検索中';
+  return '検索';
+}
