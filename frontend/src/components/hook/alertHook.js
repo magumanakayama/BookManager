@@ -5,7 +5,11 @@ const useAlertHook = () => {
   // クエリパラメータの取得
   const [searchParams] = useSearchParams({ alertOpen: 'false', message: '', severity: '' });
   const { alertOpen, message, severity } = Object.fromEntries(searchParams.entries());
-  const [alert, setAlert] = useState({ open: alertOpen, message, severity });
+  const [alert, setAlert] = useState({
+    open: alertOpen === 'true', // クエリパラメータは文字列として取得されるため、'true'と比較してbooleanに変換
+    message,
+    severity
+  });
 
   // 画面リロード時にクエリパラメータを消す
   useEffect(() => {
