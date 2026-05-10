@@ -46,12 +46,15 @@ const SearchButtons = ({ fetchInstance, searchInstance }) => {
   // promiseをstateかつキーにすることでuseを制御
   //// promiseが変数だとrequestが変わるたびに再レンダリングされてしまうため発火タイミング制御が難しくなる
   const { loading, beginRequest } = fetchInstance;
-  const { query, page, setPrevQuery, diff, requestUrl } = searchInstance;
+  const { query, setPage, setPrevQuery, diff, requestUrl } = searchInstance;
 
   // 検索ボタン押下時のハンドラ
   const handleSearch = () => {
+    const SEARCH_PAGE = 1;
+
     setPrevQuery(query); // 前回の検索語句をステートに保存
-    beginRequest(requestUrl(page)); // ページをセットし、フェッチを発火
+    setPage(SEARCH_PAGE); // ページをリセット
+    beginRequest(requestUrl(SEARCH_PAGE)); // ページをセットし、フェッチを発火
   };
 
   // ToDo: ローディング表示にならないのを治す
