@@ -8,7 +8,7 @@ const CardGrid = ({ bookList, page, handlePage }) => {
       <Grid container spacing={1} sx={{ width: '100%', justifyContent: 'center' }}>
         {(bookList?.Items ?? []).map(book => (
           <Grid key={book.Item.isbn}>
-            <BookCard book={book.Item} />
+            {book.Item.isbn && <BookCard book={book.Item} />}
           </Grid>
         ))}
       </Grid>

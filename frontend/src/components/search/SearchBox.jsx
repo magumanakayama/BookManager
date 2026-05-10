@@ -21,8 +21,7 @@ export default SearchBox;
 const InputField = ({ searchInstance }) => {
   const { query, setQuery } = searchInstance;
   const queryToLabel = {
-    title: 'タイトル',
-    author: '著者',
+    keyword: 'キーワード',
     // 他のフィールドのラベルもここに追加
   };
 
@@ -48,8 +47,6 @@ const SearchButtons = ({ fetchInstance, searchInstance }) => {
   //// promiseが変数だとrequestが変わるたびに再レンダリングされてしまうため発火タイミング制御が難しくなる
   const { loading, beginRequest } = fetchInstance;
   const { query, page, setPrevQuery, diff, requestUrl } = searchInstance;
-
-  console.log('SearchButtons loading:', loading);
 
   // 検索ボタン押下時のハンドラ
   const handleSearch = () => {
