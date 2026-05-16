@@ -1,4 +1,4 @@
-import { Box, TextField } from '@mui/material';
+import { Box, TextField, List, ListItem, ListItemText } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -14,7 +14,7 @@ const BookFormFields = ({ book, setBook }) => {
 
   return (
     <FieldsLayout>
-      {textFields.map(({ label, param }) => {
+      {!book.isbn && textFields.map(({ label, param }) => {
         return <TextFieldLayout key={param} label={label} value={book[param]} onChange={e => handleInput(param, e.target.value)} />;
       })}
       <DateField book={book} setBook={handleInput} />
@@ -30,6 +30,13 @@ const FieldsLayout = ({ children }) => (
 
 const TextFieldLayout = ({ label, value, onChange }) => (
   <TextField label={label} variant="outlined" required value={value} onChange={onChange} />
+);
+
+const LabelField = ({ label, value }) => (
+  <Box>
+    <span style={{ color: 'green', margin: 0, fontWeight: 'bold', fontSize: '0.9em', display: 'block' }}>{label}</span>
+    <span style={{ color: 'inherit', fontSize: '1.2em', display: 'block' }}>{value}</span>
+  </Box>
 );
 
 const DateField = ({ book, setBook }) => {
