@@ -7,7 +7,7 @@ export const MODAL_STYLE = {
   transform: 'translate(-50%, -50%)',
   bgcolor: 'background.paper',
   borderRadius: 2,
-  width: '80dvw',
+  width: 280,
   p: 4,
 };
 
