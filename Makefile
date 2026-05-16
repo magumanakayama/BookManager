@@ -5,13 +5,17 @@ d_d:
 	@docker compose down
 
 d_eb:
-	@docker exec -it node_backend bash
+	@docker exec -it backend bash
 
 d_ef:
-	@docker exec -it node_frontend bash
+	@docker exec -it frontend bash
 
 d_p:
 	@docker ps
+
+start:
+	@make d_u
+	@make d_ef
 
 curl_3000:
 	@curl http://localhost:3000

@@ -1,0 +1,47 @@
+name: Deploy Vite App to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read  # リポジトリ内容を読み取る権限
+  pages: write  # Pagesへの書き込み(デプロイ)権限
+  id-token: write  # IDトークンの書き込み権限、Pagesへの安全なデプロイに必要
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: yarn install
+        working-directory: frontend
+
+      - name: Build Vite app
+        run: yarn build
+        working-directory: frontend
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: frontend/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
