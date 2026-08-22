@@ -1,12 +1,18 @@
 import { use, Suspense } from 'react';
 import { ErrorBoundary } from "react-error-boundary";
 
-const FetchComponent = ({ promise, Success, Loading, Error }) => {
+// ErrorBoundary直下に子コンポーネントを置くためのラッパー
+//// Success(data)を直下に置くとcatchできないため、SuccessWrapperを挟む
+const SuccessWrapper = ({ promise, Success }) => {
   const data = use(promise);
+  return Success(data);
+};
+
+const FetchComponent = ({ promise, Success, Loading, Error }) => {
   return (
     <ErrorBoundary fallbackRender={Error}>
       <Suspense fallback={Loading()}>
-        {Success(data)}
+        <SuccessWrapper promise={promise} Success={Success} />
       </Suspense>
     </ErrorBoundary>
   )
