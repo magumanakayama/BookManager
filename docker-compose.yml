@@ -3,7 +3,7 @@ services:
   frontend:
     build:
       context: ./
-      dockerfile: Dockerfile_frontend
+      dockerfile: Dockerfile
       args:
         - USER_UID=${UID}
         - USER_GID=${GID}
