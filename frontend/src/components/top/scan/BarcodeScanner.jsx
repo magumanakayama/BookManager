@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import useQuagga from './useQuagga';
 import { Modal, Box, Typography, Button, Alert } from '@mui/material';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
+
+// バーコード読み取りカスタムフック
+import useQuagga from './useQuagga';
 
 const SCANNER_STYLE = {
   position: 'absolute',
@@ -15,7 +17,6 @@ const SCANNER_STYLE = {
 };
 
 export const BarcodeScanner = ({ onDetected, onClose }) => {
-  // Quagga専用カスタムフック
   const { setViewport, error } = useQuagga(onDetected);
 
   return (
