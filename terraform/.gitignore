@@ -1,0 +1,6 @@
+.env
+source/
+.DS_Store
+src/.terraform/
+src/terraform.tfstate*
+src/lambda_function.zip

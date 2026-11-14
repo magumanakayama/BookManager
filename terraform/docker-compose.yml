@@ -1,0 +1,13 @@
+services:
+  terraform:
+    image: hashicorp/terraform:1.16.0
+    container_name: terraform
+    env_file:
+      - .env
+    volumes:
+      - ./src:/terraform
+    working_dir: /terraform
+    entrypoint: sh
+    tty: true
+    # Apple Silicon（ARM64）でamd64を使うため明示的に指定。（ARM版があるのかは知らない）
+    platform: linux/amd64
