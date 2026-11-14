@@ -4,9 +4,8 @@ import Quagga from '@ericblade/quagga2';
 // Quagga2 を使用したバーコードスキャナーのクラスラッパー
 class QuaggaClass {
   constructor(onDetected, setError) {
-    if (typeof setError !== 'function') {
-      throw new TypeError('setError must be a function');
-    }
+    if (typeof onDetected !== 'function') throw new TypeError('onDetected must be a function');
+    if (typeof setError !== 'function') throw new TypeError('setError must be a function');
 
     this.viewport = null;
     this.onDetected = onDetected;
