@@ -1,13 +1,20 @@
+locals {
+  lambda_service_principal = "lambda.amazonaws.com"
+  lambda_policy_arn        = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  lambda_source_file       = "${path.module}/lambda_function.py"
+  lambda_zip_path          = "${path.module}/lambda_function.zip"
+}
+
 # Lambda用ZIPの作成
 data "archive_file" "lambda" {
   type        = "zip"
-  source_file = "${path.module}/lambda/lambda_function.py"
-  output_path = "${path.module}/lambda_function.zip"
+  source_file = local.lambda_source_file
+  output_path = local.lambda_zip_path
 }
 
 # IAMロールの信頼ポリシーにLambdaサービスを設定
 resource "aws_iam_role" "lambda" {
-  name = "terraform-hello-world-lambda-role"
+  name = var.lambda_role_name
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -15,7 +22,7 @@ resource "aws_iam_role" "lambda" {
       Action = "sts:AssumeRole"
       Effect = "Allow"
       Principal = {
-        Service = "lambda.amazonaws.com"
+        Service = local.lambda_service_principal
       }
     }]
   })
@@ -24,16 +31,16 @@ resource "aws_iam_role" "lambda" {
 # IAMロールにCloudWatch Logsへ書き込む権限を設定
 resource "aws_iam_role_policy_attachment" "lambda_logs" {
   role       = aws_iam_role.lambda.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  policy_arn = local.lambda_policy_arn
 }
 
 # Lambdaの作成
 resource "aws_lambda_function" "hello_world" {
-  function_name    = "terraform-hello-world"
+  function_name    = var.lambda_function_name
   role             = aws_iam_role.lambda.arn
-  runtime          = "python3.12"
-  handler          = "lambda_function.handler"
-  filename         = data.archive_file.lambda.output_path
+  runtime          = var.lambda_runtime
+  handler          = var.lambda_handler
+  filename         = local.lambda_zip_path
   source_code_hash = data.archive_file.lambda.output_base64sha256
 
   depends_on = [aws_iam_role_policy_attachment.lambda_logs]
