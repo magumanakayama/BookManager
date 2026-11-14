@@ -1,0 +1,3 @@
+- [ ] S3、DynamoDB で tf の State ファイルを管理
+- [ ] CloudFront、S3 でフロントエンドを配信
+- [ ] zipをgit追跡外に
