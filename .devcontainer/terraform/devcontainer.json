@@ -1,0 +1,21 @@
+{
+  "name": "terraform",
+  "dockerComposeFile": "../../terraform/docker-compose.yml",
+  "service": "terraform",
+  "workspaceFolder": "/terraform",
+  // Dev container を閉じると Docker Compose を停止する
+  "shutdownAction": "stopCompose",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "hashicorp.terraform"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "[terraform]": {
+          "editor.defaultFormatter": "hashicorp.terraform"
+        }
+      }
+    }
+  }
+}
